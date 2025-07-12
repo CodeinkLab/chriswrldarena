@@ -21,7 +21,7 @@ export const sendVerificationEmail = async (email: string, verificationUrl: stri
     <body style="margin: 0; padding: 0; font-family: Arial, sans-serif;">
       <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
         <div style="text-align: center; margin-bottom: 20px;">
-          <img src="https://chriswrldarena.vercel.app/img.png" alt="ChrisWrldArena Logo" style="max-width: 200px;">
+          <img src="https://chriswrldarena.com/img.png" alt="ChrisWrldArena Logo" style="max-width: 200px;">
         </div>
         
         <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">

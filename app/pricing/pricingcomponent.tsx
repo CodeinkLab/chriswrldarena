@@ -107,7 +107,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             customizations: {
                 title: 'ChrisWrldArena Subscription',
                 description: `Subscribe to ${plan.name}`,
-                logo: 'https://chriswrldarena.vercel.app/img.png',
+                logo: 'https://chriswrldarena.com/img.png',
             },
             meta: {
                 userId: user.id,

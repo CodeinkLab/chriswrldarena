@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     siteName: 'ChrisWrldArena',
     images: [
       {
-        url: 'https://chriswrldarena.vercel.app/img.png',
+        url: 'https://chriswrldarena.com/img.png',
         width: 1200,
         height: 630,
         alt: 'ChrisWrldArena - Expert Sports Predictions & Analysis',
@@ -26,15 +26,15 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ChrisWrldArena - Expert Sports Predictions & Analysis',
     description: 'Get accurate sports predictions and expert analysis. Join our community of successful bettors.',
-    images: ['https://chriswrldarena.vercel.app/img.png'],
+    images: ['https://chriswrldarena.com/img.png'],
   },
   icons: {
-    icon: 'https://chriswrldarena.vercel.app/favicon.ico',
-    apple: 'https://chriswrldarena.vercel.app/img.png',
+    icon: 'https://chriswrldarena.com/favicon.ico',
+    apple: 'https://chriswrldarena.com/img.png',
     other: [
-      { rel: 'icon', url: 'https://chriswrldarena.vercel.app/img.png', sizes: '16x16' },
-      { rel: 'icon', url: 'https://chriswrldarena.vercel.app/img.png', sizes: '32x32' },
-      { rel: 'icon', url: 'https://chriswrldarena.vercel.app/img.png', sizes: '48x48' },
+      { rel: 'icon', url: 'https://chriswrldarena.com/img.png', sizes: '16x16' },
+      { rel: 'icon', url: 'https://chriswrldarena.com/img.png', sizes: '32x32' },
+      { rel: 'icon', url: 'https://chriswrldarena.com/img.png', sizes: '48x48' },
     ],
   },
   
