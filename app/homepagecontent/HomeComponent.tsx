@@ -101,7 +101,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
                 </svg>
             ),
-            gradient: 'from-violet-500 to-green-500'
+            gradient: 'from-green-500 to-green-500'
         },
     ]
 
@@ -904,11 +904,16 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                         </table>
                                     </div>
                                     <div className="p-4 border-t border-gray-200 bg-gray-50">
+                                        <div className="flex w-full items-center justify-center my-4">
+                                            {currentPredictions
+                                                .filter(prediction => prediction.result !== "PENDING")
+                                                .slice(0, 10).length < 1 && <p>Empty List</p>}
+                                        </div>
                                         <div className="flex items-center justify-center ">
                                             <Link
                                                 href="/predictions/previousgames"
                                                 className="px-4 py-2 underline underline-offset-4 text-sm font-medium text-gray-900 hover:text-green-600 transition-all duration-300">
-                                                {!user ? "Sign in to View" : "View All Matches"}
+                                                {user && "View All Matches"}
                                             </Link>
                                             {user?.role === "ADMIN" && <Link
                                                 href={user ? "/dashboard/predictions/create" : "/signin"}
@@ -959,7 +964,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                         <div key={index} className="flex items-center justify-between p-2 bg-white rounded-lg border border-green-200 px-4">
                                                             <div>
                                                                 <p className="font-thin text-gray-900"></p>
-                                                                <p className="text-xs sm:text-sm font-medium text-gray-900"> <span className='text-violet-500'>{bet.league} &bull; <br /> </span>{bet.homeTeam} vrs {bet.awayTeam}</p>
+                                                                <p className="text-xs sm:text-sm font-medium text-gray-900"> <span className='text-green-700'>{bet.league} &bull; <br /> </span>{bet.homeTeam} vrs {bet.awayTeam}</p>
                                                                 <p className="text-xs sm:text-sm text-gray-600">{bet.tip}</p>
                                                             </div>
                                                             <div className="px-4 py-2 whitespace-nowrap">

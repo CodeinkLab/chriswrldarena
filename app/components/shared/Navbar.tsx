@@ -50,7 +50,7 @@ export default function Navbar() {
                         <img
                             src="/img.png"
                             alt="ChrisWrldArena Logo"
-                            className="h-15 w-auto"
+                            className="h-8 lg:h-12 w-auto"
                         />
                     </Link>
 
@@ -122,19 +122,16 @@ export default function Navbar() {
                                 )}
                             </div>
                         ) : (
-                            <div className="flex items-center space-x-4">
+                            <div className="flex items-center space-x-4 w-full">
                                 <Link
                                     href="/signin"
-                                    className={`px-4 py-2 rounded-full text-sm ${isScrolled
-                                        ? 'text-gray-700 hover:bg-gray-100'
-                                        : 'text-white hover:bg-white/10'
-                                        }`}
+                                    className={`px-8 py-2 rounded-full text-sm text-gray-700 bg-gray-200 hover:bg-gray-100`}
                                 >
                                     Sign In
                                 </Link>
                                 <Link
                                     href="/signup"
-                                    className="px-4 py-2 rounded-full text-sm bg-green-500 text-white hover:bg-green-600"
+                                    className="px-8 py-2 rounded-full text-sm bg-green-500 text-white hover:bg-green-600"
                                 >
                                     Sign Up
                                 </Link>
@@ -153,7 +150,7 @@ export default function Navbar() {
 
             {/* Mobile menu */}
             {isMobileMenuOpen && (
-                <div className="lg:hidden bg-green-800 shadow-xl">
+                <div className="lg:hidden bg-green-800 shadow-xl pb-8 px-8">
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         {menuItems.map((item) => (
                             <Link
@@ -204,17 +201,17 @@ export default function Navbar() {
                             </button>
                         </div>}
                         {!user && (
-                            <div className="pt-4 space-y-2">
+                            <div className="flex gap-4 pt-4 items-center mb-8 mx-2">
                                 <Link
                                     href="/signin"
-                                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100"
+                                    className="block px-8 py-2 rounded-md text-base font-medium text-white-700 bg-gray-200 hover:bg-gray-100"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     Sign In
                                 </Link>
                                 <Link
                                     href="/signup"
-                                    className="block px-3 py-2 rounded-md text-base font-medium bg-green-500 text-white hover:bg-green-600"
+                                    className="block px-8 py-2 rounded-md text-base font-medium bg-green-500 text-white hover:bg-green-600"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     Sign Up
