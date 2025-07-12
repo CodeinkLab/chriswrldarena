@@ -221,7 +221,7 @@ export default function ProfileClient({ id }: { id: string }) {
 
 
         if (Object.keys(filteredChanges).length === 0) {
-            toast("No changes made.", { icon: <Info className='size-4 text-orange-500' /> })
+            toast("No changes made.", { icon: <Info className='size-4 text-teal-500' /> })
             setLoading(false)
             return
         }
@@ -264,13 +264,13 @@ export default function ProfileClient({ id }: { id: string }) {
         if (!sub) return null;
         return (
             <div
-                className={`border rounded-xl p-5 shadow transition-all duration-200 bg-gradient-to-br from-orange-50 to-white ${onSelect ? 'cursor-pointer hover:shadow-lg hover:border-orange-400' : ''}`}
+                className={`border rounded-xl p-5 shadow transition-all duration-200 bg-gradient-to-br from-teal-50 to-white ${onSelect ? 'cursor-pointer hover:shadow-lg hover:border-teal-400' : ''}`}
                 onClick={onSelect}
             >
                 <div className="flex items-center justify-between">
                     <div>
                         <div className="flex items-center gap-2">
-                            <span className="inline-block px-2 py-1 text-xs font-semibold rounded bg-orange-100 text-orange-700 uppercase tracking-wide">
+                            <span className="inline-block px-2 py-1 text-xs font-semibold rounded bg-teal-100 text-teal-700 uppercase tracking-wide">
                                 {sub.plan || 'Unknown Plan'}
                             </span>
                             {sub.status && (
@@ -297,7 +297,7 @@ export default function ProfileClient({ id }: { id: string }) {
                     {onSelect && (
                         <button
                             type="button"
-                            className="ml-4 px-3 py-1.5 text-xs font-semibold bg-orange-600 text-white rounded-lg shadow hover:bg-orange-700 transition"
+                            className="ml-4 px-3 py-1.5 text-xs font-semibold bg-teal-600 text-white rounded-lg shadow hover:bg-teal-700 transition"
                         >
                             Select
                         </button>
@@ -344,7 +344,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                         type="text"
                                         name="username"
                                         autoComplete="user-name"
-                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                                         placeholder="Enter your username"
                                         value={profile.username}
                                         onChange={handleProfileChange}
@@ -358,7 +358,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                         name="role"
                                         disabled
                                         readOnly
-                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                                         value={profile.role}
                                         onChange={handleProfileChange}
                                         required
@@ -371,7 +371,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                             type="email"
                                             name="email"
                                             autoComplete="eimail-address"
-                                            className=" w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+                                            className=" w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                                             value={profile.email}
                                             onChange={handleProfileChange}
                                             required
@@ -387,7 +387,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                     <input
                                         type="tel"
                                         name="phone"
-                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                                         value={profile.phone}
                                         onChange={handleProfileChange}
 
@@ -402,7 +402,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                         name="country"
                                         disabled
                                         readOnly
-                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                                         value={`${profile.country}  (${profile.city} - ${profile.region})`}
                                         onChange={handleProfileChange}
                                         placeholder="Enter your phone number"
@@ -415,7 +415,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                         name="country"
                                         disabled
                                         readOnly
-                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                                         value={`${profile.currency} (${profile.symbol})`}
                                         onChange={handleProfileChange}
                                         placeholder="Enter your phone number"
@@ -428,7 +428,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                     <input
                                         type="password"
                                         autoComplete="old-password"
-                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                                         value={oldPassword}
                                         onChange={e => setOldPassword(e.target.value)}
                                         placeholder="Enter new password"
@@ -440,7 +440,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                     <input
                                         type="password"
                                         autoComplete="new-password"
-                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                                         value={newPassword}
                                         onChange={e => setNewPassword(e.target.value)}
                                         placeholder="Enter new password"
@@ -452,7 +452,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                     <input
                                         type="password"
                                         autoComplete='off'
-                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+                                        className="w-full rounded-lg px-4 py-2 border outline-0 border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                                         value={confirmPassword}
                                         onChange={e => setConfirmPassword(e.target.value)}
                                         placeholder="Confirm new password"
@@ -463,7 +463,7 @@ export default function ProfileClient({ id }: { id: string }) {
                             <div className="flex justify-end">
                                 <button
                                     type="submit"
-                                    className="px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-60"
+                                    className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-60"
                                     disabled={loading}
                                 >
                                     {loading ? 'Saving...' : 'Save Changes'}
@@ -562,7 +562,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                             type="checkbox"
                                             checked={item.checked}
                                             onChange={() => handleNotificationChange(i)}
-                                            className="h-4 w-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500 accent-orange-600"
+                                            className="h-4 w-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500 accent-teal-600"
                                         />
                                     </div>
                                     <div className="ml-3">

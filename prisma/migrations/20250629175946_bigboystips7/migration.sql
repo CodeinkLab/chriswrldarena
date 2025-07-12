@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Settings" ALTER COLUMN "values" SET NOT NULL,
-ALTER COLUMN "values" SET DATA TYPE TEXT;

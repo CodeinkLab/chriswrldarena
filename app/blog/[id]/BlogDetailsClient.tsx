@@ -183,7 +183,7 @@ export default function BlogDetailsClient({ id }: { id: string }) {
         <article className="space-y-8">
             <div className="absolute inset-0 bg-cover bg-center h-64 shadow-lg -z-20"
                 style={{
-                    backgroundImage: 'linear-gradient(to right, #1a1818c0, #111010cb), url(/stadium.webp)',
+                    backgroundImage: 'linear-gradient(to right, #1a1818c0, #111010cb), url(/stadium.jpg)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 }}></div>

@@ -100,7 +100,7 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
         <div className="relative mx-auto px-4 py-12">
             <div className="absolute inset-0 bg-cover bg-center h-64 shadow-lg -z-20"
                 style={{
-                    backgroundImage: 'linear-gradient(to right, #1a1818c0, #111010cb), url(/stadium.webp)',
+                    backgroundImage: 'linear-gradient(to right, #1a1818c0, #111010cb), url(/stadium.jpg)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 }}>
@@ -271,7 +271,7 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
                                 Previous
                             </button>
                             <button
-                                className="px-4 py-2 text-sm font-medium text-white bg-orange-600 border border-transparent rounded-md hover:bg-orange-700 disabled:opacity-50"
+                                className="px-4 py-2 text-sm font-medium text-white bg-teal-600 border border-transparent rounded-md hover:bg-teal-700 disabled:opacity-50"
                                 onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                                 disabled={currentPage === totalPages}
                             >

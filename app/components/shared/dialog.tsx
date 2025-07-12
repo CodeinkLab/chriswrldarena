@@ -54,7 +54,7 @@ export function DialogProvider({ children }: { children: ReactNode }) {
               <div className="flex items-center gap-2">
                 {state.type === 'alert' && <ExclamationTriangleIcon className="w-6 h-6 text-yellow-600" />}
                 {state.type === 'confirm' && <InformationCircleIcon className="w-6 h-6 text-blue-800" />}
-                {state.type === 'progress' && <CheckCircleIcon className="w-6 h-6 text-orange-600" />}
+                {state.type === 'progress' && <CheckCircleIcon className="w-6 h-6 text-teal-600" />}
                 <h3 className="text-lg font-semibold text-black">{state.title}</h3>
               </div>
               <button
@@ -92,7 +92,7 @@ export function DialogProvider({ children }: { children: ReactNode }) {
                   state.onConfirm?.()
                   closeDialog()
                 }}
-                className="px-4 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition-colors"
+                className="px-4 py-2 rounded-lg bg-teal-500 text-white hover:bg-teal-600 transition-colors"
               >
                 {state.type === 'progress' ? 'Close' : 'OK'}
               </button>
@@ -120,7 +120,7 @@ export function DialogProvider({ children }: { children: ReactNode }) {
                     state.onConfirm?.()
                     closeDialog()
                   }}
-                  className="px-4 py-2 rounded-lg bg-orange-800 text-white hover:bg-orange-500 transition-colors"
+                  className="px-4 py-2 rounded-lg bg-teal-800 text-white hover:bg-teal-500 transition-colors"
                 >
                   Continue
                 </button>

@@ -60,7 +60,7 @@ export default function DashboardLayout({
       {/* Mobile header */}
       <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 z-[999]">
         <Link href="/" className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold">B</span>
           </div>
           <span className="text-xl uppercase font-bold text-gray-900">ChrisWrldArena</span>
@@ -84,7 +84,7 @@ export default function DashboardLayout({
           {/* Sidebar header */}
           <div className="h-16 flex items-center px-6 border-b border-gray-200">
             <Link href="/" className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold">B</span>
               </div>
               <span className="text-xl font-bold text-gray-900 uppercase">ChrisWrldArena</span>
@@ -100,12 +100,12 @@ export default function DashboardLayout({
                   key={item.name}
                   href={item.href}
                   className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive
-                    ? 'bg-orange-50 text-orange-700'
+                    ? 'bg-teal-50 text-teal-700'
                     : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
-                  <item.icon className={`w-5 h-5 mr-3 ${isActive ? 'text-orange-700' : 'text-gray-400'
+                  <item.icon className={`w-5 h-5 mr-3 ${isActive ? 'text-teal-700' : 'text-gray-400'
                     }`} />
                   {item.name}
                 </Link>

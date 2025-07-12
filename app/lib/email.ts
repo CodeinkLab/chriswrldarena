@@ -48,7 +48,7 @@ export const sendVerificationEmail = async (email: string, verificationUrl: stri
           <p style="color: #666; font-size: 14px;">Follow us on social media:</p>
           <div style="margin: 15px 0;">
            <div class="flex space-x-4">
-           <a href="https://t.me/bigboyzg" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
+           <a href="https://t.me/Chriswrldarena1" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.227-.535.227l.19-2.712 4.94-4.465c.215-.19-.047-.296-.332-.106l-6.103 3.854-2.623-.816c-.57-.18-.582-.57.12-.843l10.238-3.948c.473-.174.887.104.605 1.337z">
            </path>
            </svg>

@@ -78,7 +78,7 @@ export function SignupForm() {
 
   return (<div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50"
     style={{
-      backgroundImage: 'linear-gradient(to right, #1a1818c0, #111010cb), url(/stadium.webp)',
+      backgroundImage: 'linear-gradient(to right, #1a1818c0, #111010cb), url(/stadium.jpg)',
       backgroundSize: 'cover',
       backgroundPosition: 'center'
     }}  >
@@ -87,7 +87,7 @@ export function SignupForm() {
 
       <div className="text-center space-y-6">
         <div className="flex justify-center">
-          <div className="w-20 h-20 bg-gradient-to-tr from-orange-500 to-orange-600 rounded-xl shadow-lg flex items-center justify-center transform -rotate-6 hover:rotate-0 transition-transform duration-300">
+          <div className="w-20 h-20 bg-gradient-to-tr from-teal-500 to-teal-600 rounded-xl shadow-lg flex items-center justify-center transform -rotate-6 hover:rotate-0 transition-transform duration-300">
             <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
@@ -96,7 +96,7 @@ export function SignupForm() {
         <h2 className="text-4xl font-bold text-gray-900">Create your account</h2>
         <p className="text-gray-600">
           Or{' '}
-          <Link href="/signin" className="font-bold text-orange-600 hover:text-orange-500 transition-colors">
+          <Link href="/signin" className="font-bold text-teal-600 hover:text-teal-500 transition-colors">
             sign in to your account
           </Link>
         </p>
@@ -145,7 +145,7 @@ export function SignupForm() {
                   name="fullName"
                   type="text"
                   required
-                  className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm bg-white transition-colors duration-200"
+                  className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm bg-white transition-colors duration-200"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -159,7 +159,7 @@ export function SignupForm() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm bg-white transition-colors duration-200"
+                  className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm bg-white transition-colors duration-200"
                   placeholder="Enter your email"
                 />
               </div>
@@ -176,7 +176,7 @@ export function SignupForm() {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm bg-white transition-colors duration-200"
+                    className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm bg-white transition-colors duration-200"
                     placeholder="Create a strong password"
                   />
                   <button
@@ -193,10 +193,10 @@ export function SignupForm() {
             <button
               type="submit"
               disabled={isLoading}
-              className="relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 transition-all duration-300 transform hover:scale-[1.02]"
+              className="relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 transition-all duration-300 transform hover:scale-[1.02]"
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <svg className="h-5 w-5 text-orange-300 group-hover:text-orange-200" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="h-5 w-5 text-teal-300 group-hover:text-teal-200" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </span>
@@ -215,11 +215,11 @@ export function SignupForm() {
 
             <p className="text-xs text-center text-gray-600">
               By creating an account, you agree to our{' '}
-              <Link href="/legal/terms" className="text-orange-600 hover:text-orange-500 transition-colors">Terms of Service</Link>
-              <Link href="/legal/privacy" className="text-orange-600 hover:text-orange-500 transition-colors">Privacy Policy</Link>
-              <Link href="/legal/eula" className="text-orange-600 hover:text-orange-500 transition-colors">End User License Agreement (EULA)</Link>
+              <Link href="/legal/terms" className="text-teal-600 hover:text-teal-500 transition-colors">Terms of Service</Link>
+              <Link href="/legal/privacy" className="text-teal-600 hover:text-teal-500 transition-colors">Privacy Policy</Link>
+              <Link href="/legal/eula" className="text-teal-600 hover:text-teal-500 transition-colors">End User License Agreement (EULA)</Link>
               {' '}and{' '}
-              <Link href="/legal/disclaimer" className="text-orange-600 hover:text-orange-500 transition-colors">User Disclaimer</Link>
+              <Link href="/legal/disclaimer" className="text-teal-600 hover:text-teal-500 transition-colors">User Disclaimer</Link>
             </p>
           </div>
         </form>

@@ -9,11 +9,12 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import moment from 'moment';
 import { useAuth } from '../contexts/AuthContext';
 import { sportTypeOptions } from '../lib/formschemas/predictionForm';
-import { Check, Clock, Edit, Edit2, LoaderCircle, MoreVertical, PlusCircle, Trash, X } from 'lucide-react';
+import { Check, Clock, Edit, Edit2, LoaderCircle, Mail, MoreVertical, Phone, PlusCircle, Trash, X } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { useDialog } from '../components/shared/dialog';
 import { updateTitle } from '../actions/utils';
 import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
+import { FaTelegram, FaTwitter } from 'react-icons/fa';
 
 const HomePageComponent = ({ content }: { content: any }) => {
     const { user } = useAuth()
@@ -46,17 +47,17 @@ const HomePageComponent = ({ content }: { content: any }) => {
             title: 'AI-Powered Analysis',
             description: 'Our advanced AI algorithms analyze millions of data points to provide highly accurate predictions.',
             icon: (
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
             ),
-            gradient: 'from-orange-500 to-purple-500'
+            gradient: 'from-teal-500 to-teal-500'
         },
         {
             title: 'Real-Time Updates',
             description: 'Get instant notifications and live updates for matches, odds changes, and prediction results.',
             icon: (
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             ),
@@ -66,17 +67,17 @@ const HomePageComponent = ({ content }: { content: any }) => {
             title: 'Secure Payments',
             description: 'Multiple payment options with bank-grade security. Easy subscriptions and instant access.',
             icon: (
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
             ),
-            gradient: 'from-orange-500 to-orange-500'
+            gradient: 'from-teal-500 to-teal-500'
         },
         {
             title: 'Premium Insights',
             description: 'Access detailed match analysis, expert opinions, and exclusive VIP predictions.',
             icon: (
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
             ),
@@ -86,21 +87,21 @@ const HomePageComponent = ({ content }: { content: any }) => {
             title: 'Multiple Payment Methods',
             description: 'Pay with credit cards, PayPal, crypto, or mobile money. Flexible subscription options.',
             icon: (
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
             ),
-            gradient: 'from-cyan-500 to-orange-500'
+            gradient: 'from-cyan-500 to-teal-500'
         },
         {
             title: '24/7 Support',
             description: 'Get help anytime with our dedicated customer support team and community forum.',
             icon: (
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
                 </svg>
             ),
-            gradient: 'from-violet-500 to-purple-500'
+            gradient: 'from-violet-500 to-teal-500'
         },
     ]
 
@@ -137,7 +138,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 <div className="my-4 w-full">
                     <input
                         type="text"
-                        className="w-full px-4 py-2 border border-orange-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-gray-900 mt-2 select-all "
+                        className="w-full px-4 py-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-900 mt-2 select-all "
                         autoFocus
                         onFocus={e => e.target.select()}
                         placeholder="Enter new table title"
@@ -231,79 +232,195 @@ const HomePageComponent = ({ content }: { content: any }) => {
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <section className="flex flex-col justify-center items-center relative min-h-[65vh] md:min-h-[80vh] 2xl:min-h-[95vh] 3xl:min-h-[90vh] bg-gradient-to-r from-neutral-600/40 to-neutral-800/40 text-white w-full bg-url(/stadium.webp) bg-cover bg-center"
-                style={{
-                    backgroundImage: 'linear-gradient(to right, #1a1818c0, #111010cb), url(/stadium.webp)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                }}>
+            <section className="flex flex-col justify-center items-center relative min-h-[65vh] md:min-h-[80vh] 2xl:min-h-[80vh] 3xl:min-h-[80vh] text-white w-full">
+                {/* Dynamic Background with Overlay */}
+                <div className="absolute inset-0 z-0">
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/80" />
+                    <div className="absolute inset-0 bg-[url('/stadium.jpg')] bg-cover bg-center mix-blend-overlay" />
+                    {/* Animated Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-gray-900/30 animate-gradient" />
+                </div>
 
-                <div className="flex items-center justify-center w-full my-auto container px-4 py-8 mt-24 md:mt-16 h-full overflow-hidden">
-                    <div className="w-full flex items-center justify-center flex-col lg:flex-row lg:justify-between gap-2 h-full">
-                        <div className="flex flex-col w-full h-full justify-center lg:w-1/2 text-center lg:text-left z-20 gap-4 ">
-                            <p className="text-xl sm:text-3xl md:text-5xl font-thin italic text-white ">Welcome, {user?.username || "User"}</p>
+                {/* Content Container */}
+                <div className="relative z-10 container mx-auto px-4 py-8 mt-8 md:mt-16">
+                    <div className="w-full flex items-center justify-center flex-col lg:flex-row lg:justify-between gap-8">
+                        {/* Text Content */}
+                        <div className="flex flex-col w-full lg:w-1/2 text-center lg:text-left space-y-6">
+                            {/* Welcome Message with Glow Effect */}
+                            <div className="relative">
+                                <p className="text-xl sm:text-3xl md:text-4xl font-light text-white/90 tracking-wide">
+                                    Welcome,{" "}
+                                    <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-600 drop-shadow-[0_0_15px_rgba(251,146,60,0.3)]">
+                                        {user?.username || "Champion"}
+                                    </span>
+                                </p>
+                            </div>
 
-                            <h1 className="text-3xl md:text-5xl lg:text-5xl 2xl:text-7xl font-bold sm:leading-16 md:leading-20 lg:leading-16 2xl:leading-24 lg:mt-8 ">
-                                Welcome to the Expert ChrisWrldArena <span className="text-orange-400">Odds </span> Hub!
-                            </h1>
-                            <p className="text-sm sm:text-lg md:text-base text-white mt-4 sm:mt-8">
-                                Join thousands of successful bettors who trust our expert analysis and predictions.
-                                Get access to premium tips and increase your winning potential.
-                            </p>
-                            <div className="flex flex-col lg:flex-row items-center justify-center">
-                                <div className="flex flex-col xl:flex-row justify-center items-center lg:justify-start gap-4 pt-4 w-full lg:mt-8">
-                                    <Link
-                                        href="https://t.me/bigboyzg" target='_blank'
-                                        className="flex bg-orange-500 uppercase w-72 font-bold justify-center items-center gap-2 hover:scale-[1.05] transition-all text-white px-4 py-2 rounded-lg text-xs sm:text-base text-center"
-                                    >
-                                        <svg className="size-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.227-.535.227l.19-2.712 4.94-4.465c.215-.19-.047-.296-.332-.106l-6.103 3.854-2.623-.816c-.57-.18-.582-.57.12-.843l10.238-3.948c.473-.174.887.104.605 1.337z" />
-                                        </svg>
-                                        Join Telegram Channel
-                                    </Link>
-                                    <Link
-                                        href="/pricing"
-                                        className="flex justify-center relative bg-orange-500 w-72 uppercase border border-orange-500 gap-2 items-center hover:scale-[1.05] transition-all text-white px-4 py-2 rounded-lg font-bold text-xs sm:text-base text-center"
-                                    >
-                                        <svg className="size-6" fill="currentColor" viewBox="0 0 24 24">
-                                            <path
-                                                d="M2 8l4 10h12l4-10-6 5-4-7-4 7-6-5z"
-                                                fill="white"
-                                                stroke="white"
-                                                strokeWidth="1"
-                                            />
-                                            <circle cx="4" cy="8" r="1.5" fill="white" />
-                                            <circle cx="12" cy="4" r="1.5" fill="white" />
-                                            <circle cx="20" cy="8" r="1.5" fill="white" />
-                                        </svg>
-                                        Get Vip Games
-                                        <div className="absolute top-2 right-2">
-                                            <div className="relative w-2 h-2">
-                                                <div className="absolute inset-0 rounded-full bg-orange-100 opacity-0 group-hover:scale-[6] group-hover:opacity-10 transition-all duration-500" />
-                                                <div className="absolute inset-0 rounded-full bg-orange-100 animate-ping group-hover:opacity-0 transition-opacity" />
-                                            </div>
-                                        </div>
-                                    </Link>
+                            {/* Main Heading with Enhanced Typography */}
+                            <div className="space-y-4">
+                                <h1 className="text-3xl md:text-5xl lg:text-6xl 2xl:text-7xl font-bold leading-tight">
+                                    Turn Passion into{" "}
+                                    <span className="relative">
+                                        <span className="text-teal-400 drop-shadow-[0_0_25px_rgba(251,146,60,0.5)]">Profit</span>
+                                        <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-teal-500 to-teal-400 rounded-full transform scale-x-0 animate-expandWidth" />
+                                    </span>{" "}
+                                    with Expert Predictions
+                                </h1>
+
+                                {/* Enhanced Description */}
+                                <p className="text-base sm:text-lg text-gray-300 max-w-xl leading-relaxed">
+                                    Experience the power of data-driven predictions and expert insights. Join our elite community
+                                    of smart bettors and unlock premium tips that consistently deliver results.
+                                </p>
+
+                                {/* Stats Section */}
+                                <div className="lg:hidden flex flex-wrap justify-center lg:justify-start gap-8 pt-6">
+                                    <div className="text-center">
+                                        <p className="text-3xl font-bold text-teal-400">95%</p>
+                                        <p className="text-sm text-gray-300">Success Rate</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <p className="text-3xl font-bold text-teal-400">10K+</p>
+                                        <p className="text-sm text-gray-300">Happy Members</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <p className="text-3xl font-bold text-teal-400">24/7</p>
+                                        <p className="text-sm text-gray-300">Expert Support</p>
+                                    </div>
                                 </div>
                             </div>
 
-                        </div>
-                        <div className="hidden lg:block w-full lg:w-1/2 px-4 sm:px-8 lg:px-0">
-                            <div className="relative max-w-[500px] mx-auto lg:max-w-none">
-                                <div className="absolute -top-4 -left-4 w-24 h-24 bg-orange-400/20 rounded-full blur-xl animate-pulse" />
-                                <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-orange-400/20 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
-                                <img src="/hero-img.png"
-                                    alt="Sports prediction illustration"
-                                    className="object-cover hover:scale-[1.02] transition-all duration-500" />
+                            {/* Enhanced CTA Buttons */}
+                            <div className="lg:hidden flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-6">
+                                <Link
+                                    href="https://t.me/Chriswrldarena1"
+                                    target='_blank'
+                                    className="group relative overflow-hidden px-6 py-3 w-full sm:w-auto rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold text-center transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-teal-500/25"
+                                >
+                                    <span className="flex items-center justify-center gap-2">
+                                        <svg className="size-5" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.227-.535.227l.19-2.712 4.94-4.465c.215-.19-.047-.296-.332-.106l-6.103 3.854-2.623-.816c-.57-.18-.582-.57.12-.843l10.238-3.948c.473-.174.887.104.605 1.337z" />
+                                        </svg>
+                                        JOIN TELEGRAM
+                                        <span className="absolute inset-0 flex justify-center items-center bg-white text-teal-600 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                            GET STARTED →
+                                        </span>
+                                    </span>
+                                </Link>
+
+                                <Link
+                                    href="/pricing"
+                                    className="group relative overflow-hidden px-6 py-3 w-full sm:w-auto rounded-lg bg-transparent border-2 border-teal-500 text-white font-semibold text-center transform hover:scale-[1.02] transition-all duration-300"
+                                >
+                                    <span className="flex items-center justify-center gap-2">
+                                        <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M2 8l4 10h12l4-10-6 5-4-7-4 7-6-5z" />
+                                        </svg>
+                                        VIP ACCESS
+                                        <div className="absolute top-1 right-1">
+                                            <div className="relative w-2 h-2">
+                                                <div className="absolute inset-0 rounded-full bg-teal-400 animate-ping" />
+                                            </div>
+                                        </div>
+                                    </span>
+                                </Link>
                             </div>
                         </div>
 
+                        <div className="hidden lg:flex flex-col w-full lg:w-1/2 text-center lg:text-left space-y-8">
+                            {/* Main Heading with Enhanced Typography */}
+                            <div className="space-y-4">
+                                {/* Stats Section */}
+                                <div className="flex flex-wrap justify-between gap-8 pt-6">
+                                    <div className="text-center">
+                                        <p className="text-7xl font-bold text-teal-400">95%</p>
+                                        <p className="text-lg text-gray-300">Success Rate</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <p className="text-7xl font-bold text-teal-400">10K+</p>
+                                        <p className="text-lg text-gray-300">Happy Members</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <p className="text-7xl font-bold text-teal-400">24/7</p>
+                                        <p className="text-lg text-gray-300">Expert Support</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Key Stats/Features Animation */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+                                <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-teal-100 hover:border-teal-200 transition-all duration-300 group hover:shadow-lg">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-500 rounded-lg flex items-center justify-center transform group-hover:rotate-6 transition-transform duration-300">
+                                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-900">High Win Rate</h4>
+                                            <p className="text-sm text-gray-600">95% success rate across all predictions</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-teal-100 hover:border-teal-200 transition-all duration-300 group hover:shadow-lg">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-500 rounded-lg flex items-center justify-center transform group-hover:rotate-6 transition-transform duration-300">
+                                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-900">Real-Time Updates</h4>
+                                            <p className="text-sm text-gray-600">Instant notifications for all matches</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Enhanced CTA Buttons */}
+                            <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+                                <Link
+                                    href="https://t.me/Chriswrldarena1"
+                                    target='_blank'
+                                    className="group relative overflow-hidden px-6 py-3 w-full sm:w-auto rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold text-center transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-teal-500/25"
+                                >
+                                    <span className="flex items-center justify-center gap-2">
+                                        <svg className="size-5" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.227-.535.227l.19-2.712 4.94-4.465c.215-.19-.047-.296-.332-.106l-6.103 3.854-2.623-.816c-.57-.18-.582-.57.12-.843l10.238-3.948c.473-.174.887.104.605 1.337z" />
+                                        </svg>
+                                        JOIN TELEGRAM
+                                        <span className="absolute inset-0 flex justify-center items-center bg-white text-teal-600 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                            JOIN OUR CHANNEL →
+                                        </span>
+                                    </span>
+                                </Link>
+
+                                <Link
+                                    href="/pricing"
+                                    className="group relative overflow-hidden px-6 py-3 w-full sm:w-auto rounded-lg bg-transparent border-2 border-teal-500 text-white font-semibold text-center transform hover:scale-[1.02] transition-all duration-300"
+                                >
+                                    <span className="flex items-center justify-center gap-2">
+                                        <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M2 8l4 10h12l4-10-6 5-4-7-4 7-6-5z" />
+                                        </svg>
+                                        VIP ACCESS
+                                        <div className="absolute top-1 right-1">
+                                            <div className="relative w-2 h-2">
+                                                <div className="absolute inset-0 rounded-full bg-teal-400 animate-ping" />
+                                            </div>
+                                        </div>
+                                    </span>
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Recent Predictions Section */}
-            <section className="py-20">
+            < section className="py-20" >
+            
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col space-y-12">
                         {/* Section Header */}
@@ -322,12 +439,12 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                 <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-max">
                                     <div className="p-6 bg-gradient-to-r from-gray-900 to-gray-800 border-b border-gray-200">
                                         <div className="relative flex flex-col lg:flex-row gap-4 items-center justify-between">
-                                            <span className="absolute left-0 items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-400 text-gray-900">
+                                            <span className="absolute left-0 items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-400 text-gray-900">
                                                 Premium
                                             </span>
                                             <h3 className="text-sm sm:text-xl font-bold text-white flex items-center gap-2 ml-20 uppercase">
                                                 {title[0]?.defaulttitle || defaulttitles[0]}
-                                                {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-400 text-gray-900"
+                                                {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-teal-400 text-gray-900"
                                                     onClick={() => updateTableTitle(0, title[0]?.defaulttitle || defaulttitles[0])}>
                                                     <Edit2 className="size-4" />&nbsp;Edit
                                                 </span>}
@@ -360,7 +477,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                             <div className="relative">
                                                 <div className="absolute inset-0 bg-gradient-to-t from-white via-white/90 to-white/50 backdrop-blur-[2px] z-10 flex items-center justify-center">
                                                     {!content.isSubscriptionActive && <div className="text-center">
-                                                        <div className="w-12 h-12 mx-auto mb-4 text-orange-400">
+                                                        <div className="w-12 h-12 mx-auto mb-4 text-teal-400">
                                                             <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                                             </svg>
@@ -369,7 +486,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                         <p className="text-sm text-gray-600 mt-1">Subscribe to access VIP predictions</p>
                                                     </div>}
                                                     {content.isSubscriptionActive && <div className="text-center">
-                                                        <div className="w-12 h-12 mx-auto mb-4 text-orange-400">
+                                                        <div className="w-12 h-12 mx-auto mb-4 text-teal-400">
                                                             <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
                                                                 <path
                                                                     d="M2 8l4 10h12l4-10-6 5-4-7-4 7-6-5z"
@@ -387,7 +504,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                         <br />
                                                         <Link
                                                             href="/pricing"
-                                                            className="px-4 py-2 mt-16 text-sm font-medium text-gray-900 bg-gradient-to-r from-orange-400 to-orange-500 rounded-lg hover:from-orange-500 hover:to-orange-600 transition-all duration-300"
+                                                            className="px-4 py-2 mt-16 text-sm font-medium text-gray-900 bg-gradient-to-r from-teal-400 to-teal-500 rounded-lg hover:from-teal-500 hover:to-teal-600 transition-all duration-300"
                                                         >
                                                             Goto Premium Predictions
                                                         </Link>
@@ -411,6 +528,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                         </div>}
                                         {content.isSubscriptionActive && <div className=" bg-white rounded-xl overflow-hidden h-max">
                                             <div className="overflow-x-auto">
+                                                
                                                 <table className="w-full">
                                                     <thead className="bg-gray-50">
                                                         <tr>
@@ -547,15 +665,15 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                 <div className="flex items-center justify-center">
                                                     <Link
                                                         href="/pricing"
-                                                        className="px-4 py-2 underline underline-offset-4 text-sm font-medium text-gray-900 hover:text-orange-600 transition-all duration-300"
+                                                        className="px-4 py-2 underline underline-offset-4 text-sm font-medium text-gray-900 hover:text-teal-600 transition-all duration-300"
                                                     >
                                                         {content.isSubscriptionActive ? "View All" : !user ? "Sign in to View" : "Upgrade to VIP"}
                                                     </Link>
                                                     {user?.role === "ADMIN" && <Link
                                                         href={user ? "/dashboard/predictions/create" : "/signin"}
-                                                        className=" text-sm font-medium text-gray-900 hover:text-orange-600 transition-all duration-300"
+                                                        className=" text-sm font-medium text-gray-900 hover:text-teal-600 transition-all duration-300"
                                                     >
-                                                        <PlusCircle className='text-orange-500 size-5 hover:text-gray-900' />
+                                                        <PlusCircle className='text-teal-500 size-5 hover:text-gray-900' />
                                                         {!user && "Sign in to View"}
                                                     </Link>}
                                                 </div>
@@ -570,7 +688,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                         <div className="relative flex flex-col lg:flex-row gap-4 items-center justify-between">
                                             <h3 className="text-sm sm:text-xl font-bold text-white flex uppercase justify-center gap-2 ">
                                                 {title[1]?.defaulttitle || defaulttitles[1]}
-                                                {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-400 text-gray-900"
+                                                {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-teal-400 text-gray-900"
                                                     onClick={() => updateTableTitle(1, title[1]?.defaulttitle || defaulttitles[1])}>
                                                     <Edit2 className="size-4" />&nbsp;Edit
                                                 </span>}
@@ -580,7 +698,6 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                         </div>
                                     </div>
                                     <div className="">
-
                                         {content.isSubscriptionActive && <div className=" bg-white rounded-xl overflow-hidden h-max">
                                             <div className="overflow-x-auto">
                                                 <table className="w-full">
@@ -719,19 +836,24 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                 <div className="flex items-center justify-center ">
                                                     <Link
                                                         href="/predictions/custom"
-                                                        className="px-4 py-2 underline underline-offset-4 text-sm font-medium text-gray-900 hover:text-orange-600 transition-all duration-300">
+                                                        className="px-4 py-2 underline underline-offset-4 text-sm font-medium text-gray-900 hover:text-teal-600 transition-all duration-300">
                                                         {!user ? "Sign in to View" : "View All Matches"}
                                                     </Link>
                                                     {user?.role === "ADMIN" && <Link
                                                         href={user ? "/dashboard/predictions/create" : "/signin"}
-                                                        className=" text-sm font-medium text-gray-900 hover:text-orange-600 transition-all duration-300"
+                                                        className=" text-sm font-medium text-gray-900 hover:text-teal-600 transition-all duration-300"
                                                     >
-                                                        <PlusCircle className='text-orange-500 size-5 hover:text-gray-900' />
+                                                        <PlusCircle className='text-teal-500 size-5 hover:text-gray-900' />
                                                         {!user && "Sign in to View"}
                                                     </Link>}
                                                 </div>
                                             </div>
-                                        </div>}
+                                        </div>
+                                        }
+                                        {!content.isSubscriptionActive && <div className="flex my-4 items-center justify-center">
+                                            <p>You need to subscribe to see this</p>
+                                        </div>
+                                        }
                                     </div>
                                 </div>
 
@@ -743,7 +865,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                             <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                             </svg>
-                                            {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-400 text-gray-900"
+                                            {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-teal-400 text-gray-900"
                                                 onClick={() => updateTableTitle(2, title[2]?.defaulttitle || defaulttitles[2])}>
                                                 <Edit2 className="size-4" />&nbsp;Edit
                                             </span>}
@@ -875,14 +997,14 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                         <div className="flex items-center justify-center ">
                                             <Link
                                                 href="/predictions/previousgames"
-                                                className="px-4 py-2 underline underline-offset-4 text-sm font-medium text-gray-900 hover:text-orange-600 transition-all duration-300">
+                                                className="px-4 py-2 underline underline-offset-4 text-sm font-medium text-gray-900 hover:text-teal-600 transition-all duration-300">
                                                 {!user ? "Sign in to View" : "View All Matches"}
                                             </Link>
                                             {user?.role === "ADMIN" && <Link
                                                 href={user ? "/dashboard/predictions/create" : "/signin"}
-                                                className=" text-sm font-medium text-gray-900 hover:text-orange-600 transition-all duration-300"
+                                                className=" text-sm font-medium text-gray-900 hover:text-teal-600 transition-all duration-300"
                                             >
-                                                <PlusCircle className='text-orange-500 size-5 hover:text-gray-900' />
+                                                <PlusCircle className='text-teal-500 size-5 hover:text-gray-900' />
                                                 {!user && "Sign in to View"}
                                             </Link>}
                                         </div>
@@ -894,7 +1016,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     <div className="flex flex-col lg:flex-row gap-4 p-6 bg-gradient-to-r from-gray-900 to-gray-800 border-b border-gray-200">
                                         <h3 className="text-base sm:text-xl font-bold text-white uppercase flex items-center gap-2">
                                             {title[3]?.defaulttitle || defaulttitles[3]}
-                                            {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-orange-400 text-gray-900"
+                                            {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-teal-400 text-gray-900"
                                                 onClick={() => updateTableTitle(3, title[3]?.defaulttitle || defaulttitles[3])}>
                                                 <Edit2 className="size-4" />&nbsp;Edit
                                             </span>}
@@ -906,17 +1028,17 @@ const HomePageComponent = ({ content }: { content: any }) => {
 
                                     </div>
                                     <div className="p-0">
-                                        <div className="bg-orange-50 border-2 border-orange-200 rounded-lg p-4">
+                                        <div className="bg-teal-50 border-2 border-teal-200 rounded-lg p-4">
                                             {/* <div className="flex items-center justify-between mb-4">
                                                 <div className="flex items-center gap-2">
-                                                    <svg className="w-5 h-5 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                                    <svg className="w-5 h-5 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clipRule="evenodd" />
                                                     </svg>
                                                     <span className="font-bold text-gray-900 text-xs sm:">Today's Special Bet Slip</span>
                                                 </div>
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-xs sm:text-sm font-medium text-gray-500">Code:</span>
-                                                    <span suppressHydrationWarning className="text-xs sm:text-sm font-mono font-bold text-orange-600">HOT-{Math.random().toString(36).substr(2, 6).toUpperCase()}</span>
+                                                    <span suppressHydrationWarning className="text-xs sm:text-sm font-mono font-bold text-teal-600">HOT-{Math.random().toString(36).substr(2, 6).toUpperCase()}</span>
                                                 </div>
                                             </div> */}
                                             <div className="space-y-3">
@@ -924,7 +1046,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                     .filter((bet) => bet.result === "PENDING" && !bet.isCustom)
                                                     .slice(0, 5)
                                                     .map((bet, index) => (
-                                                        <div key={index} className="flex items-center justify-between p-2 bg-white rounded-lg border border-orange-200 px-4">
+                                                        <div key={index} className="flex items-center justify-between p-2 bg-white rounded-lg border border-teal-200 px-4">
                                                             <div>
                                                                 <p className="font-thin text-gray-900"></p>
                                                                 <p className="text-xs sm:text-sm font-medium text-gray-900"> <span className='text-violet-500'>{bet.league} &bull; <br /> </span>{bet.homeTeam} vrs {bet.awayTeam}</p>
@@ -1011,14 +1133,14 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                 <div className="flex items-center justify-center ">
                                                     <Link
                                                         href="/predictions/freegames"
-                                                        className="px-4 py-2 underline underline-offset-4 text-sm font-medium text-gray-900 hover:text-orange-600 transition-all duration-300">
+                                                        className="px-4 py-2 underline underline-offset-4 text-sm font-medium text-gray-900 hover:text-teal-600 transition-all duration-300">
                                                         {!user ? "Sign in to View" : "View All Matches"}
                                                     </Link>
                                                     {user?.role === "ADMIN" && <Link
                                                         href={user ? "/dashboard/predictions/create" : "/signin"}
-                                                        className=" text-sm font-medium text-gray-900 hover:text-orange-600 transition-all duration-300"
+                                                        className=" text-sm font-medium text-gray-900 hover:text-teal-600 transition-all duration-300"
                                                     >
-                                                        <PlusCircle className='text-orange-500 size-5 hover:text-gray-900' />
+                                                        <PlusCircle className='text-teal-500 size-5 hover:text-gray-900' />
                                                         {!user && "Sign in to View"}
                                                     </Link>}
                                                 </div>
@@ -1030,14 +1152,14 @@ const HomePageComponent = ({ content }: { content: any }) => {
 
                                 {/* Midnight Oracle */}
                                 <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-max">
-                                    <div className="p-6 bg-gradient-to-r from-purple-50 to-white border-b border-gray-200">
+                                    <div className="p-6 bg-gradient-to-r from-teal-50 to-white border-b border-gray-200">
                                         <h3 className="text-xs sm:text-xl font-bold text-gray-900 flex items-center gap-2">
-                                            {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-200 text-gray-900"
+                                            {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-teal-200 text-gray-900"
                                                 onClick={() => updateTableTitle(4, title[4]?.defaulttitle || defaulttitles[4])}>
                                                 <Edit2 className="size-4" />&nbsp;Edit
                                             </span>}
                                             {title[4]?.defaulttitle || defaulttitles[4]}
-                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
                                                 {new Date().getHours() >= 0 && new Date().getHours() < 5 ? 'Active' : 'Returns at Midnight'}
                                             </span>
                                         </h3>
@@ -1045,27 +1167,27 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     <div className="p-6">
                                         {new Date().getHours() >= 0 && new Date().getHours() < 5 ? (
                                             <div className="space-y-4">
-                                                <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                                                <div className="p-4 bg-teal-50 rounded-lg border border-teal-200">
                                                     <div className="flex items-center gap-3 mb-2">
-                                                        <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
-                                                        <p className="text-xs sm:text-lg font-medium text-purple-900">Special Midnight Predictions</p>
+                                                        <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
+                                                        <p className="text-xs sm:text-lg font-medium text-teal-900">Special Midnight Predictions</p>
                                                     </div>
                                                     <table className="w-full mt-4">
-                                                        <thead className="bg-purple-100/50">
+                                                        <thead className="bg-teal-100/50">
                                                             <tr>
-                                                                <th className="px-4 py-2 text-left text-xs font-medium text-purple-900">Match</th>
-                                                                <th className="px-4 py-2 text-left text-xs font-medium text-purple-900">Prediction</th>
-                                                                <th className="px-4 py-2 text-left text-xs font-medium text-purple-900">Odds</th>
+                                                                <th className="px-4 py-2 text-left text-xs font-medium text-teal-900">Match</th>
+                                                                <th className="px-4 py-2 text-left text-xs font-medium text-teal-900">Prediction</th>
+                                                                <th className="px-4 py-2 text-left text-xs font-medium text-teal-900">Odds</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody className="divide-y divide-purple-100">
+                                                        <tbody className="divide-y divide-teal-100">
                                                             {predictions
                                                                 .filter((bet) => bet.result === "PENDING" && bet.isFree && bet.isCustom)
                                                                 .slice(0, 5).map((game, index) => (
                                                                     <tr key={index}>
                                                                         <td className="px-4 py-3 text-xs sm:text-sm text-gray-900">{game.homeTeam} vrs {game.awayTeam} <br /> {moment(game.publishedAt).format("LLL")}</td>
                                                                         <td className="px-4 py-3 text-xs sm:text-sm text-gray-900">{game.tip}</td>
-                                                                        <td className="px-4 py-3 text-xs sm:text-sm font-medium text-purple-700">{game.odds}</td>
+                                                                        <td className="px-4 py-3 text-xs sm:text-sm font-medium text-teal-700">{game.odds}</td>
                                                                     </tr>
                                                                 ))}
                                                         </tbody>
@@ -1081,54 +1203,130 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                 </div>
                                                 <h3 className="text-xs sm:text-xl font-medium text-gray-900 mb-2">Predictions Unavailable</h3>
                                                 <p className="text-xs sm:text-base text-gray-600">Our Midnight Oracle predictions are only available from 12 AM to 5 AM.</p>
-                                                <p className="text-xs sm:text-sm text-purple-600 mt-2">Returns in {23 - new Date().getHours()} hours - {60 - new Date().getMinutes()} mins</p>
+                                                <p className="text-xs sm:text-sm text-teal-600 mt-2">Returns in {23 - new Date().getHours()} hours - {60 - new Date().getMinutes()} mins</p>
                                             </div>
                                         )}
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex flex-col w-full lg:col-span-2 xl:col-span-1 rounded-xl bg-white shadow-sm p-4 sm:p-6 h-max relative gap-8">
+                            <div className="flex flex-col w-full lg:col-span-2 xl:col-span-1 gap-8">
+                                {/* Sports Overview Card */}
+                                <div className="rounded-2xl bg-white shadow-lg h-max relative overflow-hidden border border-gray-100">
+                                    {/* Background Pattern & Gradients */}
+                                    <div className="absolute inset-0 pointer-events-none">
+                                        <div className="absolute inset-0 bg-[linear-gradient(45deg,#f0f0f0_1px,transparent_1px),linear-gradient(-45deg,#f0f0f0_1px,transparent_1px)] bg-[size:20px_20px] opacity-20" />
+                                        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-900 to-transparent opacity-10" />
+                                        <div className="absolute -left-20 -top-20 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl" />
+                                        <div className="absolute -right-20 -bottom-20 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl" />
+                                    </div>
 
-                                {/* Gradient Border */}
-                                <div className="absolute inset-0 rounded-xl pointer-events-none z-0" style={{
-                                    padding: '2px',
-                                    background: 'linear-gradient(135deg, #101828 0%, #1e2939 50%, #f59e42 100%)'
-                                }} />
-                                <div className="relative z-10 bg-white rounded-xl p-4 sm:p-8 lg:p-4 w-full">
-                                    <h1 className="text-xl sm:text-2xl font-bold text-gray-900 text-center">Major Sporting Games</h1>
-                                    <p className="text-xs sm:textbase text-neutral-400 text-center mt-1">We are glad to offer you popolur and even less popular range of sporting activies accross the globe</p>
-                                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 flex-col mt-8 gap-4">
-                                        {sportTypeOptions.slice(0, -1).map((sport) => (
-                                            <p className={`text-xs sm:text-sm md:text-base text-black hover:text-orange-500 transition-all delay-300 cursor-default hover:scale-[1.1] font-semibold `}
-                                                key={sport.label}
-                                                onClick={() => setGames(sport.label.toLowerCase())}
-                                                onMouseEnter={() => setGames(sport.label.toLowerCase())}
-                                            >&bull; {sport.label}
+                                    <div className="relative z-10 p-6">
+                                        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center">
+                                            Major Sporting Games
+                                        </h1>
+                                        <p className="text-sm sm:text-base text-gray-600 text-center mt-2 max-w-md mx-auto">
+                                            We offer expert predictions for both popular and niche sporting events worldwide
+                                        </p>
+                                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4 mt-8">
+                                            {sportTypeOptions.slice(0, -1).map((sport) => (
+                                                <button
+                                                    key={sport.label}
+                                                    onClick={() => setGames(sport.label.toLowerCase())}
+                                                    onMouseEnter={() => setGames(sport.label.toLowerCase())}
+                                                    className={`group relative px-4 py-3 rounded-xl border border-gray-200 hover:border-teal-200 transition-all duration-300 cursor-pointer ${games === sport.label.toLowerCase()
+                                                        ? 'bg-gradient-to-r from-teal-50 to-teal-100 border-teal-200'
+                                                        : 'hover:bg-teal-50'
+                                                        }`}
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${games === sport.label.toLowerCase()
+                                                            ? 'bg-gradient-to-r from-teal-500 to-teal-600 text-white'
+                                                            : 'bg-gray-100 text-gray-500 group-hover:bg-teal-100 group-hover:text-teal-600'
+                                                            } transition-all duration-300`}>
+                                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                                    d={sport.label === "Soccer"
+                                                                        ? "M12 4v16m8-8H4"
+                                                                        : sport.label === "Basketball"
+                                                                            ? "M12 14l9-5-9-5-9 5 9 5z"
+                                                                            : sport.label === "Tennis"
+                                                                                ? "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                                                : "M12 4v16m8-8H4"
+                                                                    }
+                                                                />
+                                                            </svg>
+                                                        </div>
+                                                        <span className={`text-sm font-medium ${games === sport.label.toLowerCase()
+                                                            ? 'text-teal-900'
+                                                            : 'text-gray-700 group-hover:text-teal-900'
+                                                            }`}>
+                                                            {sport.label}
+                                                        </span>
+                                                    </div>
+                                                    {games === sport.label.toLowerCase() && (
+                                                        <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
+                                                    )}
+                                                </button>
+                                            ))}
+                                        </div>
+
+                                        {/* Betting Advice Card */}
+                                        <div className="mt-8 relative overflow-hidden rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 p-[1px]">
+                                            <div className="relative bg-white rounded-xl p-4 sm:p-6">
+                                                <div className="absolute top-0 left-0 w-full h-full bg-grid-gray-100/[0.05] [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
+                                                <h4 className="text-base font-semibold text-gray-900 mb-2">Betting Advice</h4>
+                                                <p className="text-sm text-gray-600 leading-relaxed">
+                                                    Please gamble responsibly. Only bet what you can afford to lose. Our predictions are based on expert analysis, but no outcome is guaranteed. If you feel your betting is becoming a problem, seek help from a professional or visit a responsible gambling resource.
+                                                </p>
+                                                <div className="absolute top-0 right-0 -mt-6 -mr-6 w-24 h-24 bg-gradient-to-br from-teal-500/20 to-teal-600/20 blur-2xl" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Leagues Section */}
+                                    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                                        <div className="p-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 relative">
+                                            {/* Background Effects */}
+                                            <div className="absolute inset-0 opacity-10">
+                                                <div className="absolute inset-0 bg-[linear-gradient(45deg,#ffffff0a_1px,#0000_1px),linear-gradient(-45deg,#ffffff0a_1px,#0000_1px)] bg-[size:20px_20px]" />
+                                            </div>
+                                            <div className="absolute -right-20 -top-20 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl" />
+                                            <div className="absolute -left-20 -bottom-20 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl" />
+
+                                            <h3 className="relative text-2xl font-bold text-white text-center mb-2">
+                                                Major {games.toUpperCase()} Leagues
+                                            </h3>
+                                            <p className="text-gray-400 text-sm text-center">
+                                                Select a league to view detailed predictions
                                             </p>
-                                        ))}
-                                    </div>
-                                    <div className="mt-8 p-2 sm:p-4 bg-orange-50 border border-orange-200 rounded-lg text-orange-900 text-xs sm:text-sm text-center">
-                                        <strong>Betting Advice:</strong> Please gamble responsibly. Only bet what you can afford to lose. Our predictions are based on expert analysis, but no outcome is guaranteed. If you feel your betting is becoming a problem, seek help from a professional or visit a responsible gambling resource.
+                                        </div>
+
+                                        <div className="p-6">
+                                            <div className="grid grid-cols-2 gap-4 max-h-200 overflow-y-scroll no_scrollbar">
+                                                {sportTypeOptions.find((sport) => sport.label.toLowerCase() === games)?.league.slice(0, -1).map((sport, index) => (
+                                                    <button
+                                                        key={sport.label}
+                                                        className="group relative flex items-center gap-3 p-4 rounded-xl border border-gray-200 hover:border-teal-200 transition-all duration-300"
+                                                    >
+                                                        <svg className="w-5 h-5 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+
+                                                        <div className="flex-1">
+                                                            <p className="font-medium text-sm text-gray-900 group-hover:text-teal-600">
+                                                                {sport.label}
+                                                            </p>
+
+                                                        </div>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <h1 className="text-white z-10 text-center font-bold">{games.toUpperCase()}</h1>
-
-                                {/* Gradient Border */}
-                                <div className="absolute inset-0 rounded-xl pointer-events-none z-0" style={{
-                                    padding: '2px',
-                                    background: 'linear-gradient(135deg, #101828 0%, #1e2939 50%, #f59e42 100%)'
-                                }} />
-                                <div className="relative z-10 bg-white rounded-xl p-4 sm:p-8 lg:p-4 w-full">
-                                    <h1 className="text-xl sm:text-2xl font-bold text-gray-900 text-center">Major {games.toUpperCase()} Games</h1>
-                                    <div className="flex flex-wrap mt-8 gap-4">
-                                        {sportTypeOptions.find((sport) => sport.label.toLowerCase() === games)?.league.slice(0, -1).map((sport) => (
-                                            <p className="text-xs md:text-sm text-black hover:text-orange-500 transition-all delay-300 cursor-default" key={sport.label}> &bull; {sport.label}</p>
-                                        ))}
-                                    </div>
-
-                                </div>
+                                {/* TODO: duplicate to make adds */}
                             </div>
 
                             {/* TODO: duplicate to make adds */}
@@ -1139,398 +1337,265 @@ const HomePageComponent = ({ content }: { content: any }) => {
 
 
             {/* Features Section */}
-            < section className="py-20 relative overflow-hidden" >
+            <section className="py-20 relative overflow-hidden bg-gradient-to-b from-gray-900 via-gray-900 to-black">
                 {/* Background Elements */}
-                < div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-white z-0" >
-                    <div className="absolute inset-0 bg-[linear-gradient(30deg,#00000000_0%,#0000000a_50%,#00000000_100%)] bg-[length:5px_5px]" />
-                </div >
+                <div className="absolute inset-0">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(20,184,166,0.1),transparent_50%)]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(40deg,transparent,rgba(20,184,166,0.05)_20%,rgba(20,184,166,0)_80%)]" />
+                    <div className="absolute w-full h-full bg-[radial-gradient(#14b8a650_1px,transparent_1px)] bg-[size:20px_20px]" />
+                </div>
 
-                {/* Animated Background Shapes */}
-                < div className="absolute -top-24 -right-24 w-96 h-96 bg-orange-200 rounded-full blur-3xl opacity-20 animate-pulse" />
-                <div className="absolute top-1/2 right-0 w-72 h-72 bg-orange-200 rounded-full blur-2xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }} />
-                <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-orange-200 rounded-full blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }} />
-                <div className="absolute top-32 left-0 w-72 h-72 bg-red-200 rounded-full blur-2xl opacity-20 animate-pulse" style={{ animationDelay: '3s' }} />
+                {/* Content Container */}
+                <div className="relative container mx-auto px-4">
+                    {/* Section Header */}
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-200 to-teal-400 inline-block mb-4">
+                            Why Choose Our Platform
+                        </h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto text-base sm:text-lg">
+                            Experience the perfect blend of expert analysis, cutting-edge technology, and community-driven success
+                        </p>
+                    </div>
 
-                {/* Decorative Elements */}
-                <div className="absolute top-10 left-10 w-20 h-20 border-2 border-orange-200 rounded-lg rotate-45 animate-spin-slow" />
-                <div className="absolute bottom-10 right-10 w-20 h-20 border-2 border-orange-200 rounded-lg rotate-45 animate-spin-slow" style={{ animationDirection: 'reverse' }} />
-
-                <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-16 relative">
-                        <div className="inline-block">
+                    {/* Features Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {/* Feature Card 1 */}
+                        <div className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-6 rounded-2xl border border-gray-800 hover:border-teal-500/50 transition-all duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-teal-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             <div className="relative">
-                                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2 sm:mb-4 relative z-10">
-                                    Why Choose <span className="text-orange-600">ChrisWrldArena</span>?
-                                </h2>
-                                <div className="absolute -top-6 -right-6 w-20 h-20 bg-orange-200 rounded-full blur-xl opacity-30 animate-pulse" />
-                                <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-orange-200 rounded-full blur-xl opacity-30 animate-pulse" style={{ animationDelay: '1s' }} />
+                                <div className="w-12 h-12 mb-4 bg-teal-500/10 rounded-lg flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+                                    Expert Analysis
+                                </h3>
+                                <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                                    Benefit from our team of seasoned analysts who provide detailed insights and predictions based on comprehensive research.
+                                </p>
                             </div>
                         </div>
-                        <p className="mt-4 text-sm sm:text-xl text-gray-600 max-w-3xl mx-auto">
-                            Experience the perfect blend of expert analysis, cutting-edge technology, and premium features
-                        </p>
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-1 bg-gradient-to-r from-transparent via-orange-200 to-transparent opacity-50" />
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-orange-500/0 transform -skew-y-12" />
-                        {features.map((feature, index) => (
-                            <div
-                                key={index}
-                                className="group relative bg-white/70 backdrop-blur-sm p-4 sm:p-8 rounded-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-200 shadow overflow-hidden"
-                            >
-                                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 rounded-xl transition-all duration-500`} />
-                                <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                {/* Animated Corner Effects */}
-                                <div className="absolute top-0 left-0 w-16 h-16 -translate-x-full -translate-y-full group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-700">
-                                    <div className="absolute top-0 left-0 w-[2px] h-8 bg-gradient-to-b from-transparent via-orange-500 to-transparent" />
-                                    <div className="absolute top-0 left-0 h-[2px] w-8 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
+                        {/* Feature Card 2 */}
+                        <div className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-6 rounded-2xl border border-gray-800 hover:border-teal-500/50 transition-all duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-teal-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="relative">
+                                <div className="w-12 h-12 mb-4 bg-teal-500/10 rounded-lg flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
                                 </div>
-
-                                <div className="absolute bottom-0 right-0 w-16 h-16 translate-x-full translate-y-full group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-700">
-                                    <div className="absolute bottom-0 right-0 w-[2px] h-8 bg-gradient-to-t from-transparent via-orange-500 to-transparent" />
-                                    <div className="absolute bottom-0 right-0 h-[2px] w-8 bg-gradient-to-l from-transparent via-orange-500 to-transparent" />
-                                </div>
-
-                                <div className="relative">
-                                    <div className="bg-gradient-to-br from-orange-50 to-orange-100/50 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-sm group-hover:shadow-md">
-                                        <div className="transform group-hover:scale-110 transition-transform duration-500">
-                                            {feature.icon}
-                                        </div>
-                                    </div>
-                                    <h3 className="text-base sm:text-xl font-semibold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors duration-300">
-                                        {feature.title}
-                                    </h3>
-                                    <p className="text-xs sm:text-base text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
-                                        {feature.description}
-                                    </p>
-                                </div>
-
-                                {/* Animated Dots */}
-                                <div className="absolute top-4 right-4">
-                                    <div className="relative w-2 h-2">
-                                        <div className="absolute inset-0 rounded-full bg-orange-400 opacity-0 group-hover:scale-[6] group-hover:opacity-10 transition-all duration-500" />
-                                        <div className="absolute inset-0 rounded-full bg-orange-400 animate-ping group-hover:opacity-0 transition-opacity" />
-                                    </div>
-                                </div>
+                                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+                                    Real-Time Updates
+                                </h3>
+                                <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                                    Stay ahead with instant notifications and live updates on the latest predictions and match insights.
+                                </p>
                             </div>
-                        ))}
+                        </div>
+
+                        {/* Feature Card 3 */}
+                        <div className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-6 rounded-2xl border border-gray-800 hover:border-teal-500/50 transition-all duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-teal-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="relative">
+                                <div className="w-12 h-12 mb-4 bg-teal-500/10 rounded-lg flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+                                    VIP Community
+                                </h3>
+                                <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                                    Join an exclusive community of successful bettors and get access to premium predictions and strategies.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Feature Card 4 */}
+                        <div className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-6 rounded-2xl border border-gray-800 hover:border-teal-500/50 transition-all duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-teal-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="relative">
+                                <div className="w-12 h-12 mb-4 bg-teal-500/10 rounded-lg flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+                                    Data-Driven Insights
+                                </h3>
+                                <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                                    Make informed decisions with our comprehensive statistical analysis and performance metrics.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Feature Card 5 */}
+                        <div className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-6 rounded-2xl border border-gray-800 hover:border-teal-500/50 transition-all duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-teal-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="relative">
+                                <div className="w-12 h-12 mb-4 bg-teal-500/10 rounded-lg flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+                                    Early Access
+                                </h3>
+                                <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                                    Get predictions before the crowd and maximize your winning potential with early insights.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Feature Card 6 */}
+                        <div className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-6 rounded-2xl border border-gray-800 hover:border-teal-500/50 transition-all duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-teal-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="relative">
+                                <div className="w-12 h-12 mb-4 bg-teal-500/10 rounded-lg flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+                                    24/7 Support
+                                </h3>
+                                <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
+                                    Get assistance anytime with our dedicated support team ready to help you succeed.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </section >
 
-
-            {/* CTA Section */}
-            < section className="relative py-20 overflow-hidden" >
-                {/* Gradient Background */}
-                < div className="absolute inset-0 bg-gradient-to-br from-neutral-600 via-neutral-700 to-neutral-900" >
-                    {/* Animated Pattern Overlay */}
-                    < div className="absolute inset-0 bg-[linear-gradient(45deg,#ffffff0a_1px,#0000_1px),linear-gradient(-45deg,#ffffff0a_1px,#0000_1px)] bg-[size:40px_40px] animate-[grain_8s_steps(10)_infinite]" />
-
-                    {/* Animated Shapes */}
-                    < div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-neutral-400/20 to-transparent rounded-full blur-3xl animate-shape-1" />
-                    <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-orange-400/20 to-transparent rounded-full blur-3xl animate-shape-2" />
-                </div >
-
-                <div className="container mx-auto px-4 text-center relative z-10">
-                    {/* Glowing Effect */}
-                    <div className="relative inline-block mb-6">
-                        <div className="absolute -inset-1  group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse-slow"></div>
-                        <h2 className="relative text-3xl md:text-4xl font-bold text-white mb-2">
-                            Ready to Start Winning?
-                        </h2>
-                    </div>
-
-                    <p className="text-base sm:text-xl text-orange-100 mb-12 max-w-2xl mx-auto">
-                        Join thousands of successful bettors who are already profiting from our expert predictions.
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                        <Link
-                            href="/signup"
-                            className="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-medium tracking-wider text-gray-900 rounded-lg bg-gradient-to-br from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 transition-all duration-300"
-                        >
-                            <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-orange-600/20 rounded-full group-hover:w-64 group-hover:h-64"></span>
-                            <span className="relative font-semibold">Get Started Now</span>
-                        </Link>
-
+                    {/* Call to Action */}
+                    <div className="mt-16 text-center">
                         <Link
                             href="/pricing"
-                            className="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-medium text-white rounded-lg hover:bg-white/10 transition-all duration-300 border border-white/30"
+                            className="inline-flex items-center px-8 py-3 text-base font-medium text-white bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg hover:from-teal-600 hover:to-teal-700 transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-teal-500/25"
                         >
-                            <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white/10 rounded-full group-hover:w-64 group-hover:h-64"></span>
-                            <span className="relative font-semibold">Subscribe Now!</span>
+                            Explore VIP Features
+                            <svg className="w-5 h-5 ml-2 -mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
                         </Link>
                     </div>
-
-                    {/* Trust Indicators */}
-                    <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-center">
-                        {[
-                            { label: "Subscribers", value: "10000", start: "500", suffix: "+" },
-                            { label: "Success Rate", value: "98", start: "10", suffix: "%" },
-                            { label: "Expert Tips", value: "50000", start: "500", suffix: "+" },
-                            { label: "Avg. ROI", value: "127", start: "10", suffix: "%" }
-                        ].map((stat, index) => (
-                            <div key={index} className="text-center bg-orange-200/10 backdrop-blur-sm p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow border border-orange-500/50">
-                                <p suppressHydrationWarning className="text-xl md:text-3xl font-bold text-white mb-2">
-                                    <span suppressHydrationWarning className="inline-block" data-start={stat.start} data-end={stat.value}>
-                                        {stat.value}
-                                    </span>
-                                    {stat.suffix}
-                                </p>
-                                <p className="text-orange-100 text-sm">{stat.label}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Add this script tag to the end of your component */}
-                    <script dangerouslySetInnerHTML={{
-                        __html: `
-                                function animateValue(element, start, end, duration) {
-                                let current = start;
-                                const range = end - start;
-                                const increment = range / (duration / 16);
-                                const timer = setInterval(() => {
-                                    current += increment;
-                                    if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-                                    current = end;
-                                    clearInterval(timer);
-                                    }
-                                    element.textContent = Math.round(current);
-                                }, 16);
-                                }
-
-                                const observer = new IntersectionObserver((entries) => {
-                                entries.forEach(entry => {
-                                    if (entry.isIntersecting) {
-                                    const element = entry.target;
-                                    const start = parseInt(element.dataset.start);
-                                    const end = parseInt(element.dataset.end);
-                                    animateValue(element, start, end, 2000);
-                                    observer.unobserve(element);
-                                    }
-                                });
-                                }, { threshold: 0.5 });
-
-                                document.querySelectorAll('[data-start]').forEach(element => {
-                                observer.observe(element);
-                                });
-                            `
-                    }} />
                 </div>
-            </section >
+                <div className="absolute bottom-10 right-10 w-20 h-20 border-2 border-teal-200 rounded-lg rotate-45 animate-spin-slow" style={{ animationDirection: 'reverse' }} />
+            </section>
 
-            {/* Testimonials Section */}
-            < section className="py-12 bg-gradient-to-b from-neutral-50 via-white to-neutral-50 relative overflow-hidden" >
-                {/* Animated Background Elements */}
-                < div className="absolute inset-0" >
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_200px,#e5e7eb,transparent)]" />
-                    <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-orange-50/30 to-transparent" />
-                    <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-orange-50/20 to-transparent" />
-                    <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-orange-100/20 to-transparent rounded-full blur-3xl animate-blob" />
-                    <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-orange-100/20 to-transparent rounded-full blur-3xl animate-blob animation-delay-2000" />
-                </div >
+            {/* Enhanced CTA Section with Animated Elements */}
+            <section className="relative py-20 overflow-hidden">
+                {/* Dynamic Background */}
+                <div className="absolute inset-0">
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-teal-900" />
+                    <div className="absolute inset-0 bg-[url('/stadium.jpg')] bg-cover bg-center opacity-10" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(20,184,166,0.15),transparent_50%)]" />
+                    <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-teal-500/10 to-transparent" />
+                </div>
 
-                <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-20">
-                        <div className="inline-block">
-                            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent mb-6">
-                                Voices of Success
-                            </h2>
-                            <div className="h-1 w-32 bg-gradient-to-r from-orange-500 to-orange-500 rounded-full mx-auto" />
-                        </div>
-                        <p className="text-xl text-gray-600 max-w-2xl mx-auto mt-6">
-                            Join our community of successful bettors and experience the difference
+                {/* Floating Elements */}
+                <div className="absolute inset-0 overflow-hidden">
+                    <div className="absolute -top-40 -left-40 w-80 h-80 border border-teal-500/10 rounded-full animate-spin-slow" />
+                    <div className="absolute top-0 right-0 w-64 h-64 border border-teal-500/20 rounded-full animate-reverse-spin" />
+                    <div className="absolute bottom-20 left-1/2 w-40 h-40 border border-teal-500/10 rounded-full animate-pulse" />
+                </div>
+
+                <div className="container relative z-10 mx-auto px-4">
+                    <div className="max-w-5xl mx-auto text-center">
+                        {/* Animated Heading */}
+                        <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">
+                            Transform Your
+                            <span className="relative inline-block px-2">
+                                <span className="relative z-10 bg-gradient-to-r from-teal-400 to-teal-500 bg-clip-text text-transparent">
+                                    Predictions
+                                </span>
+                                <div className="absolute inset-0 bg-teal-400/20 blur-2xl animate-pulse" />
+                            </span>
+                            Into Profit
+                        </h2>
+
+                        <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                            Join our elite community of successful bettors and unlock expert predictions
+                            that consistently deliver results.
                         </p>
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
-                        {[
-                            {
-                                name: "John Smith",
-                                role: "Professional Bettor",
-                                location: "United Kingdom",
-                                avatar: "/avatars/default_img.webp",
-                                quote: "ChrisWrldArena has completely transformed my betting strategy. The accuracy of predictions is simply remarkable!",
-                                rating: 5,
-                                winRate: "92%",
-                                gradientFrom: "from-orange-500",
-                                gradientTo: "to-orange-600"
-                            },
-                            {
-                                name: "Maria Rodriguez",
-                                role: "Sports Analyst",
-                                location: "Spain",
-                                avatar: "/avatars/default_img.webp",
-                                quote: "The premium insights have been invaluable. My success rate has improved significantly since joining.",
-                                rating: 5,
-                                winRate: "88%",
-                                gradientFrom: "from-orange-500",
-                                gradientTo: "to-orange-600"
-                            },
-                            {
-                                name: "David Chen",
-                                role: "VIP Member",
-                                location: "Singapore",
-                                avatar: "/avatars/default_img.webp",
-                                quote: "Best prediction service I've used. The combination of AI analysis and expert insights is unmatched.",
-                                rating: 5,
-                                winRate: "90%",
-                                gradientFrom: "from-purple-500",
-                                gradientTo: "to-purple-600"
-                            }
-                        ].map((testimonial, index) => (
-                            <div
-                                key={index}
-                                className="group relative bg-neutral-200 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
+                        {/* Enhanced CTA Buttons */}
+                        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                            <Link href="/signup"
+                                className="group relative px-8 py-4 text-lg font-semibold text-white rounded-xl overflow-hidden transition-all duration-300"
                             >
-                                {/* Gradient Border Effect */}
-                                {/* <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-500 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur" /> */}
-
-                                {/* Success Badge */}
-                                <div className={`absolute -top-4 right-8 bg-gradient-to-r ${testimonial.gradientFrom} ${testimonial.gradientTo} text-white text-sm font-medium px-4 py-2 rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-500`}>
-                                    {testimonial.winRate} Success Rate
+                                <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:scale-105" />
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
                                 </div>
-
-                                {/* Quote */}
-                                <div className="mb-8 relative">
-                                    <svg className="absolute -top-4 -left-2 w-8 h-8 text-gray-200 transform -rotate-12" fill="currentColor" viewBox="0 0 32 32">
-                                        <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+                                <span className="relative flex items-center gap-2">
+                                    Start Winning Now
+                                    <svg className="w-5 h-5 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
-                                    <p className="text-gray-700 text-lg relative z-10 pl-6">{testimonial.quote}</p>
-                                </div>
+                                </span>
+                            </Link>
 
-                                {/* User Info */}
-                                <div className="flex items-center gap-4">
-                                    <div className="relative">
-                                        <div className="w-14 h-14 bg-gray-200 rounded-full overflow-hidden ring-2 ring-offset-2 ring-gray-100">
-                                            <Image
-                                                src={testimonial.avatar}
-                                                alt={testimonial.name}
-                                                width={56}
-                                                height={56}
-                                                className="object-cover transform group-hover:scale-110 transition-transform duration-500"
-                                            />
-                                        </div>
-                                        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full border-2 border-white flex items-center justify-center">
-                                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
-                                        <p className="text-sm text-orange-600 font-medium">{testimonial.role}</p>
-                                        <p className="text-sm text-gray-500">{testimonial.location}</p>
-                                    </div>
-                                </div>
+                            <Link href="/pricing"
+                                className="group relative px-8 py-4 text-lg font-semibold text-white rounded-xl overflow-hidden transition-all duration-300"
+                            >
+                                <div className="absolute inset-0 bg-white/10 border border-white/30 transition-all duration-300 group-hover:bg-white/20" />
+                                <span className="relative flex items-center gap-2">
+                                    View Premium Plans
+                                    <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
+                                </span>
+                            </Link>
+                        </div>
 
-                                {/* Rating */}
-                                <div className="absolute bottom-6 right-8">
-                                    <div className="flex gap-1">
-                                        {Array.from({ length: testimonial.rating }).map((_, i) => (
-                                            <svg key={i} className="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+
                     </div>
                 </div>
-            </section >
+            </section>
 
-            {/* Contact Section */}
-            < section className="py-8 bg-neutral-500 w-full mx-auto" >
-                <div className="flex flex-col container items-center justify-center mx-auto px-4 w-full gap-8">
-
-                    <div className="flex items-center gap-4">
-                        <a href="tel:+233542810847" target="_blank" rel="noopener noreferrer"
-                            className="flex items-center gap-3 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors">
-                            <div className="w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center hover:bg-neutral-200 transition-colors">
-                                <svg className="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                </svg>
-                            </div>
-                            {/* <span className="text-gray-700 font-medium">Join our Telegram Channel</span> */}
-                        </a>
-                        <a href="mailto:contact@chriswrldarena.com" target="_blank" rel="noopener noreferrer"
-                            className="flex items-center gap-3  bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors">
-                            <div className="w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center hover:bg-neutral-200 transition-colors">
-                                <svg className="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            {/* <span className="text-gray-700 font-medium">Join our Telegram Channel</span> */}
-                        </a>
-                        <a href="https://t.me/bigboyzg" target="_blank" rel="noopener noreferrer"
-                            className="flex items-center gap-3 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors">
-                            <div className="w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center hover:bg-neutral-200 transition-colors">
-                                <svg className="w-5 h-5 text-neutral-600" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.227-.535.227l.19-2.712 4.94-4.465c.215-.19-.047-.296-.332-.106l-6.103 3.854-2.623-.816c-.57-.18-.582-.57.12-.843l10.238-3.948c.473-.174.887.104.605 1.337z" />
-                                </svg>
-                            </div>
-                            {/* <span className="text-gray-700 font-medium">Join our Telegram Channel</span> */}
-                        </a>
-                        <a href="https://x.com/@SenaNick1" target="_blank" rel="noopener noreferrer"
-                            className="flex items-center gap-3  bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors">
-                            <div className="w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center hover:bg-neutral-200 transition-colors">
-                                <svg className="w-5 h-5 text-neutral-600" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                                </svg>
-                            </div>
-                            {/* <span className="text-gray-700 font-medium">Join our Telegram Channel</span> */}
-                        </a>
-
-                    </div>
-                    {/*  <div>
-            <p className="text-gray-600 text-xs">Email</p>
-          </div> */}
-
-
+            {/* Enhanced Contact Section */}
+            <section className="relative py-20">
+                <div className="absolute inset-0">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(20,184,166,0.1),transparent_50%)]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(40deg,transparent,rgba(20,184,166,0.05)_20%,rgba(20,184,166,0)_80%)]" />
+                    <div className="absolute w-full h-full bg-[radial-gradient(#14b8a650_1px,transparent_1px)] bg-[size:20px_20px]" />
                 </div>
-
-
-            </section >
-
-            {/* Payment Gateway Section */}
-            < section className="py-10 bg-neutral-200" >
                 <div className="container mx-auto px-4">
-                    <div className="text-center my-8">
-
-                        <div className="relative max-w-3xl mx-auto">
-                            {/* Decorative Elements */}
-                            {/* <div className="absolute -top-4 -left-4 w-24 h-24 bg-orange-400/20 rounded-full blur-xl animate-pulse" /> */}
-                            {/* <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-orange-400/20 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} /> */}
-
-                            {/* Image Container */}
-                            <div className="relative rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-all duration-500">
-                                <Image
-                                    src="/paymentmethods.png"
-                                    alt="Payment Methods"
-                                    width={800}
-                                    height={400}
-                                    className="w-full h-auto"
-                                    priority
-                                />
-
-                                {/* Overlay Gradient */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                    <div className="max-w-4xl mx-auto">
+                        <div className="relative p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+                            <div className="absolute inset-0  rounded-2xl" />
+                            <div className="relative">
+                                <h2 className="text-4xl md:text-5xl font-bold lg:font-extrabold text-teal-900 mb-8 text-center uppercase">Connect With Us</h2>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                    {[
+                                        { title: "phone", label: "Call Us", href: "tel:+233540529214", icon: <Phone className="size-6 text-white" /> },
+                                        { title: "mail", label: "Email", href: "mailto:contact@chriswrldarena.com", icon: <Mail className="size-6 text-white" /> },
+                                        { title: "telegram", label: "Telegram", href: "https://t.me/Chriswrldarena1", icon: <FaTelegram className="size-6 text-white" /> },
+                                        { title: "twitter", label: "Twitter", href: "https://x.com/chriswrld233", icon: <FaTwitter className="size-6 text-white" /> }
+                                    ].map((contact, index) => (
+                                        <a key={index}
+                                            href={contact.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="group flex flex-col items-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300"
+                                        >
+                                            <div className="w-12 h-12 mb-3 rounded-full bg-gradient-to-br from-teal-400 to-teal-500 hover:to-teal-300 flex items-center justify-center">
+                                                {contact.icon}
+                                            </div>
+                                            <span className="text-sm text-neutral-500 group-hover:text-neutral-700 transition-colors">
+                                                {contact.label}
+                                            </span>
+                                        </a>
+                                    ))}
+                                </div>
                             </div>
-
-                            {/* Security Badge */}
-                            {/* <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-neutral-500 px-4 py-3 rounded-full shadow-lg flex items-center gap-2">
-                                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                </svg>
-                                <span className="text-sm font-medium text-white">100% Secure Payments</span>
-                            </div> */}
                         </div>
                     </div>
                 </div>
-            </section >
+            </section>
+
 
         </div >
     )

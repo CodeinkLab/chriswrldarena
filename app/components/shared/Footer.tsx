@@ -3,13 +3,13 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-black text-teal-500 ">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-16">
           {/* About */}
           <div className='col-span-2 lg:col-span-1'>
             <h4 className="text-lg font-bold text-white mb-4">About ChrisWrldArena</h4>
-            <p className="text-gray-400 text-sm">
+            <p className="text-teal-500 text-sm">
               Expert sports predictions and analysis platform helping bettors make informed decisions.
             </p>
           </div>
@@ -31,7 +31,7 @@ const Footer = () => {
             <div className="space-y-2">
               <p className='text-sm'>Call/WhatsApp: +233 54 281 0847</p>
               <p className='text-sm'>Email: contact@chriswrldarena.com</p>
-              <p className='text-sm'>Telegram: @NICKSENA1</p>
+              <p className='text-sm'>Telegram: @Chriswrldarena1</p>
             </div>
           </div>
 
@@ -39,7 +39,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold text-white mb-4">Follow Us</h4>
             <div className="flex space-x-4">
-              <a href="https://t.me/bigboyzg" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              <a href="https://t.me/Chriswrldarena1" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.227-.535.227l.19-2.712 4.94-4.465c.215-.19-.047-.296-.332-.106l-6.103 3.854-2.623-.816c-.57-.18-.582-.57.12-.843l10.238-3.948c.473-.174.887.104.605 1.337z" />
                 </svg>
@@ -56,17 +56,17 @@ const Footer = () => {
             <h4 className="text-lg font-bold text-white mb-4">Legal</h4>
             <div className="flex flex-col space-y-2">        
                 
-                <Link href="/legal/terms" className="text-neutral-300 text-sm hover:text-orange-500 transition-colors">Terms of Service</Link>
-                <Link href="/legal/privacy" className="text-neutral-300 text-sm hover:text-orange-500 transition-colors">Privacy Policy</Link>
-                <Link href="/legal/eula" className="text-neutral-300 text-sm hover:text-orange-500 transition-colors">End User License Agreement (EULA)</Link>           
-                <Link href="/legal/disclaimer" className="text-neutral-300 text-sm hover:text-orange-500 transition-colors">User Disclaimer</Link>
+                <Link href="/legal/terms" className="text-teal-500 text-sm hover:text-teal-700 transition-colors">Terms of Service</Link>
+                <Link href="/legal/privacy" className="text-teal-500 text-sm hover:text-teal-700 transition-colors">Privacy Policy</Link>
+                <Link href="/legal/eula" className="text-teal-500 text-sm hover:text-teal-700 transition-colors">End User License Agreement (EULA)</Link>           
+                <Link href="/legal/disclaimer" className="text-teal-500 text-sm hover:text-teal-700 transition-colors">User Disclaimer</Link>
              
             </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-800 text-center">
-          <p className="text-sm text-gray-400">
+        <div className="mt-12 pt-8 border-t border-teal-800 text-center">
+          <p className="text-sm text-teal-500">
             © {new Date().getFullYear()} ChrisWrldArena. All rights reserved.
           </p>
         </div>
