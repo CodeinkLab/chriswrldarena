@@ -22,7 +22,7 @@ export default function Privacy() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link 
           href="/legal"
-          className="inline-flex items-center text-teal-600 hover:text-teal-700 mb-8 group"
+          className="inline-flex items-center text-green-600 hover:text-green-700 mb-8 group"
         >
           <ArrowLeft className="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" />
           Back to Legal Hub
@@ -39,7 +39,7 @@ export default function Privacy() {
                     onClick={() => setActiveSection(section.id)}
                     className={`w-full text-left px-4 py-2 rounded-md transition-colors ${
                       activeSection === section.id
-                        ? 'bg-teal-100 text-teal-700'
+                        ? 'bg-green-100 text-green-700'
                         : 'text-gray-600 hover:bg-gray-100'
                     }`}
                   >
@@ -56,7 +56,7 @@ export default function Privacy() {
               <h1 className="text-4xl font-bold text-gray-900 mb-6">Privacy Policy</h1>
               <p className="text-gray-600 mb-8">Last updated: July 11, 2025</p>
 
-              <div className="prose prose-teal max-w-none">
+              <div className="prose prose-green max-w-none">
                 <section id="overview" className={activeSection === 'overview' ? '' : 'hidden'}>
                   <h2>1. Overview</h2>
                   <p>At ChrisWrldArena, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services.</p>

@@ -94,9 +94,7 @@ const pricingPlan = [
 
 const pricing = [
     { amount: 50, plan: "DAILY" },
-    { amount: 300, plan: "WEEKLY" },
-    { amount: 1500, plan: "MONTHLY" },
-    { amount: 18250, plan: "YEARLY" },
+    { amount: 300, plan: "WEEKLY" }
 ]
 
 export default function SubscriptionSection() {
@@ -185,31 +183,22 @@ export default function SubscriptionSection() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        // Calculate expiresAt based on selected plan
-        const expiresAt = new Date();
-        switch (selectedPlan.plan) {
-            case "DAILY":
-                expiresAt.setDate(expiresAt.getDate() + 1);
-                break;
-            case "WEEKLY":
-                expiresAt.setDate(expiresAt.getDate() + 7);
-                break;
-            case "MONTHLY":
-                expiresAt.setMonth(expiresAt.getMonth() + 1);
-                break;
-            case "YEARLY":
-                expiresAt.setFullYear(expiresAt.getFullYear() + 1);
-                break;
-            default:
-                expiresAt.setMonth(expiresAt.getMonth() + 1);
-        }
-
         const subdata = {
             userId: selectedUser?.id,
             plan: selectedPlan.plan,
             status: "ACTIVE",
             startedAt: new Date().toISOString(),
-            expiresAt: expiresAt.toISOString(),
+            expiresAt: (() => {
+                const start = new Date();
+                if (selectedPlan.plan === 'DAILY') {
+                    start.setDate(start.getDate() + 1);
+                    start.setHours(1, 0, 0, 0);
+                } else if (selectedPlan.plan === 'WEEKLY') {
+                    start.setDate(start.getDate() + 7);
+                    start.setHours(1, 0, 0, 0)
+                }
+                return start.toISOString();
+            })(),
         }
 
         const paydata = {
@@ -219,9 +208,9 @@ export default function SubscriptionSection() {
             status: "SUCCESS",
             currency: user?.location?.currencycode || "USD",
         }
-        console.log("Subscription data:", subdata)
-        // console.log("Payment data:", paydata)
+
         setIsSubmitting(true);
+        toast.loading("Adding Subscription for " + user?.username)
         try {
             const [subResponse, payResponse] = await Promise.all([
                 await fetch("/api/subscription", {
@@ -235,18 +224,26 @@ export default function SubscriptionSection() {
                     body: JSON.stringify(paydata),
                 }),
             ]);
+
+
             if (!subResponse.ok || !payResponse.ok) {
+                toast.dismiss()
                 throw new Error("Failed to create subscription or payment.");
             }
-            if (!subResponse.ok || !payResponse) throw new Error("Failed to create user." + subResponse.statusText || payResponse.statusText);
-            toast.success("User created successfully!", {
+            toast.dismiss()
+
+            toast.success("Subscription created successfully!", {
                 duration: 5000,
                 position: "top-center",
                 icon: <CheckCircleIcon className="text-green-600" />,
             });
-            router.push("/dashboard/users");
+            const payres = await payResponse.json()
+            console.log('payres ', payres)
+            //setTransaction(prevTrans => [...prevTrans, payres, { user: { username: selectedUser?.username }, amount: paydata.amount }]);
+
         } catch (error: any) {
-            toast.error("Failed to create user. Please try again.", {
+            toast.dismiss()
+            toast.error("Error: " + error.message, {
                 duration: 10000,
                 position: "top-center",
                 icon: <X className="text-red-600" />,
@@ -280,9 +277,9 @@ export default function SubscriptionSection() {
                 if (!res.ok) throw new Error("Failed to Save pricing plan. " + res.statusText);
                 toast.dismiss()
             }
-            
+
             setPricingPlans(prevPlans => prevPlans.map(p => p.id === editPlan.id ? editPlan : p))
-            
+
             toast.dismiss()
             toast.success("Plan updated!");
             setEditingPlanIdx(null);
@@ -295,7 +292,7 @@ export default function SubscriptionSection() {
     if (fetching) {
         return (
             <div className="flex items-center justify-center min-h-[300px]">
-                <svg className="animate-spin h-8 w-8 text-teal-600 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg className="animate-spin h-8 w-8 text-green-600 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
                 </svg>
@@ -318,7 +315,7 @@ export default function SubscriptionSection() {
                         <div className="p-6 border-b border-gray-100">
                             <div className="flex items-center justify-between">
                                 <h2 className="text-lg font-bold text-gray-900">Payment Methods</h2>
-                                <button disabled={pricingPlans.length >= 2} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md disabled:bg-neutral-300 shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                                <button disabled={pricingPlans.length >= 2} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md disabled:bg-neutral-300 shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                     onClick={addPricing}>
                                     Add Pricing
                                 </button>
@@ -330,11 +327,11 @@ export default function SubscriptionSection() {
                             {pricingPlans.map((plan, idx) => (
                                 <div
                                     key={plan.id}
-                                    className={`flex flex-col relative bg-white rounded-lg p-6 transform hover:scale-105 hover:shadow-2xl transition-transform duration-300 ${plan.isPopular ? 'border-2 border-teal-600' : 'border border-neutral-200 shadow-md'
+                                    className={`flex flex-col relative bg-white rounded-lg p-6 transform hover:scale-105 hover:shadow-2xl transition-transform duration-300 ${plan.isPopular ? 'border-2 border-green-600' : 'border border-neutral-200 shadow-md'
                                         }`}>
 
                                     {plan.isPopular && (
-                                        <div className="absolute top-0 right-0 bg-teal-600 text-white px-4 py-1 rounded-bl-lg">
+                                        <div className="absolute top-0 right-0 bg-green-600 text-white px-4 py-1 rounded-bl-lg">
                                             Popular
                                         </div>
                                     )}
@@ -351,7 +348,7 @@ export default function SubscriptionSection() {
                                                 required
                                             />
                                             <input
-                                                className="text-2xl font-bold text-teal-600 mb-6 border rounded px-2 py-1"
+                                                className="text-2xl font-bold text-green-600 mb-6 border rounded px-2 py-1"
                                                 type="number"
                                                 value={editPlan.price}
                                                 onChange={e => setEditPlan({ ...editPlan, price: Number(e.target.value) })}
@@ -379,7 +376,7 @@ export default function SubscriptionSection() {
                                             <div className="flex gap-2 mt-auto">
                                                 <button
                                                     type="submit"
-                                                    className="w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition-colors"
+                                                    className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-colors"
                                                 >
                                                     Save
                                                 </button>
@@ -396,7 +393,7 @@ export default function SubscriptionSection() {
                                         // Normal Card
                                         <>
                                             <h2 className="text-xl font-bold text-gray-800 mb-4">{plan.name}</h2>
-                                            <p className="text-2xl font-bold text-teal-600 mb-6">
+                                            <p className="text-2xl font-bold text-green-600 mb-6">
                                                 <span className="text-base text-neutral-500">{plan.currency}</span>
                                                 {plan.price.toLocaleString()}
                                                 <span className="text-lg font-normal text-gray-500">/{plan.plan}</span>
@@ -412,7 +409,7 @@ export default function SubscriptionSection() {
                                                 ))}
                                             </ul>
                                             <button
-                                                className="w-full mt-auto bg-teal-600 text-white py-3 rounded-md hover:bg-teal-700 transition-colors"
+                                                className="w-full mt-auto bg-green-600 text-white py-3 rounded-md hover:bg-green-700 transition-colors"
                                                 onClick={() => {
                                                     setEditingPlanIdx(idx);
                                                     setEditPlan({ ...plan, features: [...plan.features] });
@@ -444,8 +441,9 @@ export default function SubscriptionSection() {
                                     <Select
                                         inputId="userId"
                                         name="userId"
-                                        className="mt-1 block w-full rounded-md border-teal-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm focus-within:border-teal-500"
-                                        defaultValue={users[0]}
+                                        className="mt-1 block w-full rounded-md border-green-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm focus-within:border-green-500"
+                                        //defaultValue={users[0]}
+
                                         placeholder="Select a user"
                                         isSearchable
                                         theme={theme => ({
@@ -471,8 +469,8 @@ export default function SubscriptionSection() {
                                     <Select
                                         inputId="plan"
                                         name="plan"
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm "
-                                        defaultValue={pricing[0]}
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm "
+                                        //defaultValue={pricing[0]}
                                         placeholder="Select a plan"
                                         isSearchable
                                         theme={theme => ({
@@ -498,7 +496,7 @@ export default function SubscriptionSection() {
                                             id="autoRenew"
                                             name="autoRenew"
                                             type="checkbox"
-                                            className="h-4 w-4 text-teal-600 border-gray-300 rounded accent-teal-600 "
+                                            className="h-4 w-4 text-green-600 border-gray-300 rounded accent-green-600 "
                                             defaultChecked
                                         />
                                         <span className="ml-2 text-sm text-gray-700">Enable Auto-Renew</span>
@@ -506,9 +504,9 @@ export default function SubscriptionSection() {
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                 >
-                                    Subscribe
+                                    SUBSCRIBE for {user?.username}
                                 </button>
                             </form>
                         </div>
@@ -613,7 +611,7 @@ export default function SubscriptionSection() {
                                     <button
                                         onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                         disabled={currentPage === totalPages}
-                                        className="px-4 py-2 text-sm font-medium text-white bg-teal-600 border border-transparent rounded-md hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         Next
                                     </button>

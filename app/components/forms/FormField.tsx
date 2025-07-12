@@ -34,7 +34,7 @@ export default function FormField({
     return '';
   }, [error]);
 
-  const baseInputClasses = `mt-1 block w-full rounded-lg border border-neutral-300 focus:border-teal-500 focus:ring-teal-500 ${className} outline-none transition-colors focus:ring-1`;
+  const baseInputClasses = `mt-1 block w-full rounded-lg border border-neutral-300 focus:border-green-500 focus:ring-green-500 ${className} outline-none transition-colors focus:ring-1`;
   const errorClasses = error?.[name] ? 'border-red-500' : '';
 
   const renderField = () => {
@@ -73,7 +73,7 @@ export default function FormField({
           <input
             type="checkbox"
             {...register(name)}
-            className="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500 accent-teal-600"
+            className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500 accent-green-600"
             disabled={disabled}
             required={required}
           />

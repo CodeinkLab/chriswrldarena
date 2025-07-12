@@ -107,7 +107,7 @@ export function getWordCount(text: string): number {
 /**
  * Calculate both reading and speaking time
  */
-export function calculateAllTimes(
+export function calculagreenlTimes(
     wordCount: number,
     readingWPM: number = READING_SPEEDS.AVERAGE,
     speakingWPM: number = SPEAKING_SPEEDS.CONVERSATIONAL

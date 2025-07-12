@@ -41,7 +41,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className={`fixed w-full py-2 z-50 transition-all duration-300 ${isScrolled ? 'bg-black shadow-lg' : 'bg-black'
+        <nav className={`fixed w-full lg:py-2 z-50 transition-all duration-300 ${isScrolled ? 'bg-green-800 shadow-lg' : 'bg-green-800'
             }`}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
@@ -50,7 +50,7 @@ export default function Navbar() {
                         <img
                             src="/img.png"
                             alt="ChrisWrldArena Logo"
-                            className="h-10 w-auto"
+                            className="h-15 w-auto"
                         />
                     </Link>
 
@@ -61,8 +61,8 @@ export default function Navbar() {
                                 key={item.href}
                                 href={item.href}
                                 className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium ${isScrolled
-                                    ? `text-gray-700 ${pathname === item.href ? 'bg-gray-100/20 text-teal-500' : 'text-white hover:bg-teal-500/40'}`
-                                    : `text-white ${pathname === item.href ? 'bg-white/20 text-teal-500' : 'hover:bg-white/10'}`
+                                    ? `text-black ${pathname === item.href ? 'bg-yellow-500 text-black' : 'text-white hover:bg-white/10'}`
+                                    : `text-black ${pathname === item.href ? 'bg-yellow-500 text-black' : 'text-white hover:bg-white/10'}`
                                     } transition-colors duration-200`}
                             >
                                 {item.icon}
@@ -79,10 +79,7 @@ export default function Navbar() {
                             <div className="relative">
                                 <button
                                     onClick={() => setDropdownVisible(!dropdownVisible)}
-                                    className={`flex items-center space-x-2 px-4 py-2 rounded-full ${isScrolled
-                                        ? 'bg-gray-100/50 text-gray-100'
-                                        : 'bg-white/10 text-white'
-                                        }`}
+                                    className={`flex items-center space-x-2 px-4 py-2 rounded-full bg-white/10 text-white`}
                                 >
                                     <User size={18} />
                                     <span className="text-sm">{user.username}</span>
@@ -91,27 +88,27 @@ export default function Navbar() {
 
                                 {dropdownVisible && (
                                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2">
-                                        <Link href="/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-teal-50 transition-colors cursor-default">
+                                        <Link href="/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
                                             <UserCheck2 className='size-4' />
                                             Profile
                                         </Link>
                                         {user.role === 'ADMIN' && (
-                                            <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 hover:bg-teal-50 transition-colors cursor-default">
+                                            <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
                                                 <LayoutDashboard className='size-4' />
                                                 Dashboard
                                             </Link>
                                         )}
-                                        <div className="flex items-center gap-2 px-4 py-2 hover:bg-teal-50 transition-colors cursor-default">
+                                        <div className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
                                             <User2 className='size-4' />
                                             <p className=" text-neutral-700">  {user.username} </p>
                                         </div>
 
-                                        <div className="flex items-center gap-2 px-4 py-2 hover:bg-teal-50 transition-colors cursor-default">
+                                        <div className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
                                             <EnvelopeIcon className='size-4' />
                                             <p className=" text-neutral-700 truncate">  {user.email} </p>
                                         </div>
 
-                                        <div className="flex items-center gap-2 px-4 py-2 hover:bg-teal-50 transition-colors cursor-default">
+                                        <div className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
                                             <Home className='size-4' />
                                             <p className=" text-neutral-700">  {user.location?.country} ({user.location?.currencycode})</p>
                                         </div>
@@ -137,7 +134,7 @@ export default function Navbar() {
                                 </Link>
                                 <Link
                                     href="/signup"
-                                    className="px-4 py-2 rounded-full text-sm bg-teal-500 text-white hover:bg-teal-600"
+                                    className="px-4 py-2 rounded-full text-sm bg-green-500 text-white hover:bg-green-600"
                                 >
                                     Sign Up
                                 </Link>
@@ -148,9 +145,7 @@ export default function Navbar() {
                     {/* Mobile menu button */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className={`md:hidden rounded-md p-2 ${isScrolled ? 'text-white/90' : 'text-white'
-                            }`}
-                    >
+                        className={`md:hidden rounded-md p-2 text-white`}>
                         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
@@ -158,15 +153,15 @@ export default function Navbar() {
 
             {/* Mobile menu */}
             {isMobileMenuOpen && (
-                <div className="lg:hidden bg-white shadow-xl">
+                <div className="lg:hidden bg-green-800 shadow-xl">
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         {menuItems.map((item) => (
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={`flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium ${pathname === item.href
-                                    ? 'text-teal-500 bg-gray-100'
-                                    : 'text-gray-700 hover:bg-gray-100'
+                                className={`flex  items-center space-x-2 px-3 py-2 rounded-md text-base font-medium ${pathname === item.href
+                                    ? 'text-black bg-yellow-500'
+                                    : 'text-white hover:bg-white/10'
                                     }`}
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
@@ -174,36 +169,36 @@ export default function Navbar() {
                                 <span>{item.label}</span>
                             </Link>
                         ))}
-                        <hr className='w-full border border-neutral-100' />
-                        {user && <div className="my-2">
-                            <Link href="/profile" className="flex items-center gap-2 p-2 hover:bg-teal-50 transition-colors cursor-default">
-                                <UserCheck2 className='size-4' />
+                        {user && <div className="mx-1">
+                            <Link href="/profile" className="flex items-center rounded-lg gap-2 p-2 text-white hover:text-white hover:bg-white/10 transition-colors cursor-default">
+                                <UserCheck2 className='size-5' />
                                 Profile
                             </Link>
                             {user.role === 'ADMIN' && (
-                                <Link href="/dashboard" className="flex items-center gap-2 p-2 hover:bg-teal-50 transition-colors cursor-default">
-                                    <LayoutDashboard className='size-4' />
+                                <Link href="/dashboard" className="flex items-center rounded-lg gap-2 p-2 text-white hover:text-white hover:bg-white/10 transition-colors cursor-default">
+                                    <LayoutDashboard className='size-5' />
                                     Dashboard
                                 </Link>
                             )}
-                            <div className="flex items-center gap-2 p-2 hover:bg-teal-50 transition-colors cursor-default">
-                                <User2 className='size-4' />
-                                <p className=" text-neutral-700">  {user.username} </p>
+                            <hr className='w-full my-4 border border-green-700' />
+                            <div className="flex items-center gap-2 p-2 text-white transition-colors cursor-default">
+                                <User2 className='size-5' />
+                                <p className=" text-white/80">  {user.username} </p>
                             </div>
 
-                            <div className="flex items-center gap-2 p-2 hover:bg-teal-50 transition-colors cursor-default">
-                                <EnvelopeIcon className='size-4' />
-                                <p className=" text-neutral-700 truncate">  {user.email} </p>
+                            <div className="flex items-center gap-2 p-2 text-white  transition-colors cursor-default">
+                                <EnvelopeIcon className='size-5' />
+                                <p className=" text-white/80 truncate">  {user.email} </p>
                             </div>
 
-                            <div className="flex items-center gap-2 p-2 hover:bg-teal-50 transition-colors cursor-default">
-                                <Home className='size-4' />
-                                <p className=" text-neutral-700">  {user.location?.country} ({user.location?.currencycode})</p>
+                            <div className="flex items-center gap-2 p-2  text-white transition-colors cursor-default">
+                                <Home className='size-5' />
+                                <p className=" text-white/80">  {user.location?.country} ({user.location?.currencycode})</p>
                             </div>
-                            <hr className='w-full border border-neutral-100 my-2' />
+                            <hr className='w-full border my-4 border-green-700' />
                             <button
                                 onClick={handleSignOut}
-                                className="block w-full text-left p-2 text-sm text-red-600 hover:bg-gray-100"
+                                className="bloc text-left py-2 px-8 text-sm bg-red-100/90 w-max rounded-lg font-bold text-red-600 hover:bg-gray-100"
                             >
                                 Sign Out
                             </button>
@@ -219,7 +214,7 @@ export default function Navbar() {
                                 </Link>
                                 <Link
                                     href="/signup"
-                                    className="block px-3 py-2 rounded-md text-base font-medium bg-teal-500 text-white hover:bg-teal-600"
+                                    className="block px-3 py-2 rounded-md text-base font-medium bg-green-500 text-white hover:bg-green-600"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     Sign Up

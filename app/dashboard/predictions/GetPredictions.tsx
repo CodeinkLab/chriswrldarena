@@ -119,26 +119,26 @@ const GetPredictions = () => {
                     <p className="text-gray-600 mt-1">View and track all your predictions</p>
                 </div>
                 {/* Add New Prediction Button */}
-                <Link href={'/dashboard/predictions/create'} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                <Link href={'/dashboard/predictions/create'} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                     Add Prediction
                 </Link>
             </div>
 
             {/* Predictions filters
             <div className="flex flex-wrap gap-4 mb-6">
-                <select className="rounded-lg border-gray-300 text-sm focus:ring-teal-500 focus:border-teal-500">
+                <select className="rounded-lg border-gray-300 text-sm focus:ring-green-500 focus:border-green-500">
                     <option>All Sports</option>
                     <option>Football</option>
                     <option>Basketball</option>
                     <option>Tennis</option>
                 </select>
-                <select className="rounded-lg border-gray-300 text-sm focus:ring-teal-500 focus:border-teal-500">
+                <select className="rounded-lg border-gray-300 text-sm focus:ring-green-500 focus:border-green-500">
                     <option>All Status</option>
                     <option>Won</option>
                     <option>Lost</option>
                     <option>Pending</option>
                 </select>
-                <select className="rounded-lg border-gray-300 text-sm focus:ring-teal-500 focus:border-teal-500">
+                <select className="rounded-lg border-gray-300 text-sm focus:ring-green-500 focus:border-green-500">
                     <option>Last 7 days</option>
                     <option>Last 30 days</option>
                     <option>Last 90 days</option>

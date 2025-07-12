@@ -60,11 +60,11 @@ export default function Sidebar() {
                 href={item.href}
                 className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
                   isActive
-                    ? 'bg-gray-100 text-teal-600'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600'
+                    ? 'bg-gray-100 text-green-600'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-green-600'
                 }`}
               >
-                <div className={`mr-3 flex-shrink-0 ${isActive ? 'text-teal-600' : 'text-gray-400 group-hover:text-teal-600'}`}>
+                <div className={`mr-3 flex-shrink-0 ${isActive ? 'text-green-600' : 'text-gray-400 group-hover:text-green-600'}`}>
                   {item.icon}
                 </div>
                 {item.name}

@@ -93,7 +93,7 @@ export function EmailVerificationForm() {
               <div className="mt-4">
                 <Link
                   href="/signin"
-                  className="text-teal-600 hover:text-teal-500 font-medium"
+                  className="text-green-600 hover:text-green-500 font-medium"
                 >
                   Click here to sign in
                 </Link>
@@ -121,7 +121,7 @@ export function EmailVerificationForm() {
                 <button
                   onClick={resendVerification}
                   disabled={isResending}
-                  className="mt-4 text-teal-600 hover:text-teal-500 font-medium disabled:opacity-50"
+                  className="mt-4 text-green-600 hover:text-green-500 font-medium disabled:opacity-50"
                 >
                   {isResending ? 'Sending...' : 'Resend verification email'}
                 </button>

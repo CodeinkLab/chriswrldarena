@@ -33,7 +33,7 @@ const contactMethods = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     ),
-    action: 'contact@chriswrldarena.com',
+    action: 'chriswrld95@gmail.com',
   },
   {
     name: 'Live Chat',
@@ -53,7 +53,7 @@ const contactMethods = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
       </svg>
     ),
-    action: '+233 54 281 0847',
+    action: '+233 24 064 6729',
   },
 ]
 
@@ -101,7 +101,7 @@ export default function SupportPage() {
                       <p className="text-sm font-medium text-gray-900">{method.name}</p>
                       <p className="text-sm text-gray-500">{method.description}</p>
                       <p className="mt-1">
-                        <button className="text-sm font-medium text-teal-600 hover:text-teal-500">
+                        <button className="text-sm font-medium text-green-600 hover:text-green-500">
                           {method.action}
                         </button>
                       </p>
@@ -125,7 +125,7 @@ export default function SupportPage() {
                     type="text"
                     name="subject"
                     id="subject"
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     placeholder="What can we help you with?"
                   />
                 </div>
@@ -137,13 +137,13 @@ export default function SupportPage() {
                     id="message"
                     name="message"
                     rows={4}
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     placeholder="Describe your issue..."
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                  className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                   Submit Ticket
                 </button>

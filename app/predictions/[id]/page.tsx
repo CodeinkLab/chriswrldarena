@@ -23,6 +23,8 @@ export default async function PredictionDetailsPage({ params }: { params: Promis
     "Midnight Owl",
   ]
 
+  
+
 
   const filteredData: () => Prediction[] = () => {
 

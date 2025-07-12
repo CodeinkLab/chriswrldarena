@@ -164,7 +164,7 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
                     <button
                         type="button"
                         onClick={onCancel}
-                        className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                        className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                         disabled={isSubmitting}
                     >
                         {cancelLabel}
@@ -172,7 +172,7 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
                 )}
                 <button
                     type="submit"
-                    className="inline-flex justify-center px-4 py-2 mb-12 text-sm font-medium text-white bg-teal-600 border border-transparent rounded-md shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="inline-flex justify-center px-4 py-2 mb-12 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={isSubmitting}>
                     {isSubmitting ? (
                         <>
