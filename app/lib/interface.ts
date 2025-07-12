@@ -415,7 +415,7 @@ export interface CommentEngagement {
 }
 
 
-export interface PRicingPlan {
+export interface PricingPlan {
   [x: string]: any,
   name: string,
   price: number,

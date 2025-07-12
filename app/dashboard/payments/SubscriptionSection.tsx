@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
+import { addPrices } from "@/app/actions/utils";
 import { useAuth } from "@/app/contexts/AuthContext";
-import { Payment, PRicingPlan } from "@/app/lib/interface";
+import { Payment, PricingPlan } from "@/app/lib/interface";
 import { User } from "@prisma/client";
 import { CheckCircleIcon, X } from "lucide-react";
 import moment from "moment";
 import router from "next/router";
+import { features } from "process";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Select from 'react-select'
@@ -60,8 +62,8 @@ const pricingPlan = [
             'Weekly special picks',
             'Basic analysis tools'
         ],
-        isPopular: false,
-    },
+        isPopular: true,
+    }/* ,
     {
         id: 'monthly',
         name: 'Monthly Pass',
@@ -87,7 +89,7 @@ const pricingPlan = [
             'Personal betting consultant'
         ],
         isPopular: false,
-    }
+    } */
 ]
 
 const pricing = [
@@ -101,10 +103,10 @@ export default function SubscriptionSection() {
     const { user } = useAuth()
     const [users, setUsers] = useState<User[]>([])
     const [transactions, setTransaction] = useState<Payment[]>([])
-    const [pricingPlans, setPricingPlans] = useState<PRicingPlan[]>([])
+    const [pricingPlans, setPricingPlans] = useState<PricingPlan[]>([])
     const [selectedUser, setSelectedUser] = useState<User | null>(null)
     const [selectedPlan, setSelectedPlan] = useState(pricing[0])
-    const [fetching, setFetching] = useState(false)
+    const [fetching, setFetching] = useState(true)
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -116,12 +118,13 @@ export default function SubscriptionSection() {
     const currentTransactions = transactions.slice(startIndex, endIndex);
 
     const [editingPlanIdx, setEditingPlanIdx] = useState<number | null>(null);
+
     const [editPlan, setEditPlan] = useState<any>(null);
 
 
     useEffect(() => {
         const fetchUsers = async () => {
-            setFetching(true);
+
             try {
                 const [userRes, paymentRes, pricingRes] = await Promise.all([
                     await fetch("/api/user"),
@@ -157,6 +160,26 @@ export default function SubscriptionSection() {
     function handlePlanChange(option: any) {
         setSelectedPlan(option)
         console.log("Selected plan:", option)
+    }
+
+    const addPricing = async () => {
+        try {
+            toast.loading("Adding pricing plans");
+            const pricePromises = pricingPlan.map(plan => {
+                const { id, ...remains } = plan;
+                return addPrices(remains);
+            });
+
+            const results = await Promise.all(pricePromises);
+            const newPricingPlans = results.map(result => result.data);
+
+            setPricingPlans(prevPlans => [...prevPlans, ...newPricingPlans]);
+            toast.dismiss();
+            toast.success("Price plans added successfully");
+        } catch (error: any) {
+            toast.dismiss();
+            toast.error(error.message);
+        }
     }
 
 
@@ -239,6 +262,7 @@ export default function SubscriptionSection() {
         e.preventDefault();
         // Save to DB
         console.log("Updating plan:", editPlan);
+        toast.loading("Updating pricing")
         try {
             const { id, ...planData } = editPlan;
             const updateres = await fetch(`/api/pricing/${updateid}`, {
@@ -254,8 +278,12 @@ export default function SubscriptionSection() {
                     body: JSON.stringify(planData),
                 });
                 if (!res.ok) throw new Error("Failed to Save pricing plan. " + res.statusText);
-
+                toast.dismiss()
             }
+            
+            setPricingPlans(prevPlans => prevPlans.map(p => p.id === editPlan.id ? editPlan : p))
+            
+            toast.dismiss()
             toast.success("Plan updated!");
             setEditingPlanIdx(null);
 
@@ -287,22 +315,24 @@ export default function SubscriptionSection() {
                 {/* Payment Methods */}
                 <div className="lg:col-span-2">
                     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                        {/* <div className="p-6 border-b border-gray-100">
+                        <div className="p-6 border-b border-gray-100">
                             <div className="flex items-center justify-between">
                                 <h2 className="text-lg font-bold text-gray-900">Payment Methods</h2>
-                                <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                                <button disabled={pricingPlans.length >= 2} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md disabled:bg-neutral-300 shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                                    onClick={addPricing}>
                                     Add Pricing
                                 </button>
                             </div>
-                        </div> */}
+                        </div>
 
                         <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto px-4 py-6">
+
                             {pricingPlans.map((plan, idx) => (
                                 <div
                                     key={plan.id}
                                     className={`flex flex-col relative bg-white rounded-lg p-6 transform hover:scale-105 hover:shadow-2xl transition-transform duration-300 ${plan.isPopular ? 'border-2 border-teal-600' : 'border border-neutral-200 shadow-md'
                                         }`}>
-                                            
+
                                     {plan.isPopular && (
                                         <div className="absolute top-0 right-0 bg-teal-600 text-white px-4 py-1 rounded-bl-lg">
                                             Popular
@@ -422,7 +452,7 @@ export default function SubscriptionSection() {
                                             ...theme,
                                             colors: {
                                                 ...theme.colors,
-                                                primary: '#ff5e00',
+                                                primary: '#00786f',
                                                 primary25: 'rgba(255, 123, 0, 0.1)',
                                                 primary50: 'rgba(255, 165, 0, 0.2)',
                                             },
@@ -449,7 +479,7 @@ export default function SubscriptionSection() {
                                             ...theme,
                                             colors: {
                                                 ...theme.colors,
-                                                primary: '#ff5e00',
+                                                primary: '#00786f',
                                                 primary25: 'rgba(255, 123, 0, 0.1)',
                                                 primary50: 'rgba(255, 165, 0, 0.2)',
                                             },

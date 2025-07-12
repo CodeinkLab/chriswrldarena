@@ -72,7 +72,7 @@ export default async function ProfilePage() {
   const user = await getCurrentUser()
 
   return (
-    <div className="container mx-auto p-6 lg:p-4 bg-white mt-32">
+    <div className="container mx-auto p-6 lg:p-4 bg-white ">
       <div className="flex flex-col bg-white border-b border-gray-200 px-4 py-3 z-10">
         <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
         <p className="text-gray-600 mt-1">Manage your account settings and preferences</p>

@@ -2,7 +2,7 @@
 'use server'
 import { get } from "http"
 import Analytics from "../lib/analytics"
-import { getData, getDataWithOption, updateData } from "../lib/database"
+import { createData, getData, getDataWithOption, updateData } from "../lib/database"
 import { getDateRange } from "../lib/function"
 import { getCurrentUser } from "../lib/jwt"
 
@@ -144,4 +144,8 @@ export async function overviewData() {
 export const updateTitle = async (id: string, title: string) => {
     const res = await updateData('title', { id }, { defaulttitle: title })
     return res
+}
+
+export const addPrices = async (items: any) => {
+    return await createData('pricing', items);
 }

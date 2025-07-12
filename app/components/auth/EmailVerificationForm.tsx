@@ -54,6 +54,8 @@ export function EmailVerificationForm() {
 
       if (response.ok) {
         // Show success message
+        window.location.href = "/"
+        router.replace('/')
       }
     } catch (error: any) {
       // Show error message
