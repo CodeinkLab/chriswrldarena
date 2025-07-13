@@ -261,7 +261,7 @@ export default function BlogDetailsClient({ id }: { id: string }) {
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                             placeholder="Reply to this comment..."
-                            className="flex-1 p-2 border border-neutral-100 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-neutral-200 h-16"
+                            className="flex-1 p-2 border border-neutral-100 rounded-lg resize-none  focus:ring-2 focus:ring-neutral-200 h-16"
                             required
                             rows={50}
                             cols={50}
@@ -292,7 +292,7 @@ export default function BlogDetailsClient({ id }: { id: string }) {
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                             placeholder="Add a comment..."
-                            className="flex-1 p-2 border border-neutral-100 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-neutral-200 h-56"
+                            className="flex-1 p-2 border border-neutral-100 rounded-lg resize-none  focus:ring-2 focus:ring-neutral-200 h-56"
                             required
                             rows={50}
                             cols={50}

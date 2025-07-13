@@ -188,9 +188,9 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
                                             <td className="relative my-auto px-6 py-2 flex gap-2 items-center justify-center">
 
                                                 <Popover>
-                                                    <PopoverTrigger asChild>
+                                                    <PopoverTrigger className='flex' asChild>
                                                         <button
-                                                            className="focus:outline-none"
+                                                            className=""
                                                             tabIndex={0}
                                                             aria-label="Show actions"
                                                             type="button"

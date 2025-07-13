@@ -315,7 +315,7 @@ export default function SubscriptionSection() {
                         <div className="p-6 border-b border-gray-100">
                             <div className="flex items-center justify-between">
                                 <h2 className="text-lg font-bold text-gray-900">Payment Methods</h2>
-                                <button disabled={pricingPlans.length >= 2} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md disabled:bg-neutral-300 shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                <button disabled={pricingPlans.length >= 2} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md disabled:bg-neutral-300 shadow-sm text-white bg-green-600 hover:bg-green-700  focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                     onClick={addPricing}>
                                     Add Pricing
                                 </button>
@@ -504,7 +504,7 @@ export default function SubscriptionSection() {
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700  focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                 >
                                     SUBSCRIBE for {user?.username}
                                 </button>

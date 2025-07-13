@@ -65,7 +65,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className={`fixed w-full px-4 lg:px-0 lg:py-2 z-50 transition-all duration-300 ${isScrolled ? 'bg-green-950 shadow-lg' : `${pathname === "/" ? 'bg-gray-900' : 'bg-green-950 '}`
+        <nav className={`fixed w-full lg:py-2 z-50 transition-all duration-300 ${isScrolled ? 'bg-green-950 shadow-lg' : `${pathname === "/" ? '': 'bg-green-950 '}`
             }`}>
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-16">

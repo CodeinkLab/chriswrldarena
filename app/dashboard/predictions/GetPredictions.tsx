@@ -120,7 +120,7 @@ const GetPredictions = () => {
                     <p className="text-gray-600 mt-1">View and track all your predictions</p>
                 </div>
                 {/* Add New Prediction Button */}
-                <Link href={'/dashboard/predictions/create'} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                <Link href={'/dashboard/predictions/create'} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700  focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                     Add Prediction
                 </Link>
             </div>

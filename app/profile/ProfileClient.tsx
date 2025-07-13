@@ -463,7 +463,7 @@ export default function ProfileClient({ id }: { id: string }) {
                             <div className="flex justify-end">
                                 <button
                                     type="submit"
-                                    className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-60"
+                                    className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700  focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-60"
                                     disabled={loading}
                                 >
                                     {loading ? 'Saving...' : 'Save Changes'}
@@ -492,7 +492,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                     <div className="pt-2">
                                         <button
                                             type="button"
-                                            className="w-full px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                            className="w-full px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50  focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                                             onClick={() => setShowSubs(!showSubs)}    >
                                             {showSubs ? 'Hide Other Subscriptions' : `Show ${profile.subscriptions.length - 1} More Subscription${profile.subscriptions.length > 2 ? 's' : ''}`}
                                         </button>

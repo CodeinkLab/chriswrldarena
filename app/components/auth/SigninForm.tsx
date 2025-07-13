@@ -113,7 +113,7 @@ export function SigninForm() {
                     type="email"
                     autoComplete="email"
                     required
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm transition-colors"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg placeholder-gray-400  focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm transition-colors"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -135,7 +135,7 @@ export function SigninForm() {
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm transition-colors"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg placeholder-gray-400  focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm transition-colors"
                     placeholder="Enter your password"
                   />
                 </div>
@@ -168,7 +168,7 @@ export function SigninForm() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-sm font-semibold rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 transition-colors relative overflow-hidden group"
+              className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-sm font-semibold rounded-lg text-white bg-green-600 hover:bg-green-700  focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 transition-colors relative overflow-hidden group"
             >
               <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-gradient-to-r from-green-500 to-green-600 group-hover:opacity-0"></span>
               <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-gradient-to-r from-green-600 to-green-700 opacity-0 group-hover:opacity-100"></span>

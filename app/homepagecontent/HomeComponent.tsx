@@ -139,7 +139,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 <div className="my-4 w-full">
                     <input
                         type="text"
-                        className="w-full px-4 py-2 border border-green-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900 mt-2 select-all "
+                        className="w-full px-4 py-2 border border-green-400 rounded-lg  focus:ring-2 focus:ring-green-500 text-gray-900 mt-2 select-all "
                         autoFocus
                         onFocus={e => e.target.select()}
                         placeholder="Enter new table title"
@@ -248,7 +248,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <section className="flex flex-col px-4 lg:px-0 justify-center items-center relative min-h-[55vh] md:min-h-[80vh] text-white w-full">
+            <section className="flex flex-col justify-center items-center relative min-h-[65vh] md:min-h-[80vh] text-white w-full">
                 {/* Dynamic Background with Overlay */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/80" />
@@ -277,12 +277,12 @@ const HomePageComponent = ({ content }: { content: any }) => {
                             <br />
                             <div className="space-y-4">
                                 {/* Intro Description */}
-                                <p className="text-3xl md:text-5xl lg:text-6xl 2xl:text-7xl font-bold max-w-xl leading-relaxed lg:leading-tight">
+                                <p className="text-2xl md:text-5xl lg:text-6xl 2xl:text-7xl font-bold max-w-xl">
                                     Welcome to <br />Chriswrld Arena official Page
                                 </p>
 
                                 {/* Enhanced Description */}
-                                <p className="text-xs sm:text-lg text-gray-300 max-w-xl leading-relaxed">
+                                <p className="text-xs sm:text-sm text-gray-300 max-w-xl leading-relaxed">
                                     Turn Passion into Profit with Expert Predictions.
                                     Experience the power of data-driven predictions and expert insights. Join our elite community
                                     of smart bettors and unlock premium tips that consistently deliver results.
@@ -291,7 +291,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                             </div>
 
                             {/* Enhanced CTA Buttons */}
-                            <div className="lg:hidden flex flex-col sm:flex-row gap-4 pt-6">
+                            <div className="lg:hidden flex flex-col sm:flex-row gap-4 pt-4">
                                 <Link
                                     href="/pricing"
                                     className="group relative overflow-hidden px-6 py-1.5 w-max rounded-lg  bg-yellow-500 text-black font-semibold text-center transform hover:scale-[1.02] transition-all duration-300"
@@ -508,9 +508,9 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                         <td className="relative px-4 py-2 flex gap-2 items-center justify-center">
 
                                                                             <Popover>
-                                                                                <PopoverTrigger asChild>
+                                                                                <PopoverTrigger className='flex' asChild>
                                                                                     <button
-                                                                                        className="focus:outline-none"
+                                                                                        className=""
                                                                                         tabIndex={0}
                                                                                         aria-label="Show actions"
                                                                                         type="button"
@@ -673,9 +673,9 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                     {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
                                                                         <td className="relative px-4 py-2 flex gap-2 items-center justify-center">
                                                                             <Popover>
-                                                                                <PopoverTrigger asChild>
+                                                                                <PopoverTrigger className='flex' asChild>
                                                                                     <button
-                                                                                        className="focus:outline-none"
+                                                                                        className=""
                                                                                         tabIndex={0}
                                                                                         aria-label="Show actions"
                                                                                         type="button"
@@ -847,9 +847,9 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                 <td className="relative px-4 py-2 flex gap-2 items-center justify-center">
 
                                                                     <Popover>
-                                                                        <PopoverTrigger asChild>
+                                                                        <PopoverTrigger className='flex' asChild>
                                                                             <button
-                                                                                className="focus:outline-none"
+                                                                                className=""
                                                                                 tabIndex={0}
                                                                                 aria-label="Show actions"
                                                                                 type="button"
@@ -975,9 +975,9 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                 </div>
                                                                 {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
                                                                     <Popover>
-                                                                        <PopoverTrigger asChild>
+                                                                        <PopoverTrigger className='flex' asChild>
                                                                             <button
-                                                                                className="focus:outline-none"
+                                                                                className=""
                                                                                 tabIndex={0}
                                                                                 aria-label="Show actions"
                                                                                 type="button"
