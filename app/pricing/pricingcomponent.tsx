@@ -58,6 +58,23 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
     const endIndex = startIndex + predictionsPerPage;
     const currentPredictions = predictions.slice(startIndex, endIndex);
 
+
+    const pageControl = (size: number) => {
+
+        const pageSize = size;
+        const totalPages = Math.ceil(pageSize / predictionsPerPage);
+        const startIndex = (currentPage - 1) * predictionsPerPage;
+        const endIndex = startIndex + predictionsPerPage;
+        const currentPredictions = predictions.slice(startIndex, endIndex);
+        return {
+            pageSize,
+            totalPages,
+            startIndex,
+            endIndex,
+            currentPredictions
+        }
+    }
+
     const dialog = useDialog()
     const [games, setGames] = useState('soccer')
     const [updating, setUpdating] = useState<boolean>(false);
@@ -463,9 +480,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                     <div className="p-4 border-t border-gray-200 bg-gray-50">
                         {/* Pagination Controls */}
                         <div className="flex items-center justify-between">
-                            <p className="text-sm text-gray-600">
-                                Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
-                                {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
+                            <p className="text-sm text-ray-6g00">
+                                Showing {Math.min((currentPage - 1) * pageControl(VIPGames.length).pageSize + 1, pageControl(VIPGames.length).totalPages)}-
+                                {Math.min(currentPage * pageControl(VIPGames.length).pageSize, pageControl(VIPGames.length).totalPages)} of {pageControl(VIPGames.length).totalPages} results
                             </p>
                             <div className="flex gap-2">
                                 <button
@@ -476,9 +493,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                                     Previous
                                 </button>
                                 <button
-                                    className="px-4 py-2 text-sm font-medium text-white bg-green-900 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
-                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                                    disabled={currentPage === totalPages}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-orange-600 border border-transparent rounded-md hover:bg-orange-700 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, pageControl(VIPGames.length).totalPages))}
+                                    disabled={currentPage === pageControl(VIPGames.length).totalPages}
                                 >
                                     Next
                                 </button>
@@ -644,7 +661,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                                 {/* Pagination Controls */}
                                 <div className="flex items-center justify-between">
                                     <p className="text-sm text-gray-600">
-                                        Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
+                                        Showing {Math.min((currentPage - 1) * pageControl(BetOfTheDayGames.length).pageSize + 1, pageControl(BetOfTheDayGames.length).totalPages)}-
                                         {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
                                     </p>
                                     <div className="flex gap-2">
@@ -656,14 +673,14 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                                             Previous
                                         </button>
                                         <button
-                                            className="px-4 py-2 text-sm font-medium text-white bg-green-900 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
-                                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                                            disabled={currentPage === totalPages}
+                                            className="px-4 py-2 text-sm font-medium text-white bg-orange-600 border border-transparent rounded-md hover:bg-orange-700 disabled:opacity-50"
+                                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, pageControl(BetOfTheDayGames.length).totalPages))}
+                                            disabled={currentPage === pageControl(BetOfTheDayGames.length).totalPages}
                                         >
                                             Next
                                         </button>
-
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -815,8 +832,8 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                         {/* Pagination Controls */}
                         <div className="flex items-center justify-between">
                             <p className="text-sm text-gray-600">
-                                Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
-                                {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
+                                Showing {Math.min((currentPage - 1) * pageControl(CorrectScoreGames.length).pageSize + 1, pageControl(CorrectScoreGames.length).totalPages)}-
+                                {Math.min(currentPage * pageControl(CorrectScoreGames.length).pageSize, pageControl(CorrectScoreGames.length).totalPages)} of {pageControl(CorrectScoreGames.length).totalPages} results
                             </p>
                             <div className="flex gap-2">
                                 <button
@@ -827,9 +844,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                                     Previous
                                 </button>
                                 <button
-                                    className="px-4 py-2 text-sm font-medium text-white bg-green-900 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
-                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                                    disabled={currentPage === totalPages}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-orange-600 border border-transparent rounded-md hover:bg-orange-700 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, pageControl(CorrectScoreGames.length).totalPages))}
+                                    disabled={currentPage === pageControl(CorrectScoreGames.length).totalPages}
                                 >
                                     Next
                                 </button>
@@ -983,8 +1000,8 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                         {/* Pagination Controls */}
                         <div className="flex items-center justify-between">
                             <p className="text-sm text-gray-600">
-                                Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
-                                {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
+                                Showing {Math.min((currentPage - 1) * pageControl(DrawGames.length).pageSize + 1, pageControl(DrawGames.length).totalPages)}-
+                                {Math.min(currentPage * pageSize, pageControl(DrawGames.length).totalPages)} of {pageControl(DrawGames.length).totalPages} results
                             </p>
                             <div className="flex gap-2">
                                 <button
@@ -995,9 +1012,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                                     Previous
                                 </button>
                                 <button
-                                    className="px-4 py-2 text-sm font-medium text-white bg-green-900 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
-                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                                    disabled={currentPage === totalPages}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-orange-600 border border-transparent rounded-md hover:bg-orange-700 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, pageControl(DrawGames.length).totalPages))}
+                                    disabled={currentPage === pageControl(DrawGames.length).totalPages}
                                 >
                                     Next
                                 </button>
@@ -1154,8 +1171,8 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                         {/* Pagination Controls */}
                         <div className="flex items-center justify-between">
                             <p className="text-sm text-gray-600">
-                                Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
-                                {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
+                                Showing {Math.min((currentPage - 1) * pageControl(PrevWonGames.length).pageSize + 1, pageControl(PrevWonGames.length).totalPages)}-
+                                {Math.min(currentPage * pageControl(PrevWonGames.length).pageSize, pageControl(PrevWonGames.length).totalPages)} of {pageControl(PrevWonGames.length).totalPages} results
                             </p>
                             <div className="flex gap-2">
                                 <button
@@ -1166,9 +1183,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                                     Previous
                                 </button>
                                 <button
-                                    className="px-4 py-2 text-sm font-medium text-white bg-green-900 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
-                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                                    disabled={currentPage === totalPages}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-orange-600 border border-transparent rounded-md hover:bg-orange-700 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, pageControl(PrevWonGames.length).totalPages))}
+                                    disabled={currentPage === pageControl(PrevWonGames.length).totalPages}
                                 >
                                     Next
                                 </button>

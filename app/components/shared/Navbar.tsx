@@ -3,11 +3,11 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, ChevronDown, User, Loader2, User2, LogIn, Home, UserCheck2, LayoutDashboard, Activity, UserCircle2 } from 'lucide-react';
+import { Menu, X, ChevronDown, User, Loader2, User2, LogIn, Home, UserCheck2, LayoutDashboard, Activity, UserCircle2, FileText, Scale } from 'lucide-react';
 import { useAuth } from '@/app/contexts/AuthContext';
 import { useRouter, usePathname } from 'next/navigation';
 import { FaAccusoft } from 'react-icons/fa';
-import { EnvelopeIcon } from '@heroicons/react/24/outline';
+import { DocumentIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
 import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
 
 export default function Navbar() {
@@ -111,6 +111,15 @@ export default function Navbar() {
                         >
                             <UserCircle2 className="w-[18px]" />
                             <span>User Profile</span>
+                        </div>}
+                        {pathname.includes("/legal") && <div
+                            className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium ${isScrolled
+                                ? `text-black ${pathname.includes("/legal") ? 'bg-yellow-500 text-black' : 'text-white hover:bg-white/10'}`
+                                : `text-black ${pathname.includes("/legal") ? 'bg-yellow-500 text-black' : 'text-white hover:bg-white/10'}`
+                                } transition-colors duration-200`}
+                        >
+                            <Scale className="w-[18px]" />
+                            <span>Legalities</span>
                         </div>}
                     </div>
 

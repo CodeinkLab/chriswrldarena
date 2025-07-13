@@ -14,7 +14,7 @@ export default function LegalHub() {
       description: 'Our terms and conditions for using ChrisWrldArena services',
       icon: <Scale className="w-6 h-6" />,
       href: '/legal/terms',
-      color: 'from-green-950 to-green-95'
+      color: 'from-green-950 to-green-950'
     },
     {
       id: 'privacy',
@@ -30,7 +30,7 @@ export default function LegalHub() {
       description: 'License terms for using our platform and services',
       icon: <FileText className="w-6 h-6" />,
       href: '/legal/eula',
-      color: 'from-green-950 to-green-9500'
+      color: 'from-green-950 to-green-950'
     },
     {
       id: 'disclaimer',

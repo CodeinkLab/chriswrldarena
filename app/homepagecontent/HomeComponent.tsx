@@ -253,7 +253,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 <div className="relative z-10 container mx-auto px-4">
                     <div className="w-full flex items-center justify-center flex-col lg:flex-row lg:justify-between gap-8">
                         {/* Text Content */}
-                        <div className="flex flex-col w-full lg:w-1/2 text-left space-y-6">
+                        <div className="flex flex-col w-full  text-left space-y-6">
                             {/* Welcome Message with Glow Effect */}
                             <div className="relative">
                                 {/*  <p className="text-xl sm:text-3xl md:text-4xl font-light text-white/90 tracking-wide">
@@ -269,24 +269,24 @@ const HomePageComponent = ({ content }: { content: any }) => {
                             <br />
                             <div className="space-y-4">
                                 {/* Intro Description */}
-                                <p className="text-2xl md:text-5xl lg:text-5xl 2xl:text-7xl font-bold max-w-xl lg:leading-relaxed">
+                                <p className="text-2xl md:text-5xl lg:text-6xl 2xl:text-7xl font-bold  lg:leading-relaxed">
                                     Welcome to <br />Chriswrld Arena official Page
                                 </p>
 
                                 {/* Enhanced Description */}
-                                <p className="text-sm text-gray-300 max-w-xl leading-relaxed">
+                                <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-300 max-w-2xl leading-relaxed">
                                     Join our elite community for expert predictions and data-driven insights that help turn your betting passion into consistent profits.
                                 </p>
 
                             </div>
 
                             {/* Enhanced CTA Buttons */}
-                            <div className="lg:hidden flex flex-col lg:flex-row gap-4 pt-4">
+                            <div className="flex flex-col gap-4 pt-4">
                                 <Link
                                     href="/pricing"
                                     className="group relative overflow-hidden px-6 py-1.5 w-max rounded-lg  bg-yellow-500 text-black font-semibold text-center transform hover:scale-[1.02] transition-all duration-300"
                                 >
-                                    <span className="text-base flex items-center justify-center gap-2">
+                                    <span className="text-base md:text-lg lg:text-xl xl:text-2xl flex items-center justify-center gap-2">
                                         GET VIP GAMES
                                         <div className="absolute top-1 right-1">
                                             <div className="relative w-2 h-2">
@@ -300,8 +300,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     target='_blank'
                                     className="group relative overflow-hidden px-6 py-1.5 w-max rounded-lg bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold text-center transform hover:scale-[1.02] transition-all duration-300 shadow-lg"
                                 >
-                                    <span className="text-base flex items-center justify-center gap-2">
-                                        <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <span className="text-base md:text-lg lg:text-xl xl:text-2xl flex items-center justify-center gap-2">
+                                        <svg className="size-4 md:size-8" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.227-.535.227l.19-2.712 4.94-4.465c.215-.19-.047-.296-.332-.106l-6.103 3.854-2.623-.816c-.57-.18-.582-.57.12-.843l10.238-3.948c.473-.174.887.104.605 1.337z" />
                                         </svg>
                                         JOIN TELEGRAM CHANNEL
@@ -312,21 +312,21 @@ const HomePageComponent = ({ content }: { content: any }) => {
                             </div>
                         </div>
 
-                        <div className="hidden lg:flex flex-col w-full lg:w-1/2 text-center lg:text-left space-y-8">
+                        <div className="hidden flex-col w-full lg:w-1/2 text-center lg:text-left space-y-8">
                             {/* Main Heading with Enhanced Typography */}
                             <div className="space-y-4">
                                 {/* Stats Section */}
-                                <div className="flex flex-wrap justify-between gap-8 pt-6">
+                                <div className="flex flex-wrap justify-between gap-4 pt-6">
                                     <div className="text-center">
-                                        <p className="text-5xl xl:text-7xl font-extrabold text-white">95%</p>
+                                        <p className="text-3xl xl:text-7xl font-extrabold text-white">95%</p>
                                         <p className=" xl:text-lg text-green-500">Success Rate</p>
                                     </div>
                                     <div className="text-center">
-                                        <p className="text-5xl xl:text-7xl font-extrabold text-white">10K+</p>
+                                        <p className="text-3xl xl:text-7xl font-extrabold text-white">10K+</p>
                                         <p className="text-lg text-green-500">Happy Members</p>
                                     </div>
                                     <div className="text-center">
-                                        <p className="text-5xl xl:text-7xl font-extrabold text-white">24/7</p>
+                                        <p className="text-3xl xl:text-7xl font-extrabold text-white">24/7</p>
                                         <p className=" xl:text-lg text-green-500">Expert Support</p>
                                     </div>
                                 </div>
@@ -447,6 +447,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
                                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
                                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody className="divide-y divide-gray-200 bg-white">
@@ -607,6 +608,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
                                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
                                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody className="divide-y divide-gray-200 bg-white">
@@ -773,6 +775,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
                                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
                                                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> </th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-gray-200 bg-white">
