@@ -19,7 +19,7 @@ export default function EULA() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <Link 
           href="/legal"
           className="inline-flex items-center text-green-600 hover:text-green-700 mb-8 group"

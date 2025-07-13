@@ -350,7 +350,6 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                                             <Popover>
                                                 <PopoverTrigger className='max-w-lg w-full' asChild>
                                                     <p className="max-w-xs truncate text-sm">{prediction.analysis}</p>
-
                                                 </PopoverTrigger>
                                                 <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
                                                     <p className="whitespace-pre-wrap">{prediction.analysis}</p>

@@ -14,7 +14,7 @@ export default function LegalHub() {
       description: 'Our terms and conditions for using ChrisWrldArena services',
       icon: <Scale className="w-6 h-6" />,
       href: '/legal/terms',
-      color: 'from-blue-500 to-blue-600'
+      color: 'from-green-950 to-green-95'
     },
     {
       id: 'privacy',
@@ -22,7 +22,7 @@ export default function LegalHub() {
       description: 'How we handle and protect your personal information',
       icon: <Shield className="w-6 h-6" />,
       href: '/legal/privacy',
-      color: 'from-green-500 to-green-600'
+      color: 'from-green-950 to-green-950'
     },
     {
       id: 'eula',
@@ -30,7 +30,7 @@ export default function LegalHub() {
       description: 'License terms for using our platform and services',
       icon: <FileText className="w-6 h-6" />,
       href: '/legal/eula',
-      color: 'from-purple-500 to-purple-600'
+      color: 'from-green-950 to-green-9500'
     },
     {
       id: 'disclaimer',
@@ -38,14 +38,14 @@ export default function LegalHub() {
       description: 'Important information about sports betting risks',
       icon: <Book className="w-6 h-6" />,
       href: '/legal/disclaimer',
-      color: 'from-red-500 to-red-600'
+      color: 'from-green-950 to-green-950'
     }
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
+        <div className="text-center my-28">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Legal Information</h1>
           <p className="text-xl text-gray-600">Important documents and policies for ChrisWrldArena users</p>
         </div>

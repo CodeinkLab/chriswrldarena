@@ -248,7 +248,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <section className="flex flex-col justify-center items-center relative min-h-[65vh] md:min-h-[80vh] text-white w-full">
+            <section className="flex flex-col justify-center items-center relative min-h-[55vh] md:min-h-[80vh] text-white w-full">
                 {/* Dynamic Background with Overlay */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/80" />
@@ -282,10 +282,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                 </p>
 
                                 {/* Enhanced Description */}
-                                <p className="text-xs sm:text-sm text-gray-300 max-w-xl leading-relaxed">
-                                    Turn Passion into Profit with Expert Predictions.
-                                    Experience the power of data-driven predictions and expert insights. Join our elite community
-                                    of smart bettors and unlock premium tips that consistently deliver results.
+                                <p className="text-sm text-gray-300 max-w-xl leading-relaxed">
+                                    Join our elite community for expert predictions and data-driven insights that help turn your betting passion into consistent profits.
                                 </p>
 
                             </div>
@@ -296,7 +294,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     href="/pricing"
                                     className="group relative overflow-hidden px-6 py-1.5 w-max rounded-lg  bg-yellow-500 text-black font-semibold text-center transform hover:scale-[1.02] transition-all duration-300"
                                 >
-                                    <span className="flex items-center justify-center gap-2">
+                                    <span className="text-base flex items-center justify-center gap-2">
                                         GET VIP GAMES
                                         <div className="absolute top-1 right-1">
                                             <div className="relative w-2 h-2">
@@ -310,7 +308,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     target='_blank'
                                     className="group relative overflow-hidden px-6 py-1.5 w-max rounded-lg bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold text-center transform hover:scale-[1.02] transition-all duration-300 shadow-lg"
                                 >
-                                    <span className="flex items-center justify-center gap-2">
+                                    <span className="text-base flex items-center justify-center gap-2">
                                         <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.227-.535.227l.19-2.712 4.94-4.465c.215-.19-.047-.296-.332-.106l-6.103 3.854-2.623-.816c-.57-.18-.582-.57.12-.843l10.238-3.948c.473-.174.887.104.605 1.337z" />
                                         </svg>

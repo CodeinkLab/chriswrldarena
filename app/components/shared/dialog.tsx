@@ -92,7 +92,7 @@ export function DialogProvider({ children }: { children: ReactNode }) {
                   state.onConfirm?.()
                   closeDialog()
                 }}
-                className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 transition-colors"
+                className="px-4 py-2 rounded-lg bg-green-900 text-white hover:bg-green-600 transition-colors"
               >
                 {state.type === 'progress' ? 'Close' : 'OK'}
               </button>
@@ -120,7 +120,7 @@ export function DialogProvider({ children }: { children: ReactNode }) {
                     state.onConfirm?.()
                     closeDialog()
                   }}
-                  className="px-4 py-2 rounded-lg bg-green-800 text-white hover:bg-green-500 transition-colors"
+                  className="px-4 py-2 rounded-lg bg-green-800 text-white hover:bg-green-900 transition-colors"
                 >
                   Continue
                 </button>

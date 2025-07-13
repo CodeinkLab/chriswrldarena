@@ -174,7 +174,7 @@ export default function Navbar() {
                                 </Link>
                                 <Link
                                     href="/signup"
-                                    className="px-8 py-2 rounded-full text-sm bg-green-500 text-white hover:bg-green-600"
+                                    className="px-8 py-2 rounded-full text-sm bg-green-900 text-white hover:bg-green-600"
                                 >
                                     Sign Up
                                 </Link>
@@ -193,7 +193,7 @@ export default function Navbar() {
 
             {/* Mobile menu */}
             {isMobileMenuOpen && (
-                <div className="lg:hidden bg-green-800 shadow-xl pb-8 px-8">
+                <div className="lg:hidden bg-green-950 shadow-xl pb-8 px-8">
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         {menuItems.map((item) => (
                             <Link
