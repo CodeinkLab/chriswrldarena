@@ -12,7 +12,8 @@ export function SigninForm() {
   const { user } = useAuth()
 
   if (user) {
-    router.replace('/')
+    window.location.href = "/"
+    router.replace("/")
     return
   }
 

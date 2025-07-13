@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, ChevronDown, User, Loader2, User2, LogIn, Home, UserCheck2, LayoutDashboard } from 'lucide-react';
+import { Menu, X, ChevronDown, User, Loader2, User2, LogIn, Home, UserCheck2, LayoutDashboard, Activity, UserCircle2 } from 'lucide-react';
 import { useAuth } from '@/app/contexts/AuthContext';
 import { useRouter, usePathname } from 'next/navigation';
 import { FaAccusoft } from 'react-icons/fa';
@@ -34,9 +34,10 @@ export default function Navbar() {
     const handleSignOut = async () => {
         try {
             await signOut();
-            router.push('/');
-            router.refresh();
-            
+            window.location.href = "/"
+            router.replace("/")
+
+
         } catch (error) {
             console.error('Sign out failed:', error);
         }
@@ -65,21 +66,21 @@ export default function Navbar() {
     };
 
     return (
-        <nav className={`fixed w-full lg:py-2 z-50 transition-all duration-300 ${isScrolled ? 'bg-green-950 shadow-lg' : `${pathname === "/" ? '': 'bg-green-950 '}`
+        <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-green-950 shadow-lg' : `${pathname === "/" ? '' : 'bg-green-950 '}`
             }`}>
-            <div className="container mx-auto px-4">
-                <div className="flex items-center justify-between h-16">
+            <div className="container mx-auto py-2 px-4">
+                <div className="flex items-center justify-between h-10 md:h-12 lg:h-18 xl:h-20">
                     {/* Logo */}
                     <Link href="/" className="flex-shrink-0">
                         <img
                             src="/img.png"
                             alt="ChrisWrldArena Logo"
-                            className="h-8 lg:h-12 w-auto"
+                            className="h-10 md:h-12 lg:h-18 xl:h-20 w-auto"
                         />
                     </Link>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center space-x-8">
+                    <div className="hidden lg:flex items-center space-x-8 lg:space-x-2 xl:space-x-8">
                         {menuItems.map((item) => (
                             <Link
                                 key={item.href}
@@ -93,6 +94,24 @@ export default function Navbar() {
                                 <span>{item.label}</span>
                             </Link>
                         ))}
+                        {pathname.includes("/predictions") && <div
+                            className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium ${isScrolled
+                                ? `text-black ${pathname.includes("/predictions") ? 'bg-yellow-500 text-black' : 'text-white hover:bg-white/10'}`
+                                : `text-black ${pathname.includes("/predictions") ? 'bg-yellow-500 text-black' : 'text-white hover:bg-white/10'}`
+                                } transition-colors duration-200`}
+                        >
+                            <Activity className="w-[18px]" />
+                            <span>Predictions</span>
+                        </div>}
+                        {pathname.includes("/profile") && <div
+                            className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium ${isScrolled
+                                ? `text-black ${pathname.includes("/profile") ? 'bg-yellow-500 text-black' : 'text-white hover:bg-white/10'}`
+                                : `text-black ${pathname.includes("/profile") ? 'bg-yellow-500 text-black' : 'text-white hover:bg-white/10'}`
+                                } transition-colors duration-200`}
+                        >
+                            <UserCircle2 className="w-[18px]" />
+                            <span>User Profile</span>
+                        </div>}
                     </div>
 
                     {/* Auth Buttons/Profile */}
@@ -185,7 +204,7 @@ export default function Navbar() {
                     {/* Mobile menu button */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className={`md:hidden rounded-md  text-white`}>
+                        className={`lg:hidden rounded-md  text-white`}>
                         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
@@ -193,8 +212,8 @@ export default function Navbar() {
 
             {/* Mobile menu */}
             {isMobileMenuOpen && (
-                <div className="lg:hidden bg-green-950 shadow-xl pb-8 px-8">
-                    <div className="px-2 pt-2 pb-3 space-y-1">
+                <div className="fixed top-0 right-0 left-0 inset-x-0 lg:hidden bg-green-950 shadow-xl p-8 -z-50">
+                    <div className="px-2 pt-2 pb-3 space-y-4 mt-8 transition-transform duration-500">
                         {menuItems.map((item) => (
                             <Link
                                 key={item.href}

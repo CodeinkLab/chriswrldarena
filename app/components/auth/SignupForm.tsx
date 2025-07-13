@@ -35,7 +35,7 @@ export function SignupForm() {
   }, [password])
 
   if (user && !user.emailVerified)
-    redirect('/verify-email')
+    redirect('/signin')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

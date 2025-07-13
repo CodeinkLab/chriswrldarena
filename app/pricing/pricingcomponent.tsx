@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Prediction } from '@prisma/client';
 import moment from 'moment';
 import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
-import { MoreVertical, Check, X, Clock, Edit, Trash, LoaderCircle } from 'lucide-react';
+import { MoreVertical, Check, X, Clock, Edit, Trash, LoaderCircle, Link, PlusCircle } from 'lucide-react';
 import { useDialog } from '../components/shared/dialog';
 import { updateTitle } from '../actions/utils';
 
@@ -32,6 +32,15 @@ interface PricingComponentProps {
     paymentKeys: Record<string, string>;
     content: any
 }
+
+const defaulttitles = [
+    "Vip Predictions",
+    "Bet of the day",
+    "Previously Won Matches",
+    "Free Hot Odds",
+    "Midnight Owl",
+]
+const customgames = ['Bet of the Day', 'Correct Score', 'Draw Games']
 
 const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
     const router = useRouter()
@@ -76,7 +85,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
         if (content?.predictions?.length > 0) {
             setCurrency(content.currencyrate.high_ask || 1)
             setPredictions(content?.predictions || []);
-            
+
         }
     }, [content, content?.predictions]);
 
@@ -181,7 +190,6 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
         });
     };
 
-
     const deletePrediction = async (index: number, id: string) => {
         setCurrentPosition(index);
         dialog.showDialog({
@@ -246,84 +254,96 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
     }
 
 
+    const VIPGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && !customgames.includes(prediction.customTitle!))
+    const CorrectScoreGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && prediction.customTitle === "Correct Score")
+    const DrawGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && prediction.customTitle === "Draw Games")
+    const BetOfTheDayGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && prediction.isCustom && prediction.isFree)
+    const PrevWonGames = currentPredictions.filter(prediction => prediction.result !== "PENDING" && !prediction.isFree)
+
+
+
     return (
-        <div className="relative mx-auto px-4 py-12">
+        <div className="relative mx-auto px-4 py-12 w-full">
             <div className="absolute inset-0 bg-cover bg-center h-64 shadow-lg -z-20"
                 style={{
                     backgroundImage: 'linear-gradient(to right, #1a1818c0, #111010cb), url(/stadium.jpg)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 }}>
-
+            </div>
+            <div className="absolute inset-0 -z-30">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(20, 184, 28, 0.986),transparent_50%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(40deg,transparent,rgba(24, 104, 24, 0.932)_20%,rgba(26, 184, 20, 0)_80%)]" />
+                <div className="absolute w-full h-full bg-[radial-gradient(#14b8a650_1px,transparent_1px)] bg-[size:20px_20px]" />
             </div>
             <div className="max-w-4xl mx-auto mt-28 z-50">
                 {!content.isSubscriptionActive && <h1 className="text-4xl font-bold mb-20 text-white">Choose Your Plan</h1>}
                 {content.isSubscriptionActive && <h1 className="text-4xl font-bold mb-20 text-white">Vip Predictions & Analysis</h1>}
                 {!content.isSubscriptionActive && <p className="text-2xl text-gray-600 text-center mt-32">Get access to premium predictions and expert analysis</p>}
             </div>
-            {!content.isSubscriptionActive && <div className="max-w-8xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-8 max-w-7xl mx-auto my-16">
-                <div className="md:col-start-2 md:col-span-2 flex flex-col md:flex-row gap-8 justify-center items-center mx-auto w-full">
-                    {pricingPlans.map((plan, index) => (
-                        <div
-                            key={plan.id}
-                            className={`relative bg-neutral-100 w-full rounded-lg p-8 transform hover:scale-105 hover:shadow-2xl transition-transform duration-300 ${plan.isPopular ? 'border-2 border-green-600' : 'border border-neutral-200 shadow-md'} col-start-${2}`}
-                        >
-                            {plan.isPopular && (
-                                <div className="absolute top-0 right-0 bg-green-600 text-white px-4 py-1 rounded-bl-lg">
-                                    Popular
-                                </div>
-                            )}
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">{plan.name}</h2>
-                            <p className="text-4xl font-bold text-green-600 mb-6">
-                                <span className="text-base text-neutral-500">{user?.location?.currencycode || "USD"}</span>{(plan.price * currency).toLocaleString("en-US", { maximumFractionDigits: 0 })}<span className="text-lg font-normal text-gray-500">/{plan.plan}</span>
-                            </p>
-                            <ul className="space-y-4 mb-8">
-                                {plan.features.map((feature, index) => (
-                                    <li key={index} className="flex items-center">
-                                        <svg className="h-5 w-5 text-green-500 mr-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path d="M5 13l4 4L19 7"></path>
-                                        </svg>
-                                        {feature}
-                                    </li>
-                                ))}
-                            </ul>
-                            <button
-                                className="w-full bg-green-600 text-white py-3 rounded-md hover:bg-green-700 transition-colors"
-                                onClick={() => handleFlutterwavePayment(plan)}
+            <div className="flex flex-col max-w-[95rem] w-full mx-auto gap-16">
+                {!content.isSubscriptionActive && <div className="max-w-[95rem] w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-8 mx-auto my-16">
+                    <div className="md:col-start-2 md:col-span-2 flex flex-col md:flex-row gap-8 justify-center items-center mx-auto w-full">
+                        {pricingPlans.map((plan, index) => (
+                            <div
+                                key={plan.id}
+                                className={`relative bg-neutral-100 w-full rounded-lg p-8 transform hover:scale-105 hover:shadow-2xl transition-transform duration-300 ${plan.isPopular ? 'border-2 border-green-900' : 'border border-neutral-200 shadow-md'} col-start-${2}`}
                             >
-                                Pay with Flutterwave
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            </div>}
+                                {plan.isPopular && (
+                                    <div className="absolute top-0 right-0 bg-green-900 text-white px-4 py-1 rounded-bl-lg">
+                                        Popular
+                                    </div>
+                                )}
+                                <h2 className="text-2xl font-bold text-gray-800 mb-4">{plan.name}</h2>
+                                <p className="text-4xl font-bold text-green-900 mb-6">
+                                    <span className="text-base text-neutral-500">{user?.location?.currencycode || "USD"}</span>{(plan.price * currency).toLocaleString("en-US", { maximumFractionDigits: 0 })}<span className="text-lg font-normal text-gray-500">/{plan.plan}</span>
+                                </p>
+                                <ul className="space-y-4 mb-8">
+                                    {plan.features.map((feature, index) => (
+                                        <li key={index} className="flex items-center">
+                                            <svg className="h-5 w-5 text-green-500 mr-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            {feature}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <button
+                                    className="w-full bg-green-900 text-white py-3 rounded-md hover:bg-green-700 transition-colors"
+                                    onClick={() => handleFlutterwavePayment(plan)}
+                                >
+                                    Pay with Flutterwave
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>}
 
-            {content.isSubscriptionActive && <div className="max-w-[90rem] mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 h-max">
-                <div className="p-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
-                    <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                        VIP Odds Predictions
-                        <svg className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2 13l3.293-6.586a1 1 0 011.707-.117L10 10.382l2.999-4.085a1 1 0 011.707.117L18 13H2zm0 2a1 1 0 001 1h14a1 1 0 001-1v-1H2v1z" />
-                        </svg>
-                    </h3>
-                </div>
-                <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Match</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Analysis</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-200 bg-white">
-                            {currentPredictions
-                                .filter(prediction => prediction.result === "PENDING" && !prediction.isFree)
-                                .map((prediction, index) => (
+                {/* VIP Prediction */}
+                {content.isSubscriptionActive && <div className="max-w-[95rem] w-full mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 h-max">
+                    <div className="p-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
+                        <h3 className="text-xl font-bold text-gray-900 flex items-center uppercase gap-2">
+                            VIP Odds Predictions
+                            <svg className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 13l3.293-6.586a1 1 0 011.707-.117L10 10.382l2.999-4.085a1 1 0 011.707.117L18 13H2zm0 2a1 1 0 001 1h14a1 1 0 001-1v-1H2v1z" />
+                            </svg>
+                        </h3>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Match</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Analysis</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-200 bg-white">
+                                {VIPGames.map((prediction, index) => (
                                     <tr key={index} className="hover:bg-gray-50 transition-colors odd:bg-neutral-100">
                                         <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-600">
                                             {moment(prediction.publishedAt).format('LL')}
@@ -352,7 +372,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                                                     <p className="max-w-xs truncate text-sm">{prediction.analysis}</p>
                                                 </PopoverTrigger>
                                                 <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
-                                                    <p className="whitespace-pre-wrap">{prediction.analysis}</p>
+                                                    <p className="whitespace-pre-wrap text-sm">{prediction.analysis}</p>
                                                 </PopoverContent>
                                             </Popover>
                                         </td>
@@ -437,62 +457,580 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                                         </td>
                                     </tr>
                                 ))}
-                        </tbody>
-                    </table>
-                </div>
-                <div className="p-4 border-t border-gray-200 bg-gray-50">
-                    {/* Pagination Controls */}
-                    <div className="flex items-center justify-between">
-                        <p className="text-sm text-gray-600">
-                            Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
-                            {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
-                        </p>
-                        <div className="flex gap-2">
-                            <button
-                                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
-                                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                                disabled={currentPage === 1}
-                            >
-                                Previous
-                            </button>
-                            <button
-                                className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
-                                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                                disabled={currentPage === totalPages}
-                            >
-                                Next
-                            </button>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="p-4 border-t border-gray-200 bg-gray-50">
+                        {/* Pagination Controls */}
+                        <div className="flex items-center justify-between">
+                            <p className="text-sm text-gray-600">
+                                Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
+                                {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
+                            </p>
+                            <div className="flex gap-2">
+                                <button
+                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                >
+                                    Previous
+                                </button>
+                                <button
+                                    className="px-4 py-2 text-sm font-medium text-white bg-green-900 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                                    disabled={currentPage === totalPages}
+                                >
+                                    Next
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>}
-            <br />
-            {content.isSubscriptionActive && <div className="max-w-[90rem] mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-yellow-200 h-max">
-                <div className="p-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
-                    <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                        Previous Predictions
-                        <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                    </h3>
-                </div>
-                <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Match</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Analysis</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-200 bg-white ">
-                            {currentPredictions
-                                .filter(prediction => prediction.result !== "PENDING" && !prediction.isFree)
-                                .map((prediction, index) => (
+                </div>}
+
+                {/* Custom Predictions */}
+                {content.isSubscriptionActive && <div className="max-w-[95rem] w-full bg-white mx-auto rounded-xl shadow-lg overflow-hidden border border-gray-200 h-max">
+                    <div className="relative p-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
+                        <div className="relative flex flex-col lg:flex-row gap-4  justify-between">
+                            <h3 className="text-xl font-bold text-gray-900 flex items-center uppercase gap-2">
+                                {title[1]?.defaulttitle || defaulttitles[1]}
+                            </h3>
+                        </div>
+                    </div>
+                    <div className="">
+                        <div className=" bg-white rounded-xl overflow-hidden h-max">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead className="bg-gray-50">
+                                        <tr>
+                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Match</th>
+                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
+                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
+                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Analysis</th>
+                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200 bg-white">
+                                        {BetOfTheDayGames.map((prediction, index) => (
+                                            <tr key={index} className="hover:bg-gray-50 transition-colors odd:bg-neutral-100">
+                                                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+                                                    {moment(prediction.publishedAt).format('LL')}
+                                                    <br />
+                                                    {moment(prediction.publishedAt).format('LT')}
+                                                </td>
+                                                <td className="px-4 py-2 whitespace-nowrap">
+                                                    <div className="text-sm font-medium text-gray-900">
+                                                        {prediction.sportType} &bull; {prediction.league || 'Unknown League'}
+                                                    </div>
+                                                    <div className="text-sm text-gray-600 w-44 truncate">
+                                                        {prediction.homeTeam} vs {prediction.awayTeam}
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 w-20 truncate">
+                                                    {prediction.tip || 'No prediction available'}
+                                                </td>
+                                                <td className="px-4 py-2 whitespace-nowrap">
+                                                    <span className="px-2 py-1 text-xs font-medium text-neutral-800 bg-neutral-100 rounded-full">
+                                                        {prediction.odds || 'N/A'}
+                                                    </span>
+                                                </td>
+
+                                                <td className="px-4 py-2 whitespace-nowrap" title={prediction.analysis || ""}>
+                                                    <Popover>
+                                                        <PopoverTrigger className='max-w-lg w-full' asChild>
+                                                            <p className="max-w-xs truncate text-sm">{prediction.analysis}</p>
+                                                        </PopoverTrigger>
+                                                        <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
+                                                            <p className="whitespace-pre-wrap text-sm">{prediction.analysis}</p>
+                                                        </PopoverContent>
+                                                    </Popover>
+                                                </td>
+
+                                                <td className="px-4 py-2 whitespace-nowrap">
+                                                    {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                        {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                                                    </span>}
+
+                                                    {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                        {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+
+                                                    </span>}
+                                                    {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                        {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+
+                                                    </span>}
+                                                </td>
+
+
+                                                {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
+                                                    <td className="px-4 py-2 gap-2 items-center justify-center">
+                                                        <Popover>
+                                                            <PopoverTrigger className='flex' asChild>
+                                                                <button
+                                                                    className=""
+                                                                    tabIndex={0}
+                                                                    aria-label="Show actions"
+                                                                    type="button"
+                                                                >
+                                                                    <MoreVertical
+                                                                        className="text-neutral-500 cursor-pointer hover:text-neutral-600 size-5"
+                                                                    />
+                                                                </button>
+                                                            </PopoverTrigger>
+                                                            <PopoverContent align="end" className="z-50 p-0 w-40 bg-white border border-gray-200 rounded shadow-lg">
+                                                                <div className="flex flex-col">
+                                                                    <button
+                                                                        className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                        onClick={() => {
+                                                                            updateWLPrediction(index, prediction, 'WON');
+                                                                        }}
+                                                                    >
+                                                                        <Check className="w-4 h-4 text-neutral-500" />
+                                                                        Won
+                                                                    </button>
+                                                                    <button
+                                                                        className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                        onClick={() => {
+                                                                            updateWLPrediction(index, prediction, 'LOST');
+                                                                        }}
+                                                                    >
+                                                                        <X className="w-4 h-4 text-neutral-500" />
+                                                                        Lost
+                                                                    </button>
+                                                                    <button
+                                                                        className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                        onClick={() => {
+                                                                            updateWLPrediction(index, prediction, 'PENDING');
+                                                                        }}
+                                                                    >
+                                                                        <Clock className="w-4 h-4 text-gray-500" />
+                                                                        Pending
+                                                                    </button>
+                                                                    <button
+                                                                        className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                        onClick={() => {
+                                                                            window.location.href = `/dashboard/predictions/update/?id=${prediction.id}`;
+                                                                        }}
+                                                                    >
+                                                                        <Edit className="w-4 h-4 text-gray-500" />
+                                                                        Edit
+                                                                    </button>
+                                                                    <button
+                                                                        className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                                                                        onClick={() => deletePrediction(index, prediction.id)}
+                                                                    >
+                                                                        <Trash className="w-4 h-4 text-red-500" />
+                                                                        Delete
+                                                                    </button>
+                                                                </div>
+                                                            </PopoverContent>
+                                                        </Popover>
+                                                    </td>}
+
+                                            </tr>
+                                        ))}
+                                        {currentPredictions.filter(prediction => prediction.result === "PENDING" && prediction.isCustom).length === 0 && (
+                                            <tr>
+                                                <td colSpan={5} className="text-center text-gray-400 py-6">
+                                                    No custom predictions available.
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="p-4 border-t border-gray-200 bg-gray-50">
+                                {/* Pagination Controls */}
+                                <div className="flex items-center justify-between">
+                                    <p className="text-sm text-gray-600">
+                                        Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
+                                        {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
+                                    </p>
+                                    <div className="flex gap-2">
+                                        <button
+                                            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+                                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                            disabled={currentPage === 1}
+                                        >
+                                            Previous
+                                        </button>
+                                        <button
+                                            className="px-4 py-2 text-sm font-medium text-white bg-green-900 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
+                                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                                            disabled={currentPage === totalPages}
+                                        >
+                                            Next
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>}
+
+                {/* Correct Score */}
+                {content.isSubscriptionActive && <div className="max-w-[95rem] w-full mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 h-max">
+                    <div className="p-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
+                        <h3 className="text-xl font-bold text-gray-900 flex items-center uppercase gap-2">
+                            Correct Score Odd Predictions
+                            <svg className="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 13l3.293-6.586a1 1 0 011.707-.117L10 10.382l2.999-4.085a1 1 0 011.707.117L18 13H2zm0 2a1 1 0 001 1h14a1 1 0 001-1v-1H2v1z" />
+                            </svg>
+                        </h3>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Match</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Analysis</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-200 bg-white">
+                                {CorrectScoreGames.map((prediction, index) => (
+                                    <tr key={index} className="hover:bg-gray-50 transition-colors odd:bg-neutral-100">
+                                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-600">
+                                            {moment(prediction.publishedAt).format('LL')}
+                                            <br />
+                                            {moment(prediction.publishedAt).format('LT')}
+                                        </td>
+                                        <td className="px-6 py-2 whitespace-nowrap">
+                                            <div className="text-sm font-medium text-gray-900">
+                                                {prediction.sportType} &bull; {prediction.league || 'Unknown League'}
+                                            </div>
+                                            <div className="text-sm text-gray-600 w-44 truncate">
+                                                {prediction.homeTeam} vs {prediction.awayTeam}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-600 w-20 truncate">
+                                            {prediction.tip || 'No prediction available'}
+                                        </td>
+                                        <td className="px-6 py-2 whitespace-nowrap">
+                                            <span className="px-2 py-1 text-xs font-medium text-neutral-800 bg-neutral-100 rounded-full">
+                                                {prediction.odds || 'N/A'}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-2 whitespace-nowrap" title={prediction.analysis || ""}>
+                                            <Popover>
+                                                <PopoverTrigger className='max-w-lg w-full' asChild>
+                                                    <p className="max-w-xs truncate text-sm">{prediction.analysis}</p>
+                                                </PopoverTrigger>
+                                                <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
+                                                    <p className="whitespace-pre-wrap text-sm">{prediction.analysis}</p>
+                                                </PopoverContent>
+                                            </Popover>
+                                        </td>
+                                        <td className="px-4 py-2 whitespace-nowrap">
+                                            {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                                            </span>}
+
+                                            {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+
+                                            </span>}
+                                            {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+
+                                            </span>}
+                                        </td>
+                                        <td className="px-6 py-2 whitespace-nowrap ">
+                                            {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
+                                                <Popover>
+                                                    <PopoverTrigger className='flex my-auto' asChild>
+                                                        <button
+                                                            className=""
+                                                            tabIndex={0}
+                                                            aria-label="Show actions"
+                                                            type="button"
+                                                        >
+                                                            <MoreVertical
+                                                                className="text-neutral-500 cursor-pointer hover:text-neutral-600 size-5"
+                                                            />
+                                                        </button>
+                                                    </PopoverTrigger>
+                                                    <PopoverContent align="end" className=" bg-white border border-gray-200 rounded shadow-lg">
+                                                        <div className="flex flex-col">
+                                                            <button
+                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                onClick={() => {
+                                                                    updateWLPrediction(index, prediction, 'WON');
+                                                                }}
+                                                            >
+                                                                <Check className="w-4 h-4 text-neutral-500" />
+                                                                Won
+                                                            </button>
+                                                            <button
+                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                onClick={() => {
+                                                                    updateWLPrediction(index, prediction, 'LOST');
+                                                                }}
+                                                            >
+                                                                <X className="w-4 h-4 text-neutral-500" />
+                                                                Lost
+                                                            </button>
+                                                            <button
+                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                onClick={() => {
+                                                                    updateWLPrediction(index, prediction, 'PENDING');
+                                                                }}
+                                                            >
+                                                                <Clock className="w-4 h-4 text-gray-500" />
+                                                                Pending
+                                                            </button>
+                                                            <button
+                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                onClick={() => {
+                                                                    window.location.href = `/dashboard/predictions/update/?id=${prediction.id}`;
+                                                                }}
+                                                            >
+                                                                <Edit className="w-4 h-4 text-gray-500" />
+                                                                Edit
+                                                            </button>
+                                                            <button
+                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                                                                onClick={() => deletePrediction(index, prediction.id)}
+                                                            >
+                                                                <Trash className="w-4 h-4 text-red-500" />
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </PopoverContent>
+                                                </Popover>
+                                            }
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="p-4 border-t border-gray-200 bg-gray-50">
+                        {/* Pagination Controls */}
+                        <div className="flex items-center justify-between">
+                            <p className="text-sm text-gray-600">
+                                Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
+                                {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
+                            </p>
+                            <div className="flex gap-2">
+                                <button
+                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                >
+                                    Previous
+                                </button>
+                                <button
+                                    className="px-4 py-2 text-sm font-medium text-white bg-green-900 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                                    disabled={currentPage === totalPages}
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>}
+
+                {/* Draw Games */}
+                {content.isSubscriptionActive && <div className="max-w-[95rem] w-full mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 h-max">
+                    <div className="p-6 bg-gradient-to-r from-gray-50 to-white border-b uppercase border-gray-200">
+                        <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                            Draw Games Odd Predictions
+                            <svg className="w-5 h-5 text-teal-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 13l3.293-6.586a1 1 0 011.707-.117L10 10.382l2.999-4.085a1 1 0 011.707.117L18 13H2zm0 2a1 1 0 001 1h14a1 1 0 001-1v-1H2v1z" />
+                            </svg>
+                        </h3>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Match</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Analysis</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-200 bg-white">
+                                {DrawGames.map((prediction, index) => (
+                                    <tr key={index} className="hover:bg-gray-50 transition-colors odd:bg-neutral-100">
+                                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-600">
+                                            {moment(prediction.publishedAt).format('LL')}
+                                            <br />
+                                            {moment(prediction.publishedAt).format('LT')}
+                                        </td>
+                                        <td className="px-6 py-2 whitespace-nowrap">
+                                            <div className="text-sm font-medium text-gray-900">
+                                                {prediction.sportType} &bull; {prediction.league || 'Unknown League'}
+                                            </div>
+                                            <div className="text-sm text-gray-600 w-44 truncate">
+                                                {prediction.homeTeam} vs {prediction.awayTeam}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-600 w-20 truncate">
+                                            {prediction.tip || 'No prediction available'}
+                                        </td>
+                                        <td className="px-6 py-2 whitespace-nowrap">
+                                            <span className="px-2 py-1 text-xs font-medium text-neutral-800 bg-neutral-100 rounded-full">
+                                                {prediction.odds || 'N/A'}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-2 whitespace-nowrap" title={prediction.analysis || ""}>
+                                            <Popover>
+                                                <PopoverTrigger className='max-w-lg w-full' asChild>
+                                                    <p className="max-w-xs truncate text-sm">{prediction.analysis}</p>
+                                                </PopoverTrigger>
+                                                <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
+                                                    <p className="whitespace-pre-wrap text-sm">{prediction.analysis}</p>
+                                                </PopoverContent>
+                                            </Popover>
+                                        </td>
+                                        <td className="px-4 py-2 whitespace-nowrap">
+                                            {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                                            </span>}
+
+                                            {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+
+                                            </span>}
+                                            {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+
+                                            </span>}
+                                        </td>
+                                        <td className="px-6 py-2 whitespace-nowrap ">
+                                            {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
+                                                <Popover>
+                                                    <PopoverTrigger className='flex my-auto' asChild>
+                                                        <button
+                                                            className=""
+                                                            tabIndex={0}
+                                                            aria-label="Show actions"
+                                                            type="button"
+                                                        >
+                                                            <MoreVertical
+                                                                className="text-neutral-500 cursor-pointer hover:text-neutral-600 size-5"
+                                                            />
+                                                        </button>
+                                                    </PopoverTrigger>
+                                                    <PopoverContent align="end" className=" bg-white border border-gray-200 rounded shadow-lg">
+                                                        <div className="flex flex-col">
+                                                            <button
+                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                onClick={() => {
+                                                                    updateWLPrediction(index, prediction, 'WON');
+                                                                }}
+                                                            >
+                                                                <Check className="w-4 h-4 text-neutral-500" />
+                                                                Won
+                                                            </button>
+                                                            <button
+                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                onClick={() => {
+                                                                    updateWLPrediction(index, prediction, 'LOST');
+                                                                }}
+                                                            >
+                                                                <X className="w-4 h-4 text-neutral-500" />
+                                                                Lost
+                                                            </button>
+                                                            <button
+                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                onClick={() => {
+                                                                    updateWLPrediction(index, prediction, 'PENDING');
+                                                                }}
+                                                            >
+                                                                <Clock className="w-4 h-4 text-gray-500" />
+                                                                Pending
+                                                            </button>
+                                                            <button
+                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                                onClick={() => {
+                                                                    window.location.href = `/dashboard/predictions/update/?id=${prediction.id}`;
+                                                                }}
+                                                            >
+                                                                <Edit className="w-4 h-4 text-gray-500" />
+                                                                Edit
+                                                            </button>
+                                                            <button
+                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                                                                onClick={() => deletePrediction(index, prediction.id)}
+                                                            >
+                                                                <Trash className="w-4 h-4 text-red-500" />
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </PopoverContent>
+                                                </Popover>
+                                            }
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="p-4 border-t border-gray-200 bg-gray-50">
+                        {/* Pagination Controls */}
+                        <div className="flex items-center justify-between">
+                            <p className="text-sm text-gray-600">
+                                Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
+                                {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
+                            </p>
+                            <div className="flex gap-2">
+                                <button
+                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                >
+                                    Previous
+                                </button>
+                                <button
+                                    className="px-4 py-2 text-sm font-medium text-white bg-green-900 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                                    disabled={currentPage === totalPages}
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>}
+
+                {/* Previous Won Games */}
+                {content.isSubscriptionActive && <div className="max-w-[95rem] w-full mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-yellow-200 h-max">
+                    <div className="p-6 bg-gradient-to-r from-gray-50 to-white border-b  border-gray-200">
+                        <h3 className="text-xl font-bold text-gray-900 flex items-center uppercase gap-2">
+                            Previous Predictions
+                            <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                        </h3>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Match</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Analysis</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-200 bg-white ">
+                                {PrevWonGames.map((prediction, index) => (
                                     <tr key={index} className="hover:bg-gray-50 transition-colors odd:bg-neutral-100 ">
                                         <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-600">
                                             {moment(prediction.publishedAt).format('LL')}
@@ -522,7 +1060,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
 
                                                 </PopoverTrigger>
                                                 <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
-                                                    <p className="whitespace-pre-wrap">{prediction.analysis}</p>
+                                                    <p className="whitespace-pre-wrap text-sm">{prediction.analysis}</p>
                                                 </PopoverContent>
                                             </Popover>
                                         </td>
@@ -609,36 +1147,36 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
 
                                     </tr>
                                 ))}
-                        </tbody>
-                    </table>
-                </div>
-                <div className="p-4 border-t border-gray-200 bg-gray-50">
-                    {/* Pagination Controls */}
-                    <div className="flex items-center justify-between">
-                        <p className="text-sm text-gray-600">
-                            Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
-                            {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
-                        </p>
-                        <div className="flex gap-2">
-                            <button
-                                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
-                                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                                disabled={currentPage === 1}
-                            >
-                                Previous
-                            </button>
-                            <button
-                                className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
-                                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                                disabled={currentPage === totalPages}
-                            >
-                                Next
-                            </button>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="p-4 border-t border-gray-200 bg-gray-50">
+                        {/* Pagination Controls */}
+                        <div className="flex items-center justify-between">
+                            <p className="text-sm text-gray-600">
+                                Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
+                                {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
+                            </p>
+                            <div className="flex gap-2">
+                                <button
+                                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                >
+                                    Previous
+                                </button>
+                                <button
+                                    className="px-4 py-2 text-sm font-medium text-white bg-green-900 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
+                                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                                    disabled={currentPage === totalPages}
+                                >
+                                    Next
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            }
+                </div>}
+            </div >
         </div >
     )
 }

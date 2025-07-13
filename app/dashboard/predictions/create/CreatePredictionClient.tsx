@@ -17,11 +17,15 @@ export default function CreatePredictionClient() {
     const { user } = useAuth();
     const [iscode, setIsCode] = useState(false);
 
-    const [defaultValues, setDefaultValues] = useState({isFree:true,})
+    const [defaultValues, setDefaultValues] = useState({ isFree: true })
 
     async function handleCreate(data: CreatePredictionDTO) {
+
+        const isFree = (data.customTitle === "Correct Score" || data.customTitle === "Draw Games") ? false : data.isFree
+
         setIsSubmitting(true);
         try {
+
             const response = await fetch("/api/prediction", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -29,6 +33,7 @@ export default function CreatePredictionClient() {
                     ...data,
                     publishedAt: new Date(data.publishedAt || Date.now()).toISOString(),
                     result: "PENDING",
+                    isFree,
                     userId: user?.id
                 }),
             });
@@ -88,6 +93,7 @@ export default function CreatePredictionClient() {
 
                     const defdata = {
                         ...data,
+                        customTitle: "",
                         publishedAt: formatDateTimeLocal(data.publishedAt),
                     }
 

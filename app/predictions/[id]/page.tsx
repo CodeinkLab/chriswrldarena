@@ -23,7 +23,7 @@ export default async function PredictionDetailsPage({ params }: { params: Promis
     "Midnight Owl",
   ]
 
-  
+  const customgames = ['Bet of the Day', 'Correct Score', 'Draw Games']
 
 
   const filteredData: () => Prediction[] = () => {
@@ -39,7 +39,7 @@ export default async function PredictionDetailsPage({ params }: { params: Promis
         return data.predictions.filter((bet: Prediction) => bet.result === "PENDING" && bet.isFree);
       case 'custom':
         title = sortedTitles[1].defaulttitle
-        return data.predictions.filter((bet: Prediction) => bet.result === "PENDING" && bet.isCustom);
+        return data.predictions.filter((bet: Prediction) => bet.result === "PENDING" && bet.isCustom && bet.isFree);
       case 'previousgames':
         title = sortedTitles[2].defaulttitle
         return data.predictions.filter((bet: Prediction) => bet.result !== "PENDING");

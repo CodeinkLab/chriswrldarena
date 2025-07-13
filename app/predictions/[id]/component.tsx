@@ -106,12 +106,12 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
                 }}>
 
             </div>
-            <div className="container mx-auto mt-28 z-50">
+            <div className="max-w-[94rem] mx-auto mt-28 z-50">
                 <h1 className="text-4xl font-bold mb-20 text-white">{title.toUpperCase() || "No category specified"}</h1>
             </div>
 
 
-            <div className="container mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 h-max">
+            <div className="max-w-[94rem]  mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 h-max">
                 <div className="p-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
                     <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                         {title}
@@ -165,7 +165,7 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
 
                                                 </PopoverTrigger>
                                                 <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
-                                                    <p className="whitespace-pre-wrap">{prediction.analysis}</p>
+                                                    <p className="whitespace-pre-wrap text-sm">{prediction.analysis}</p>
                                                 </PopoverContent>
                                             </Popover>
                                         </td>
@@ -185,8 +185,7 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
                                             </span>}
                                         </td>
                                         {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
-                                            <td className="relative my-auto px-6 py-2 flex gap-2 items-center justify-center">
-
+                                            <td className="relative my-auto px-6 py-2 gap-2 items-center justify-center">
                                                 <Popover>
                                                     <PopoverTrigger className='flex' asChild>
                                                         <button

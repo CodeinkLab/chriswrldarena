@@ -16,7 +16,7 @@ import FormField, { FormFieldPropsWithChange } from './FormField';
 import { DynamicFormProps } from '@/app/lib/interface';
 import { use } from 'react';
 import { useAuth } from '@/app/contexts/AuthContext';
-import { sportTypeOptions } from '@/app/lib/formschemas/predictionForm';
+import { predictionFormSchema, sportTypeOptions } from '@/app/lib/formschemas/predictionForm';
 
 export default function DynamicForm<TFieldValues extends FieldValues>({
     schema,
@@ -41,12 +41,13 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
     });
 
     const [selectedSportType, setSelectedSportType] = useState<string>(initialData['sportType'] || '');
+    
     const [leagueOptions, setLeagueOptions] = useState(() => {
         if (initialData['sportType']) {
             const found = sportTypeOptions.find(opt => opt.label === initialData['sportType']);
             return found ? found.league : [];
         }
-
+       
         return [];
     });
 
@@ -121,7 +122,7 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
                 }
                 if (name === 'customTitle') {
                     const isCustom = watch('isCustom' as Path<TFieldValues>);
-                    
+
                     return (
                         <FormField
                             key={name}
@@ -131,7 +132,11 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
                             register={register as UseFormRegister<FieldValues>}
                             error={error}
                             required={isCustom ?? true}
-                            options={leagueOptions.length > 0 ? leagueOptions : field.options}
+                            options={
+                                [{ label: 'Bet of the Day', value: 'Bet of the Day' },
+                                { label: 'Correct Score', value: 'Correct Score' },
+                                { label: 'Draw Games', value: 'Draw Games' },
+                                ]}
                             hidden={!isCustom}
                             disabled={field.disabled || isSubmitting}
                             placeholder={field.placeholder}
