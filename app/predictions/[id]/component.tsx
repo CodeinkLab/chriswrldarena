@@ -161,7 +161,7 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
                                         <td className="px-6 py-2 whitespace-nowrap " title={prediction.analysis}>
                                             <Popover>
                                                 <PopoverTrigger className='max-w-lg w-full' asChild>
-                                                    <p className="max-w-xs truncate">{prediction.analysis}</p>
+                                                    <p className="max-w-xs truncate text-sm">{prediction.analysis}</p>
 
                                                 </PopoverTrigger>
                                                 <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
@@ -171,19 +171,18 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
                                         </td>
 
                                         <td className="px-4 py-2 whitespace-nowrap">
-                                            {updating && index === currentposition && <LoaderCircle className="animate-spin size-4" />}
+                                            {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                                            </span>}
 
-                                            {!updating && <>
-                                                {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                    Won ✓
-                                                </span>}
-                                                {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                    Lost ✗
-                                                </span>}
-                                                {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                    Pending ⏳
-                                                </span>}
-                                            </>}
+                                            {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+
+                                            </span>}
+                                            {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+
+                                            </span>}
                                         </td>
                                         {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
                                             <td className="relative my-auto px-6 py-2 flex gap-2 items-center justify-center">

@@ -8,6 +8,7 @@ import { useAuth } from '@/app/contexts/AuthContext';
 import { useRouter, usePathname } from 'next/navigation';
 import { FaAccusoft } from 'react-icons/fa';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
+import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -35,15 +36,38 @@ export default function Navbar() {
             await signOut();
             router.push('/');
             router.refresh();
+            
         } catch (error) {
             console.error('Sign out failed:', error);
         }
     };
+    const toggleDropdown = () => {
+        setDropdownVisible(!dropdownVisible);
+
+    };
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const dropdown = document.getElementById('user-dropdown');
+            const button = document.getElementById('user-menu-button');
+            if (dropdown && button && !dropdown.contains(event.target as Node) && !button.contains(event.target as Node)) {
+                setDropdownVisible(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            toggleDropdown();
+        }
+    };
 
     return (
-        <nav className={`fixed w-full lg:py-2 z-50 transition-all duration-300 ${isScrolled ? 'bg-green-800 shadow-lg' : 'bg-green-800'
+        <nav className={`fixed w-full px-4 lg:px-0 lg:py-2 z-50 transition-all duration-300 ${isScrolled ? 'bg-green-950 shadow-lg' : `${pathname === "/" ? 'bg-gray-900' : 'bg-green-950 '}`
             }`}>
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <Link href="/" className="flex-shrink-0">
@@ -76,51 +100,70 @@ export default function Navbar() {
                         {loading ? (
                             <Loader2 className="animate-spin" size={20} />
                         ) : user ? (
-                            <div className="relative">
+                            <div className="relative text-sm">
                                 <button
-                                    onClick={() => setDropdownVisible(!dropdownVisible)}
-                                    className={`flex items-center space-x-2 px-4 py-2 rounded-full bg-white/10 text-white`}
+                                    id="user-menu-button"
+                                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors bg-white/20 text-white hover:bg-white/20`}
+                                    onClick={toggleDropdown}
+                                    onKeyDown={handleKeyDown}
+                                    aria-haspopup="true"
+                                    aria-expanded={dropdownVisible}
+                                    aria-controls="user-dropdown"
                                 >
-                                    <User size={18} />
-                                    <span className="text-sm">{user.username}</span>
-                                    <ChevronDown size={16} />
+                                    <User size={20} />
+                                    <span>{user.username || 'Account'}</span>
+                                    <ChevronDown
+                                        size={16}
+                                        className={`transform transition-transform duration-200 ${dropdownVisible ? 'rotate-180' : ''}`}
+                                    />
                                 </button>
+                                <div
+                                    id="user-dropdown"
+                                    role="menu"
+                                    aria-orientation="vertical"
+                                    aria-labelledby="user-menu-button"
+                                    className={`absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 transition-all duration-200 transform origin-top-right ${dropdownVisible
+                                        ? 'scale-100 opacity-100'
+                                        : 'scale-95 opacity-0 pointer-events-none'
+                                        }`}  >
 
-                                {dropdownVisible && (
-                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2">
-                                        <Link href="/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
-                                            <UserCheck2 className='size-4' />
-                                            Profile
+                                    <Link href="/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
+                                        <UserCheck2 className='size-4' />
+                                        Profile
+                                    </Link>
+                                    {user.role === 'ADMIN' && (
+                                        <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
+                                            <LayoutDashboard className='size-4' />
+                                            Dashboard
                                         </Link>
-                                        {user.role === 'ADMIN' && (
-                                            <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
-                                                <LayoutDashboard className='size-4' />
-                                                Dashboard
-                                            </Link>
-                                        )}
-                                        <div className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
-                                            <User2 className='size-4' />
-                                            <p className=" text-neutral-700">  {user.username} </p>
-                                        </div>
-
-                                        <div className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
-                                            <EnvelopeIcon className='size-4' />
-                                            <p className=" text-neutral-700 truncate">  {user.email} </p>
-                                        </div>
-
-                                        <div className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
-                                            <Home className='size-4' />
-                                            <p className=" text-neutral-700">  {user.location?.country} ({user.location?.currencycode})</p>
-                                        </div>
-                                        <button
-                                            onClick={handleSignOut}
-                                            className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                                        >
-                                            Sign Out
-                                        </button>
+                                    )}
+                                    <div className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
+                                        <User2 className='size-4' />
+                                        <p className=" text-neutral-700">  {user.username} </p>
                                     </div>
-                                )}
+
+                                    <div className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
+                                        <EnvelopeIcon className='size-4' />
+                                        <p className=" text-neutral-700 truncate">  {user.email} </p>
+                                    </div>
+
+                                    <div className="flex items-center gap-2 px-4 py-2 hover:bg-green-50 transition-colors cursor-default">
+                                        <Home className='size-4' />
+                                        <p className=" text-neutral-700">  {user.location?.country} ({user.location?.currencycode})</p>
+                                    </div>
+                                    <button
+                                        onClick={handleSignOut}
+                                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                                    >
+                                        Sign Out
+                                    </button>
+
+                                </div>
                             </div>
+
+
+
+
                         ) : (
                             <div className="flex items-center space-x-4 w-full">
                                 <Link
@@ -142,7 +185,7 @@ export default function Navbar() {
                     {/* Mobile menu button */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className={`md:hidden rounded-md p-2 text-white`}>
+                        className={`md:hidden rounded-md  text-white`}>
                         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>

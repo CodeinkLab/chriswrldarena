@@ -92,8 +92,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             });
 
             setUser(null);
-            router.push('/');
-            router.refresh();
+            window.location.reload()
         } catch (error) {
             console.error('Sign out failed:', error);
         }

@@ -43,6 +43,7 @@ const GetPredictions = () => {
             }
         })
     }
+    
     const updateWLPrediction = async (index: number, prediction: Prediction, data: string) => {
         setCurrentPosition(index);
         const { id, ...dataWithoutId } = prediction;

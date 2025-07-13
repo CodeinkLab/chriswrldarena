@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import { Prediction } from '../lib/interface';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { useAuth } from '../contexts/AuthContext';
 import { sportTypeOptions } from '../lib/formschemas/predictionForm';
@@ -27,11 +27,12 @@ const HomePageComponent = ({ content }: { content: any }) => {
     const startIndex = (currentPage - 1) * predictionsPerPage;
     const endIndex = startIndex + predictionsPerPage;
     const currentPredictions = predictions.slice(startIndex, endIndex);
-    const [games, setGames] = useState('soccer')
     const [updating, setUpdating] = useState<boolean>(false);
     const [currentposition, setCurrentPosition] = useState<number>(-1);
     const [loading, setLoading] = useState(false)
     const [title, setTitle] = useState<Record<string, any>[]>([])
+
+    const parentRef = useRef<HTMLDivElement>(null)
 
 
     const defaulttitles = [
@@ -163,7 +164,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
     }
 
 
-    const deletePrediction = async (index: number, id: string) => {
+    const deletePrediction = async (e: MouseEvent<HTMLButtonElement>, index: number, id: string) => {
         setCurrentPosition(index);
         dialog.showDialog({
             title: "Delete Prediction",
@@ -171,6 +172,16 @@ const HomePageComponent = ({ content }: { content: any }) => {
             type: "confirm",
             onConfirm: async () => {
                 setUpdating(true);
+
+                const target = e.currentTarget;
+                const parent = parentRef.current;
+
+                if (parent) {
+                    const children = Array.from(parent.children);
+                    const index = children.indexOf(target);
+                    console.log('Child index:', index);
+                }
+
                 try {
                     const response = await fetch(`/api/prediction/${id}`, {
                         method: "DELETE",
@@ -181,14 +192,13 @@ const HomePageComponent = ({ content }: { content: any }) => {
                     setUpdating(false);
                 } catch (error) {
                     setUpdating(false);
-                    console.error("Error deleting prediction:", error);
                 }
 
             }
         })
     }
 
-    const updateWLPrediction = async (index: number, prediction: Prediction, data: string) => {
+    const updateWLPrediction = async (e: MouseEvent<HTMLButtonElement>, index: number, prediction: Prediction, data: string) => {
         setCurrentPosition(index);
         const { id, ...dataWithoutId } = prediction;
         dialog.showDialog({
@@ -197,6 +207,16 @@ const HomePageComponent = ({ content }: { content: any }) => {
             type: "confirm",
             onConfirm: async () => {
                 setUpdating(true);
+
+                const target = e.currentTarget;
+                const parent = parentRef.current;
+
+                if (parent) {
+                    const children = Array.from(parent.children);
+                    const index = children.indexOf(target);
+                    console.log('Child index:', index);
+                }
+
                 try {
                     const response = await fetch(`/api/prediction/${id}`, {
                         method: "PUT",
@@ -214,14 +234,10 @@ const HomePageComponent = ({ content }: { content: any }) => {
                         ...newdata,
                         newresult
                     ])
-
-
                     setUpdating(false);
-                    console.log("Prediction updated successfully:", newresult);
-                    // setPredictions(result);
+
                 } catch (error) {
                     setUpdating(false);
-                    console.error("Error updating prediction:", error);
                 }
 
             }
@@ -232,7 +248,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <section className="flex flex-col justify-center items-center relative min-h-[65vh] md:min-h-[80vh] 2xl:min-h-[80vh] 3xl:min-h-[80vh] text-white w-full">
+            <section className="flex flex-col px-4 lg:px-0 justify-center items-center relative min-h-[55vh] md:min-h-[80vh] text-white w-full">
                 {/* Dynamic Background with Overlay */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/80" />
@@ -242,33 +258,32 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 </div>
 
                 {/* Content Container */}
-                <div className="relative z-10 container mx-auto px-4 py-8 mt-8 md:mt-16">
+                <div className="relative z-10 container mx-auto px-4">
                     <div className="w-full flex items-center justify-center flex-col lg:flex-row lg:justify-between gap-8">
                         {/* Text Content */}
-                        <div className="flex flex-col w-full lg:w-1/2 text-center lg:text-left space-y-6">
+                        <div className="flex flex-col w-full lg:w-1/2 text-left space-y-6">
                             {/* Welcome Message with Glow Effect */}
                             <div className="relative">
-                                <p className="text-xl sm:text-3xl md:text-4xl font-light text-white/90 tracking-wide">
+                                {/*  <p className="text-xl sm:text-3xl md:text-4xl font-light text-white/90 tracking-wide">
                                     Welcome,{" "}
                                     <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-500 ">
                                         {user?.username || "Champion"}
                                     </span>
-                                </p>
+                                </p> */}
                             </div>
 
                             {/* Main Heading with Enhanced Typography */}
+                            <br />
+                            <br />
                             <div className="space-y-4">
-                                <h1 className="text-3xl md:text-5xl lg:text-6xl 2xl:text-7xl font-bold leading-tight">
-                                    Turn Passion into{" "}
-                                    <span className="relative">
-                                        <span className="text-yellow-400 drop-shadow-[0_0_25px_rgba(128, 94, 0, 0.5)]">Profit</span>
-                                        <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-full transform scale-x-0 animate-expandWidth" />
-                                    </span>{" "}
-                                    with Expert Predictions
-                                </h1>
+                                {/* Intro Description */}
+                                <p className="text-3xl md:text-5xl lg:text-6xl 2xl:text-7xl font-bold max-w-xl leading-relaxed lg:leading-tight">
+                                    Welcome to <br />Chriswrld Arena official Page
+                                </p>
 
                                 {/* Enhanced Description */}
                                 <p className="text-xs sm:text-lg text-gray-300 max-w-xl leading-relaxed">
+                                    Turn Passion into Profit with Expert Predictions.
                                     Experience the power of data-driven predictions and expert insights. Join our elite community
                                     of smart bettors and unlock premium tips that consistently deliver results.
                                 </p>
@@ -276,31 +291,12 @@ const HomePageComponent = ({ content }: { content: any }) => {
                             </div>
 
                             {/* Enhanced CTA Buttons */}
-                            <div className="lg:hidden flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-6">
-                                <Link
-                                    href="https://t.me/Chriswrldarena1"
-                                    target='_blank'
-                                    className="group relative overflow-hidden px-6 py-2 w-75 sm:w-auto rounded-lg bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold text-center transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-yellow-500/25"
-                                >
-                                    <span className="flex items-center justify-center gap-2">
-                                        <svg className="size-5" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.227-.535.227l.19-2.712 4.94-4.465c.215-.19-.047-.296-.332-.106l-6.103 3.854-2.623-.816c-.57-.18-.582-.57.12-.843l10.238-3.948c.473-.174.887.104.605 1.337z" />
-                                        </svg>
-                                        JOIN TELEGRAM CHANNEL
-                                        <span className="absolute inset-0 flex justify-center items-center bg-white text-black transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                                            CLICK TO JOIN →
-                                        </span>
-                                    </span>
-                                </Link>
-
+                            <div className="lg:hidden flex flex-col sm:flex-row gap-4 pt-6">
                                 <Link
                                     href="/pricing"
-                                    className="group relative overflow-hidden px-6 py-2 w-75 sm:w-auto rounded-lg  bg-yellow-500 text-black font-semibold text-center transform hover:scale-[1.02] transition-all duration-300"
+                                    className="group relative overflow-hidden px-6 py-1.5 w-max rounded-lg  bg-yellow-500 text-black font-semibold text-center transform hover:scale-[1.02] transition-all duration-300"
                                 >
                                     <span className="flex items-center justify-center gap-2">
-                                        <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M2 8l4 10h12l4-10-6 5-4-7-4 7-6-5z" />
-                                        </svg>
                                         GET VIP GAMES
                                         <div className="absolute top-1 right-1">
                                             <div className="relative w-2 h-2">
@@ -309,6 +305,20 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                         </div>
                                     </span>
                                 </Link>
+                                <Link
+                                    href="https://t.me/Chriswrldarena1"
+                                    target='_blank'
+                                    className="group relative overflow-hidden px-6 py-1.5 w-max rounded-lg bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold text-center transform hover:scale-[1.02] transition-all duration-300 shadow-lg"
+                                >
+                                    <span className="flex items-center justify-center gap-2">
+                                        <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.227-.535.227l.19-2.712 4.94-4.465c.215-.19-.047-.296-.332-.106l-6.103 3.854-2.623-.816c-.57-.18-.582-.57.12-.843l10.238-3.948c.473-.174.887.104.605 1.337z" />
+                                        </svg>
+                                        JOIN TELEGRAM CHANNEL
+
+                                    </span>
+                                </Link>
+
                             </div>
                         </div>
 
@@ -334,7 +344,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
 
                             {/* Key Stats/Features Animation */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
-                                <div className="bg-green-800 backdrop-blur-sm p-6 rounded-xl border border-green-700 hover:border-green-600 transition-all duration-300 group hover:shadow-lg">
+                                <div className="bg-green-950 backdrop-blur-sm p-6 rounded-xl border border-green-800 hover:border-green-900 transition-all duration-300 group hover:shadow-lg">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-gradient-to-br from-white to-white/50 rounded-lg flex items-center justify-center transform group-hover:rotate-6 transition-transform duration-300">
                                             <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -348,7 +358,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     </div>
                                 </div>
 
-                                <div className="bg-green-800 backdrop-blur-sm p-6 rounded-xl border border-green-700 hover:border-green-600 transition-all duration-300 group hover:shadow-lg">
+                                <div className="bg-green-950 backdrop-blur-sm p-6 rounded-xl border border-green-800 hover:border-green-900 transition-all duration-300 group hover:shadow-lg">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-gradient-to-br from-white to-white/50 rounded-lg flex items-center justify-center transform group-hover:rotate-6 transition-transform duration-300">
                                             <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -404,8 +414,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             </section >
 
             {/* Recent Predictions Section */}
-            < section className="py-20" >
-
+            <section className="py-20">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col space-y-12">
                         {/* Section Header */}
@@ -419,10 +428,10 @@ const HomePageComponent = ({ content }: { content: any }) => {
                         </div>
 
                         <div className="w-full ">
-                            <div className="flex flex-col w-full xl:col-span-2 gap-16">
+                            <div ref={parentRef} className="flex flex-col w-full xl:col-span-2 gap-16">
                                 {/* VIP Predictions */}
                                 {content.isSubscriptionActive && <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-max">
-                                    <div className="p-6 bg-gradient-to-r from-green-900 to-green-800 border-b border-gray-200">
+                                    <div className="p-6 bg-gradient-to-r from-green-950 to-green-950 border-b border-gray-200">
                                         <div className="relative flex flex-col lg:flex-row gap-4 items-center justify-between">
                                             <span className="absolute left-0 items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-500 text-gray-900">
                                                 Premium
@@ -450,7 +459,6 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
                                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
                                                             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
-                                                            {user?.role === "ADMIN" && <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>}
                                                         </tr>
                                                     </thead>
                                                     <tbody className="divide-y divide-gray-200 bg-white">
@@ -482,23 +490,22 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                     </td>
 
                                                                     <td className="px-4 py-2 whitespace-nowrap">
-                                                                        {updating && index === currentposition && <LoaderCircle className="animate-spin size-4" />}
+                                                                        {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                                            {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                                                                        </span>}
 
-                                                                        {!updating && <>
-                                                                            {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                                                Won ✓
-                                                                            </span>}
-                                                                            {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                                                Lost ✗
-                                                                            </span>}
-                                                                            {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                                                Pending ⏳
-                                                                            </span>}
-                                                                        </>}
+                                                                        {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                                            {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+
+                                                                        </span>}
+                                                                        {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                                            {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+
+                                                                        </span>}
                                                                     </td>
 
                                                                     {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
-                                                                        <td className="relative px-4 py-2 flex gap-2 items-center justify-end">
+                                                                        <td className="relative px-4 py-2 flex gap-2 items-center justify-center">
 
                                                                             <Popover>
                                                                                 <PopoverTrigger asChild>
@@ -517,8 +524,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                     <div className="flex flex-col">
                                                                                         <button
                                                                                             className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                            onClick={() => {
-                                                                                                updateWLPrediction(index, prediction, 'WON');
+                                                                                            onClick={(e) => {
+                                                                                                updateWLPrediction(e, index, prediction, 'WON');
                                                                                             }}
                                                                                         >
                                                                                             <Check className="w-4 h-4 text-neutral-500" />
@@ -526,8 +533,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                         </button>
                                                                                         <button
                                                                                             className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                            onClick={() => {
-                                                                                                updateWLPrediction(index, prediction, 'LOST');
+                                                                                            onClick={(e) => {
+                                                                                                updateWLPrediction(e, index, prediction, 'LOST');
                                                                                             }}
                                                                                         >
                                                                                             <X className="w-4 h-4 text-neutral-500" />
@@ -535,8 +542,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                         </button>
                                                                                         <button
                                                                                             className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                            onClick={() => {
-                                                                                                updateWLPrediction(index, prediction, 'PENDING');
+                                                                                            onClick={(e) => {
+                                                                                                updateWLPrediction(e, index, prediction, 'PENDING');
                                                                                             }}
                                                                                         >
                                                                                             <Clock className="w-4 h-4 text-gray-500" />
@@ -553,7 +560,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                         </button>
                                                                                         <button
                                                                                             className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                                                                                            onClick={() => deletePrediction(index, prediction.id)}
+                                                                                            onClick={(e) => deletePrediction(e, index, prediction.id)}
                                                                                         >
                                                                                             <Trash className="w-4 h-4 text-red-500" />
                                                                                             Delete
@@ -562,9 +569,6 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                 </PopoverContent>
                                                                             </Popover>
                                                                         </td>}
-
-
-
 
                                                                 </tr>
                                                             ))}
@@ -596,8 +600,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                 </div>}
 
                                 {/* Custom Predictions */}
-                                {content.isSubscriptionActive && <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-max">
-                                    <div className="relative p-6 bg-gradient-to-r from-green-900 to-green-800 border-b border-gray-200">
+                                <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-max">
+                                    <div className="relative p-6 bg-gradient-to-r from-green-950 to-green-950 border-b border-gray-200">
                                         <div className="relative flex flex-col lg:flex-row gap-4 items-center justify-between">
                                             <h3 className="text-sm sm:text-xl font-bold text-white flex uppercase justify-center gap-2 ">
                                                 {title[1]?.defaulttitle || defaulttitles[1]}
@@ -649,23 +653,25 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                         </span>
                                                                     </td>
 
-                                                                    <td className="px-4 py-2 whitespace-nowrap">
-                                                                        {updating && index === currentposition && <LoaderCircle className="animate-spin size-4" />}
 
-                                                                        {!updating && <>
-                                                                            {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                                                Won ✓
-                                                                            </span>}
-                                                                            {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                                                Lost ✗
-                                                                            </span>}
-                                                                            {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                                                Pending ⏳
-                                                                            </span>}
-                                                                        </>}
+                                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                                        {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                                            {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                                                                        </span>}
+
+                                                                        {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                                            {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+
+                                                                        </span>}
+                                                                        {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                                            {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+
+                                                                        </span>}
                                                                     </td>
+
+
                                                                     {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
-                                                                        <td className="relative px-4 py-2 flex gap-2 items-center justify-end">
+                                                                        <td className="relative px-4 py-2 flex gap-2 items-center justify-center">
                                                                             <Popover>
                                                                                 <PopoverTrigger asChild>
                                                                                     <button
@@ -683,8 +689,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                     <div className="flex flex-col">
                                                                                         <button
                                                                                             className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                            onClick={() => {
-                                                                                                updateWLPrediction(index, prediction, 'WON');
+                                                                                            onClick={(e) => {
+                                                                                                updateWLPrediction(e, index, prediction, 'WON');
                                                                                             }}
                                                                                         >
                                                                                             <Check className="w-4 h-4 text-neutral-500" />
@@ -692,8 +698,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                         </button>
                                                                                         <button
                                                                                             className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                            onClick={() => {
-                                                                                                updateWLPrediction(index, prediction, 'LOST');
+                                                                                            onClick={(e) => {
+                                                                                                updateWLPrediction(e, index, prediction, 'LOST');
                                                                                             }}
                                                                                         >
                                                                                             <X className="w-4 h-4 text-neutral-500" />
@@ -701,8 +707,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                         </button>
                                                                                         <button
                                                                                             className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                            onClick={() => {
-                                                                                                updateWLPrediction(index, prediction, 'PENDING');
+                                                                                            onClick={(e) => {
+                                                                                                updateWLPrediction(e, index, prediction, 'PENDING');
                                                                                             }}
                                                                                         >
                                                                                             <Clock className="w-4 h-4 text-gray-500" />
@@ -719,7 +725,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                         </button>
                                                                                         <button
                                                                                             className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                                                                                            onClick={() => deletePrediction(index, prediction.id)}
+                                                                                            onClick={(e) => deletePrediction(e, index, prediction.id)}
                                                                                         >
                                                                                             <Trash className="w-4 h-4 text-red-500" />
                                                                                             Delete
@@ -747,29 +753,27 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                     <Link
                                                         href="/predictions/custom"
                                                         className="px-4 py-2 underline underline-offset-4 text-sm font-medium text-gray-900 hover:text-green-600 transition-all duration-300">
-                                                        {!user ? "Sign in to View" : "View All Matches"}
+                                                        {"View All Matches"}
                                                     </Link>
                                                     {user?.role === "ADMIN" && <Link
                                                         href={user ? "/dashboard/predictions/create" : "/signin"}
                                                         className=" text-sm font-medium text-gray-900 hover:text-green-600 transition-all duration-300"
                                                     >
                                                         <PlusCircle className='text-green-500 size-5 hover:text-gray-900' />
-                                                        {!user && "Sign in to View"}
+
                                                     </Link>}
                                                 </div>
                                             </div>
                                         </div>
-                                        {!content.isSubscriptionActive && <div className="flex my-4 items-center justify-center">
-                                            <p>You need to subscribe to see this</p>
-                                        </div>
-                                        }
+
+
                                     </div>
                                 </div>
-                                }
+
 
                                 {/* Previousely won odds */}
                                 <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-max">
-                                    <div className="flex flex-col lg:flex-row gap-4 p-6 bg-gradient-to-r from-green-900 to-green-800 border-b border-gray-200">
+                                    <div className="flex flex-col lg:flex-row gap-4 p-6 bg-gradient-to-r from-green-950 to-green-950 border-b border-gray-200">
                                         <h3 className="text-base sm:text-xl font-bold text-white flex uppercase items-center gap-2">
                                             {title[2]?.defaulttitle || defaulttitles[2]}
                                             <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
@@ -826,15 +830,21 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                             </td>
                                                             <td className="px-4 py-2 whitespace-nowrap">
                                                                 {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                                    {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : " Won ✓"}
-                                                                </span>}
-                                                                {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                                    {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+                                                                    {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
                                                                 </span>}
 
+                                                                {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                                    {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+
+                                                                </span>}
+                                                                {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                                    {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+
+                                                                </span>}
                                                             </td>
+
                                                             {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
-                                                                <td className="relative px-4 py-2 flex gap-2 items-center justify-end">
+                                                                <td className="relative px-4 py-2 flex gap-2 items-center justify-center">
 
                                                                     <Popover>
                                                                         <PopoverTrigger asChild>
@@ -853,8 +863,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                             <div className="flex flex-col">
                                                                                 <button
                                                                                     className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                    onClick={() => {
-                                                                                        updateWLPrediction(index, prediction, 'WON');
+                                                                                    onClick={(e) => {
+                                                                                        updateWLPrediction(e, index, prediction, 'WON');
                                                                                     }}
                                                                                 >
                                                                                     <Check className="w-4 h-4 text-neutral-500" />
@@ -862,8 +872,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                 </button>
                                                                                 <button
                                                                                     className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                    onClick={() => {
-                                                                                        updateWLPrediction(index, prediction, 'LOST');
+                                                                                    onClick={(e) => {
+                                                                                        updateWLPrediction(e, index, prediction, 'LOST');
                                                                                     }}
                                                                                 >
                                                                                     <X className="w-4 h-4 text-neutral-500" />
@@ -871,8 +881,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                 </button>
                                                                                 <button
                                                                                     className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                    onClick={() => {
-                                                                                        updateWLPrediction(index, prediction, 'PENDING');
+                                                                                    onClick={(e) => {
+                                                                                        updateWLPrediction(e, index, prediction, 'PENDING');
                                                                                     }}
                                                                                 >
                                                                                     <Clock className="w-4 h-4 text-gray-500" />
@@ -889,7 +899,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                 </button>
                                                                                 <button
                                                                                     className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                                                                                    onClick={() => deletePrediction(index, prediction.id)}
+                                                                                    onClick={(e) => deletePrediction(e, index, prediction.id)}
                                                                                 >
                                                                                     <Trash className="w-4 h-4 text-red-500" />
                                                                                     Delete
@@ -904,11 +914,14 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                         </table>
                                     </div>
                                     <div className="p-4 border-t border-gray-200 bg-gray-50">
-                                        <div className="flex w-full items-center justify-center my-4">
-                                            {currentPredictions
-                                                .filter(prediction => prediction.result !== "PENDING")
-                                                .slice(0, 10).length < 1 && <p>Empty List</p>}
-                                        </div>
+                                        {currentPredictions
+                                            .filter(prediction => prediction.result !== "PENDING")
+                                            .slice(0, 10).length < 1 &&
+                                            <div className="flex w-full items-center justify-center my-4">
+                                                <p>Empty List</p>
+
+                                            </div>
+                                        }
                                         <div className="flex items-center justify-center ">
                                             <Link
                                                 href="/predictions/previousgames"
@@ -928,34 +941,19 @@ const HomePageComponent = ({ content }: { content: any }) => {
 
                                 {/* Free Hot Odds */}
                                 <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-max">
-                                    <div className="flex flex-col lg:flex-row gap-4 p-6 bg-gradient-to-r from-green-900 to-green-800 border-b border-gray-200">
+                                    <div className="flex flex-col lg:flex-row gap-4 p-6 bg-gradient-to-r from-green-950 to-green-950 border-b border-gray-200">
                                         <h3 className="text-base sm:text-xl font-bold text-white uppercase flex items-center gap-2">
                                             {title[3]?.defaulttitle || defaulttitles[3]}
                                             {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-500 text-gray-900"
                                                 onClick={() => updateTableTitle(3, title[3]?.defaulttitle || defaulttitles[3])}>
                                                 <Edit2 className="size-4" />&nbsp;Edit
                                             </span>}
-                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                Live
-                                            </span>
                                         </h3>
 
 
                                     </div>
                                     <div className="p-0">
                                         <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4">
-                                            {/* <div className="flex items-center justify-between mb-4">
-                                                <div className="flex items-center gap-2">
-                                                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clipRule="evenodd" />
-                                                    </svg>
-                                                    <span className="font-bold text-gray-900 text-xs sm:">Today's Special Bet Slip</span>
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-xs sm:text-sm font-medium text-gray-500">Code:</span>
-                                                    <span suppressHydrationWarning className="text-xs sm:text-sm font-mono font-bold text-green-600">HOT-{Math.random().toString(36).substr(2, 6).toUpperCase()}</span>
-                                                </div>
-                                            </div> */}
                                             <div className="space-y-3">
                                                 {predictions
                                                     .filter((bet) => bet.result === "PENDING" && !bet.isCustom)
@@ -969,7 +967,6 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                             </div>
                                                             <div className="px-4 py-2 whitespace-nowrap">
                                                                 {updating && index === currentposition && <LoaderCircle className="animate-spin size-4" />}
-
                                                             </div>
                                                             <div className="flex text-right gap-4">
                                                                 <div className="">
@@ -994,8 +991,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                             <div className="flex flex-col">
                                                                                 <button
                                                                                     className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                    onClick={() => {
-                                                                                        updateWLPrediction(index, bet, 'WON');
+                                                                                    onClick={(e) => {
+                                                                                        updateWLPrediction(e, index, bet, 'WON');
                                                                                     }}
                                                                                 >
                                                                                     <Check className="w-4 h-4 text-neutral-500" />
@@ -1003,8 +1000,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                 </button>
                                                                                 <button
                                                                                     className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                    onClick={() => {
-                                                                                        updateWLPrediction(index, bet, 'LOST');
+                                                                                    onClick={(e) => {
+                                                                                        updateWLPrediction(e, index, bet, 'LOST');
                                                                                     }}
                                                                                 >
                                                                                     <X className="w-4 h-4 text-neutral-500" />
@@ -1012,8 +1009,8 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                 </button>
                                                                                 <button
                                                                                     className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                                    onClick={() => {
-                                                                                        updateWLPrediction(index, bet, 'PENDING');
+                                                                                    onClick={(e) => {
+                                                                                        updateWLPrediction(e, index, bet, 'PENDING');
                                                                                     }}
                                                                                 >
                                                                                     <Clock className="w-4 h-4 text-gray-500" />
@@ -1030,7 +1027,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                                                 </button>
                                                                                 <button
                                                                                     className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                                                                                    onClick={() => deletePrediction(index, bet.id)}
+                                                                                    onClick={(e) => deletePrediction(e, index, bet.id)}
                                                                                 >
                                                                                     <Trash className="w-4 h-4 text-red-500" />
                                                                                     Delete
@@ -1065,7 +1062,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
 
                                 {/* Midnight Oracle */}
                                 <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-max">
-                                    <div className="p-6 bg-gradient-to-r  from-green-900 to-green-800 border-b border-gray-200">
+                                    <div className="p-6 bg-gradient-to-r  from-green-950 to-green-950 border-b border-gray-200">
                                         <h3 className="text-xs sm:text-xl font-bold text-white flex items-center gap-2">
                                             {user?.role === "ADMIN" && <span className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-500 text-gray-900"
                                                 onClick={() => updateTableTitle(4, title[4]?.defaulttitle || defaulttitles[4])}>
@@ -1364,7 +1361,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                 <h2 className="text-4xl md:text-5xl font-bold lg:font-extrabold text-green-900 mb-8 text-center uppercase">Connect With Us</h2>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                                     {[
-                                        { title: "phone", label: "Call Us", href: "tel:+233540529214", icon: <Phone className="size-6 text-black" /> },
+                                        { title: "phone", label: "Call Us", href: "tel:+233 24 064 6729", icon: <Phone className="size-6 text-black" /> },
                                         { title: "mail", label: "Email", href: "mailto:chriswrld95@gmail.com", icon: <Mail className="size-6 text-black" /> },
                                         { title: "telegram", label: "Telegram", href: "https://t.me/Chriswrldarena1", icon: <FaTelegram className="size-6 text-black" /> },
                                         { title: "twitter", label: "Twitter", href: "https://x.com/chriswrld233", icon: <FaTwitter className="size-6 text-black" /> }
