@@ -253,10 +253,10 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 <div className="relative z-10 container mx-auto px-4">
                     <div className="w-full flex items-center justify-center flex-col lg:flex-row lg:justify-between gap-8">
                         {/* Text Content */}
-                        <div className="w-full flex flex-col justify-center mx-8 my-16 md:my-24 lg:my-48">
-                            <div className="flex flex-col w-full m-auto justify-center text-left mt-10  gap-4 md:gap-8 xl:gap-16">
+                        <div className="w-full flex flex-col justify-center mx-8 my-16 md:my-24 lg:my-28">
+                            <div className="flex flex-col w-full m-auto justify-center text-left mt-10 gap-4 md:gap-8 xl:gap-10">
                                 {/* Intro Description */}
-                                <h1 className="text-xl sm:text-6xl md:text-5xl xl:text-7xl font-bold lg:leading-relaxed md:leading-16 xl:leading-20">
+                                <h1 className="text-xl sm:text-xl md:text-5xl xl:text-6xl 2xl:text-7xl font-bold lg:leading-relaxed md:leading-16 xl:leading-20">
                                     Welcome to <br />Chriswrld Arena official Page
                                 </h1>
 
