@@ -240,7 +240,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <section className="md:px-8 flex flex-col justify-center items-center relative min-h-[55vh] md:min-h-[80vh] lg:min-h-[95vh] xl:min-h-[80vh] text-white w-full">
+            <section className="md:px-8 flex flex-col justify-center items-center relative text-white w-full">
                 {/* Dynamic Background with Overlay */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/80" />
@@ -253,35 +253,22 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 <div className="relative z-10 container mx-auto px-4">
                     <div className="w-full flex items-center justify-center flex-col lg:flex-row lg:justify-between gap-8">
                         {/* Text Content */}
-                        <div className="flex flex-col w-full  text-left space-y-6">
-                            {/* Welcome Message with Glow Effect */}
-                            <div className="relative">
-                                {/*  <p className="text-xl sm:text-3xl md:text-4xl font-light text-white/90 tracking-wide">
-                                    Welcome,{" "}
-                                    <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-500 ">
-                                        {user?.username || "Champion"}
-                                    </span>
-                                </p> */}
-                            </div>
-
-                            {/* Main Heading with Enhanced Typography */}
-                            <br />
-                            <br />
-                            <div className="space-y-4">
+                        <div className="w-full flex flex-col justify-center mx-8 my-16 md:my-24 lg:my-48">
+                            <div className="flex flex-col w-full m-auto justify-center text-left mt-10  gap-4 md:gap-8 xl:gap-16">
                                 {/* Intro Description */}
-                                <p className="text-2xl md:text-5xl lg:text-6xl 2xl:text-7xl font-bold  lg:leading-relaxed">
+                                <h1 className="text-xl sm:text-6xl md:text-5xl xl:text-7xl font-bold lg:leading-relaxed md:leading-16 xl:leading-20">
                                     Welcome to <br />Chriswrld Arena official Page
-                                </p>
+                                </h1>
 
                                 {/* Enhanced Description */}
-                                <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-300 max-w-2xl leading-relaxed">
+                                <p className="text-xs sm:text-lg md:text-xl text-gray-300 max-w-2xl xl:max-w-4xl">
                                     Join our elite community for expert predictions and data-driven insights that help turn your betting passion into consistent profits.
                                 </p>
 
                             </div>
 
                             {/* Enhanced CTA Buttons */}
-                            <div className="flex flex-col gap-4 pt-4">
+                            <div className="flex flex-col gap-4 pt-4 mt-8">
                                 <Link
                                     href="/pricing"
                                     className="group relative overflow-hidden px-6 py-1.5 w-max rounded-lg  bg-yellow-500 text-black font-semibold text-center transform hover:scale-[1.02] transition-all duration-300"
