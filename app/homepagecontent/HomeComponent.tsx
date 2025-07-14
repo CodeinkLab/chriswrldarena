@@ -240,7 +240,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <section className="md:px-8 flex flex-col justify-center items-center relative min-h-[55vh] md:min-h-[80vh] text-white w-full">
+            <section className="md:px-8 flex flex-col justify-center items-center relative min-h-[55vh] md:min-h-[80vh] lg:min-h-[95vh] xl:min-h-[80vh] text-white w-full">
                 {/* Dynamic Background with Overlay */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/80" />
