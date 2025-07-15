@@ -986,16 +986,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                         updating={updating}
                         currentPosition={currentposition}
                     />
-                    <TableComponent
-                        uniqueId={BetOfTheDayGamesData().uniqueId}
-                        data={BetOfTheDayGamesData().data}
-                        columns={BetOfTheDayGamesData().columns}
-                        actions={BetOfTheDayGamesData().actions}
-                        footer={BetOfTheDayGamesData().footer}
-                        header={BetOfTheDayGamesData().header}
-                        updating={updating}
-                        currentPosition={currentposition}
-                    />
+                   
                     <TableComponent
                         uniqueId={CorrectScoreGamesData().uniqueId}
                         data={CorrectScoreGamesData().data}
