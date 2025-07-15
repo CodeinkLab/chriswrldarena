@@ -22,7 +22,7 @@ const Footer = () => {
               <li><Link href="/predictions/freegames" className="text-white/70 hover:text-white/50 transition-colors text-sm">Predictions</Link></li>
               <li><Link href="/pricing" className="text-white/70 hover:text-white/50 transition-colors text-sm">VIP Games</Link></li>
               <li><Link href="/contact" className="text-white/70 hover:text-white/50 transition-colors text-sm">Contact us</Link></li>
-              <li><Link href="/contact" className="text-white/70 hover:text-white/50 transition-colors text-sm">About us</Link></li>
+              <li><Link href="/acout" className="text-white/70 hover:text-white/50 transition-colors text-sm">About us</Link></li>
             </ul>
           </div>
 
@@ -30,7 +30,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold text-white mb-4">Contact Info</h4>
             <div className="space-y-2">
-              <p className='text-sm text-white/70 hover:text-white/50'>Call/WhatsApp: +233 24 064 6729</p>
+              <p className='text-sm text-white/70 hover:text-white/50'>Call/WhatsApp: +233240646729</p>
               <p className='text-sm text-white/70 hover:text-white/50'>Email: chriswrld95@gmail.com</p>
               <p className='text-sm text-white/70 hover:text-white/50'>Telegram: @Chriswrldarena1</p>
             </div>

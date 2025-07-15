@@ -315,3 +315,13 @@ model Title {
   defaulttitle String
   customtitle  String
 }
+
+
+model BettingCode {
+  id              String   @id @default(uuid())
+  bettingPlatform String
+  bettingCode     String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+}

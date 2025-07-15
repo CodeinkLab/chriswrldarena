@@ -105,7 +105,7 @@ const Overview = ({ content }: any) => {
           <div className="flex items-center gap-3 mb-4">
             <div className={`p-3 rounded-xl bg-gradient-to-br ${
               color === 'green' ? 'from-green-500 to-green-600' :
-              color === 'orange' ? 'from-orange-500 to-orange-600' :
+              color === 'green' ? 'from-green-500 to-green-600' :
                 color === 'purple' ? 'from-purple-500 to-purple-600' :
                   color === 'teal' ? 'from-teal-500 to-teal-600' :
                     'from-indigo-500 to-indigo-600'
@@ -201,7 +201,7 @@ const Overview = ({ content }: any) => {
             value={safe(() => formatNumberShort(summary.overview.totalUsers || '0'), '0')}
             subtitle="Active members"
             trend={12.5}
-            color="orange"
+            color="green"
           />
           <StatCard
             icon={Target}

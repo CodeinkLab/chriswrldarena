@@ -1,10 +1,12 @@
 'use client'
 import { useDialog } from '@/app/components/shared/dialog'
+import { Action, Column, TableComponent } from '@/app/components/shared/TableSeater'
 import { useAuth } from '@/app/contexts/AuthContext'
 import { Prediction } from '@/app/lib/interface'
 import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover'
-import { Check, Clock, Edit, LoaderCircle, MoreVertical, Trash, X } from 'lucide-react'
+import { Check, Clock, Edit, LoaderCircle, MoreVertical, PlusCircle, Trash, X } from 'lucide-react'
 import moment from 'moment'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -95,6 +97,154 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
         })
     }
 
+    const CustomViewData = () => {
+        const columns: Column<Prediction>[] = [
+            {
+                header: 'Date',
+                accessorKey: 'publishedAt',
+                cell: (prediction) => (
+                    <>
+                        {moment(prediction.publishedAt).format('LL')}
+                        <br />
+                        {moment(prediction.publishedAt).format('LT')}
+                    </>
+                ),
+            },
+            {
+                header: 'Match',
+                accessorKey: 'homeTeam',
+                cell: (prediction) => (
+                    <div>
+                        <div className="text-sm font-medium text-gray-900">
+                            {prediction.sportType} • {prediction.league || 'Unknown League'}
+                        </div>
+                        <div className="text-sm text-gray-600 w-44 truncate">
+                            {prediction.homeTeam} vs {prediction.awayTeam}
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                header: 'Prediction',
+                accessorKey: 'tip',
+                cell: (prediction) => prediction.tip || 'No prediction available',
+            },
+            {
+                header: 'Odds',
+                accessorKey: 'odds',
+                cell: (prediction) => (
+                    <span className="px-2 py-1 text-xs font-medium text-neutral-800 bg-neutral-100 rounded-full">
+                        {prediction.odds || 'N/A'}
+                    </span>
+                ),
+            },
+            {
+                header: 'Analysis',
+                accessorKey: 'analysis',
+                cell: (prediction) => (
+                    <span className="px-2 py-1 text-xs text-neutral-800 rounded-full" title={prediction.analysis}>
+                        <Popover>
+                            <PopoverTrigger className='max-w-lg w-full' asChild>
+                                <p className="max-w-xs truncate text-sm cursor-default">{prediction.analysis}</p>
+
+                            </PopoverTrigger>
+                            <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
+                                <p className="whitespace-pre-wrap text-sm">{prediction.analysis}</p>
+                            </PopoverContent>
+                        </Popover>
+
+                    </span>
+                ),
+            },
+            {
+                header: 'Result',
+                accessorKey: 'result',
+                cell: (prediction, colIndex, index) => {
+                    if (prediction.result === "WON") {
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                        </span>;
+                    }
+                    if (prediction.result === "LOST") {
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+                        </span>;
+                    }
+                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+                    </span>;
+                },
+            },
+        ];
+        const actions: Action<Prediction>[] = user?.role === "ADMIN" ? [
+            {
+                label: 'Won',
+                icon: <Check className="w-4 h-4 text-neutral-500" />,
+                onClick: (prediction, index) => updateWLPrediction(index, prediction, 'WON'),
+            },
+            {
+                label: 'Lost',
+                icon: <X className="w-4 h-4 text-neutral-500" />,
+                onClick: (prediction, index) => updateWLPrediction(index, prediction, 'LOST'),
+            },
+            {
+                label: 'Pending',
+                icon: <Clock className="w-4 h-4 text-gray-500" />,
+                onClick: (prediction, index) => updateWLPrediction(index, prediction, 'PENDING'),
+            },
+            {
+                label: 'Edit',
+                icon: <Edit className="w-4 h-4 text-gray-500" />,
+                onClick: (prediction) => {
+                    window.location.href = `/dashboard/predictions/update/?id=${prediction.id}`;
+                },
+            },
+            {
+                label: 'Delete',
+                icon: <Trash className="w-4 h-4 text-red-500" />,
+                onClick: (prediction, index) => deletePrediction(index, prediction.id),
+                className: 'text-red-600',
+            },
+        ] : [];
+        const slice = 10
+        const header = {
+            title,
+            //badge: 'Premium',
+            //isAdmin: user?.role === "ADMIN",
+            //onTitleEdit: (title: string) => updateTableTitle(3, title),
+        }
+        const uniqueId = Date.now().toString()
+        const footer = {
+            emptyMessage: 'Empty List',
+            viewMoreLink: "/predictions/freegames",
+            viewMoreText: "View More",
+            customActions: user?.role === "ADMIN" && (
+                <Link
+                    href={user ? "/dashboard/predictions/create" : "/signin"}
+                    className="text-sm font-medium text-gray-900 hover:text-green-600 transition-all duration-300"
+                >
+                    <div className="group flex gap-1 items-center underline underline-offset-4 text-green-500 hover:text-gray-900">
+                        <PlusCircle className='text-green-500 size-5 group-hover:text-gray-900' /> Add Data
+                    </div>
+                    {!user && "Sign in to View"}
+                </Link>
+            ),
+        }
+        const className = "bg-gray-50 border-2 border-gray-200 rounded-lg"
+
+        return {
+            data: currentPredictions,
+            columns,
+            actions,
+            header,
+            footer,
+            slice,
+            totalPages,
+            updating,
+            uniqueId,
+            className
+        }
+    }
 
     return (
         <div className="relative mx-auto px-4 py-12">
@@ -111,173 +261,19 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
             </div>
 
 
-            <div className="max-w-[94rem]  mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 h-max">
-                <div className="p-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
-                    <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                        {title}
-                        <svg className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2 13l3.293-6.586a1 1 0 011.707-.117L10 10.382l2.999-4.085a1 1 0 011.707.117L18 13H2zm0 2a1 1 0 001 1h14a1 1 0 001-1v-1H2v1z" />
-                        </svg>
-                    </h3>
-                </div>
-                <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Match</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Odds</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Analysis</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> </th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-200 bg-white">
-                            {currentPredictions
-                                .map((prediction, index) => (
-                                    <tr key={index} className="hover:bg-gray-50 transition-colors odd:bg-neutral-100">
-                                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-600">
-                                            {moment(prediction.publishedAt).format('LL')}
-                                            <br />
-                                            {moment(prediction.publishedAt).format('LT')}
-                                        </td>
-                                        <td className="px-6 py-2 whitespace-nowrap">
-                                            <div className="text-sm font-medium text-gray-900">
-                                                {prediction.sportType} &bull; {prediction.league || 'Unknown League'}
-                                            </div>
-                                            <div className="text-sm text-gray-600 w-44 truncate">
-                                                {prediction.homeTeam} vs {prediction.awayTeam}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-600 w-20 truncate">
-                                            {prediction.tip || 'No prediction available'}
-                                        </td>
-                                        <td className="px-6 py-2 whitespace-nowrap">
-                                            <span className="px-2 py-1 text-xs font-medium text-neutral-800 bg-neutral-100 rounded-full">
-                                                {prediction.odds || 'N/A'}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-2 whitespace-nowrap " title={prediction.analysis}>
-                                            <Popover>
-                                                <PopoverTrigger className='max-w-lg w-full' asChild>
-                                                    <p className="max-w-xs truncate text-sm">{prediction.analysis}</p>
+            <div className="container w-full mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 h-max">
+                <TableComponent
+                    uniqueId={CustomViewData().uniqueId}
+                    data={CustomViewData().data}
+                    columns={CustomViewData().columns}
+                    actions={CustomViewData().actions}
+                    footer={CustomViewData().footer}
+                    header={CustomViewData().header}
+                    className={CustomViewData().className}
+                    updating={updating}
+                    currentPosition={currentposition}
+                />
 
-                                                </PopoverTrigger>
-                                                <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
-                                                    <p className="whitespace-pre-wrap text-sm">{prediction.analysis}</p>
-                                                </PopoverContent>
-                                            </Popover>
-                                        </td>
-
-                                        <td className="px-4 py-2 whitespace-nowrap">
-                                            {prediction.result === "WON" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
-                                            </span>}
-
-                                            {prediction.result === "LOST" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
-
-                                            </span>}
-                                            {prediction.result === "PENDING" && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                {updating && index === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
-
-                                            </span>}
-                                        </td>
-                                        {predictions.length > 0 && user?.role === "ADMIN" && !loading &&
-                                            <td className="relative my-auto px-6 py-2 gap-2 items-center justify-center">
-                                                <Popover>
-                                                    <PopoverTrigger className='flex' asChild>
-                                                        <button
-                                                            className=""
-                                                            tabIndex={0}
-                                                            aria-label="Show actions"
-                                                            type="button"
-                                                        >
-                                                            <MoreVertical
-                                                                className="text-neutral-500 cursor-pointer hover:text-neutral-600 size-5"
-                                                            />
-                                                        </button>
-                                                    </PopoverTrigger>
-                                                    <PopoverContent align="end" className="z-50 p-0 w-40 bg-white border border-gray-200 rounded shadow-lg">
-                                                        <div className="flex flex-col">
-                                                            <button
-                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                onClick={() => {
-                                                                    updateWLPrediction(index, prediction, 'WON');
-                                                                }}
-                                                            >
-                                                                <Check className="w-4 h-4 text-neutral-500" />
-                                                                Won
-                                                            </button>
-                                                            <button
-                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                onClick={() => {
-                                                                    updateWLPrediction(index, prediction, 'LOST');
-                                                                }}
-                                                            >
-                                                                <X className="w-4 h-4 text-neutral-500" />
-                                                                Lost
-                                                            </button>
-                                                            <button
-                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                onClick={() => {
-                                                                    updateWLPrediction(index, prediction, 'PENDING');
-                                                                }}
-                                                            >
-                                                                <Clock className="w-4 h-4 text-gray-500" />
-                                                                Pending
-                                                            </button>
-                                                            <button
-                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                                onClick={() => {
-                                                                    window.location.href = `/dashboard/predictions/update/?id=${prediction.id}`;
-                                                                }}
-                                                            >
-                                                                <Edit className="w-4 h-4 text-gray-500" />
-                                                                Edit
-                                                            </button>
-                                                            <button
-                                                                className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                                                                onClick={() => deletePrediction(index, prediction.id)}
-                                                            >
-                                                                <Trash className="w-4 h-4 text-red-500" />
-                                                                Delete
-                                                            </button>
-                                                        </div>
-                                                    </PopoverContent>
-                                                </Popover>
-                                            </td>}
-                                    </tr>
-                                ))}
-                        </tbody>
-                    </table>
-                </div>
-                <div className="p-4 border-t border-gray-200 bg-gray-50">
-                    {/* Pagination Controls */}
-                    <div className="flex items-center justify-between">
-                        <p className="text-sm text-gray-600">
-                            Showing {Math.min((currentPage - 1) * pageSize + 1, totalPages)}-
-                            {Math.min(currentPage * pageSize, totalPages)} of {totalPages} results
-                        </p>
-                        <div className="flex gap-2">
-                            <button
-                                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
-                                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                                disabled={currentPage === 1}
-                            >
-                                Previous
-                            </button>
-                            <button
-                                className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 disabled:opacity-50"
-                                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                                disabled={currentPage === totalPages}
-                            >
-                                Next
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>

@@ -3,6 +3,7 @@
 import { useDialog } from "@/app/components/shared/dialog";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { User } from "@/app/lib/interface";
+import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
 import { Check, Edit, MoreVertical, Trash, User as EditUser } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
@@ -180,14 +181,18 @@ const UsersClient = () => {
                                             </td>
                                              <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500"> {user.subscriptions?.length || "None"}</td>
                                              <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{moment(user.createdAt).format("LLL")}</td>
-                                            {users.length > 0 && !loading && <td className="flex justify-end whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium">
+                                             {users.length > 0 && !loading && <td className="justify-end whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium">
 
-                                                <div className="group my-4 ">
-                                                    <MoreVertical
-                                                        className="text-neutral-500 cursor-pointer hover:text-neutral-600 size-5"
-                                                        tabIndex={0}
-                                                    />
-                                                    <div className="absolute right-5  w-38 bg-white border border-gray-200 rounded shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto">
+                                                <Popover>
+                                                    <PopoverTrigger className='max-w-lg w-full' asChild>
+                                                        <MoreVertical
+                                                            className="text-neutral-500 cursor-pointer hover:text-neutral-600 size-5 outline-0"
+                                                            tabIndex={0}
+                                                        />
+
+                                                    </PopoverTrigger>
+                                                    <PopoverContent align="end" className=" h-auto  bg-white z-50 rounded-lg border border-neutral-300 p-2 outline-0">
+
                                                         <button
                                                             className="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                             onClick={() => {
@@ -215,8 +220,10 @@ const UsersClient = () => {
                                                             <Trash className="w-4 h-4 text-red-500" />
                                                             Delete User
                                                         </button>
-                                                    </div>
-                                                </div>
+
+
+                                                    </PopoverContent>
+                                                </Popover>
                                             </td>}
                                         </tr>
                                     )

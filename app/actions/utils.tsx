@@ -9,7 +9,7 @@ import { getCurrentUser } from "../lib/jwt"
 export const homeData = async () => {
     try {
         const currentuser = await getCurrentUser()
-        const [predictions, pricings, subscriptions, payments, titles, currencyrate] = await Promise.all([
+        const [predictions, pricings, subscriptions, payments, titles, betslip, currencyrate] = await Promise.all([
             await getDataWithOption('prediction', {
                 createdBy: true,
                 league_rel: true,
@@ -23,6 +23,7 @@ export const homeData = async () => {
             currentuser ? await getData('subscription', { userId: currentuser?.id }) : null,
             currentuser ? await getData('payment', { userId: currentuser?.id }) : null,
             await getData('title'),
+            await getData('bettingCode'),
             await fetch(`https://fxds-public-exchange-rates-api.oanda.com/cc-api/currencies?base=GHS&quote=${currentuser?.location?.currencycode || "USD"}&data_type=general_currency_pair&${getDateRange()}`, {
                 "headers": {
                     "accept": "application/json, text/plain, */*",
@@ -40,8 +41,9 @@ export const homeData = async () => {
             payments: payments?.data || [],
             subscriptions: subscriptions?.data || [],
             titles: titles?.data || [],
+            betslip: betslip?.data || [],
             currencyrate: cr,
-            isSubscriptionActive: await checkSubscriptionStatus(subscriptions?.data || [])
+            isSubscriptionActive: await checkSubscriptionStatus(currentuser, subscriptions?.data || [])
         }
     } catch (error) {
         console.log()
@@ -51,12 +53,15 @@ export const homeData = async () => {
             payments: [],
             subscriptions: [],
             titles: [],
+            betslip: [],
             currencyrate: { high_ask: 1 },
             error: error
         }
     }
 }
-const checkSubscriptionStatus = async (subs: any) => {
+const checkSubscriptionStatus = async (user: any, subs: any) => {
+    if (!user) return false;
+    const userId = user.id
     let hasActive = false;
     const now = new Date();
 
@@ -65,6 +70,7 @@ const checkSubscriptionStatus = async (subs: any) => {
             if (sub.status === 'ACTIVE') {
                 const expiry = new Date(sub.expiresAt);
                 if (expiry > now) {
+                    updateData("settings", { userId }, { values: "{subscriptionIndex: 0}" })
                     hasActive = true;
                 } else {
                     // Expired but still marked ACTIVE, update to EXPIRED
@@ -148,4 +154,9 @@ export const updateTitle = async (id: string, title: string) => {
 
 export const addPrices = async (items: any) => {
     return await createData('pricing', items);
+}
+
+
+export const addBettingCode = async (id: string, items: any) => {
+    return await updateData('bettingCode', { id }, items);
 }

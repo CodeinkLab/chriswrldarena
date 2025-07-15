@@ -377,7 +377,7 @@ export default function ProfileClient({ id }: { id: string }) {
                                         />
                                         <button className='absolute right-5 text-red-500 hover:text-red-600 transition-colors cursor-pointer'
                                             onClick={handleVerification}>
-                                            {profile.verified ? <Verified className='size-4 text-green-500' /> : "Verify"}
+                                            {profile.emailVerified ? <Verified className='size-4 text-green-500' /> : "Verify"}
                                         </button>
                                     </div>
                                 </div>
