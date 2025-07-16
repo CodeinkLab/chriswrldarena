@@ -5,9 +5,9 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900">
       <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-16">
+        <div className="grid grid-cols-1sm:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* About */}
-          <div className='col-span-2 lg:col-span-1'>
+          <div className=''>
             <h4 className="text-lg font-bold text-white mb-4">About ChrisWrldArena</h4>
             <p className="text-white/70 hover:text-white/50 text-sm">
               Expert sports predictions and analysis platform helping bettors make informed decisions.

@@ -16,13 +16,7 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
     const { user } = useAuth()
     const dialog = useDialog()
     const [predictions, setPredictions] = useState<Prediction[]>([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const predictionsPerPage = 25;
-    const pageSize = predictions.length;
-    const totalPages = Math.ceil(pageSize / predictionsPerPage);
-    const startIndex = (currentPage - 1) * predictionsPerPage;
-    const endIndex = startIndex + predictionsPerPage;
-    const currentPredictions = predictions.slice(startIndex, endIndex);
+    
     const [updating, setUpdating] = useState<boolean>(false);
     const [currentposition, setCurrentPosition] = useState<number>(-1);
     const [loading, setLoading] = useState(false)
@@ -233,13 +227,12 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
         const className = "bg-gray-50 border-2 border-gray-200 rounded-lg"
 
         return {
-            data: currentPredictions,
+            data: predictions,
             columns,
             actions,
             header,
             footer,
             slice,
-            totalPages,
             updating,
             uniqueId,
             className

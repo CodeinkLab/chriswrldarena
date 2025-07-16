@@ -53,12 +53,6 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
     const [predictions, setPredictions] = useState<Prediction[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [currency, setCurrency] = useState(1);
-    const predictionsPerPage = 20;
-    const pageSize = predictions.length;
-    const totalPages = Math.ceil(pageSize / predictionsPerPage);
-    const startIndex = (currentPage - 1) * predictionsPerPage;
-    const endIndex = startIndex + predictionsPerPage;
-    const currentPredictions = predictions.slice(startIndex, endIndex);
 
 
     const dialog = useDialog()
@@ -257,11 +251,11 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
     }
 
 
-    const VIPGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && !customgames.includes(prediction.customTitle!))
-    const CorrectScoreGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && prediction.customTitle === "Correct Score")
-    const DrawGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && prediction.customTitle === "Draw Games")
-    const BetOfTheDayGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && prediction.isCustom && prediction.isFree)
-    const PrevWonGames = currentPredictions.filter(prediction => prediction.result !== "PENDING" && !prediction.isFree)
+    const VIPGames = predictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && !customgames.includes(prediction.customTitle!))
+    const CorrectScoreGames = predictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && prediction.customTitle === "Correct Score")
+    const DrawGames = predictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && prediction.customTitle === "Draw Games")
+    const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.isCustom && prediction.isFree)
+    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING" && !prediction.isFree)
 
     const VIPGamesData = () => {
         const columns: Column<Prediction>[] = [
@@ -384,7 +378,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             header,
             footer,
             slice,
-            totalPages,
+
             updating,
             uniqueId
         }
@@ -511,7 +505,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             header,
             footer,
             slice,
-            totalPages,
+
             updating,
             uniqueId
         }
@@ -655,7 +649,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             header,
             footer,
             slice,
-            totalPages,
+
             updating,
             uniqueId
         }
@@ -783,7 +777,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             header,
             footer,
             slice,
-            totalPages,
+
             updating,
             uniqueId,
             className
@@ -910,7 +904,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             header,
             footer,
             slice,
-            totalPages,
+
             updating,
             uniqueId,
             className
@@ -974,7 +968,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                     </div>
                 </div>}
 
-                <div className="flex flex-col max-w-[95rem] w-full mx-auto gap-16 mt-16">
+                {content.isSubscriptionActive && <div className="flex flex-col max-w-[95rem] w-full mx-auto gap-16 mt-16">
 
                     <TableComponent
                         uniqueId={VIPGamesData().uniqueId}
@@ -986,7 +980,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                         updating={updating}
                         currentPosition={currentposition}
                     />
-                   
+
                     <TableComponent
                         uniqueId={CorrectScoreGamesData().uniqueId}
                         data={CorrectScoreGamesData().data}
@@ -1019,7 +1013,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                         currentPosition={currentposition}
                     />
 
-                </div>
+                </div>}
 
             </div >
         </div >

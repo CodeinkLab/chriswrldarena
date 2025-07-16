@@ -23,12 +23,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
     const dialog = useDialog()
     const [predictions, setPredictions] = useState<Prediction[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const predictionsPerPage = 20;
-    const pageSize = predictions.length;
-    const totalPages = Math.ceil(pageSize / predictionsPerPage);
-    const startIndex = (currentPage - 1) * predictionsPerPage;
-    const endIndex = startIndex + predictionsPerPage;
-    const currentPredictions = predictions.slice(startIndex, endIndex);
+   
     const [updating, setUpdating] = useState<boolean>(false);
     const [currentposition, setCurrentPosition] = useState<number>(-1);
     const [loading, setLoading] = useState(false)
@@ -335,11 +330,11 @@ const HomePageComponent = ({ content }: { content: any }) => {
     }
 
 
-    const VIPGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && !customgames.includes(prediction.customTitle!))
-    const BetOfTheDayGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && prediction.isCustom && prediction.isFree)
-    const PrevWonGames = currentPredictions.filter(prediction => prediction.result !== "PENDING")
-    const FreeGames = currentPredictions.filter(prediction => prediction.result === "PENDING" && prediction.isFree)
-    const MidnightOwlGames = currentPredictions.filter(prediction => prediction.result === "PENDING").slice(0, 5)
+    const VIPGames = predictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && !customgames.includes(prediction.customTitle!))
+    const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.isCustom && prediction.isFree)
+    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING")
+    const FreeGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.isFree)
+    const MidnightOwlGames = predictions.filter(prediction => prediction.result === "PENDING").slice(0, 5)
 
 
     const VIPData = () => {
@@ -467,7 +462,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             header,
             footer,
             slice,
-            totalPages,
+           
             updating,
             uniqueId
         }
@@ -597,7 +592,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             header,
             footer,
             slice,
-            totalPages,
+           
             updating,
             uniqueId
         }
@@ -727,7 +722,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             header,
             footer,
             slice,
-            totalPages,
+           
             updating,
             uniqueId
         }
@@ -875,7 +870,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             header,
             footer,
             slice,
-            totalPages,
+           
             updating,
             uniqueId,
             className,
@@ -1008,7 +1003,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             header,
             footer,
             slice,
-            totalPages,
+           
             updating,
             uniqueId,
             className
