@@ -89,6 +89,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
     useEffect(() => {
         if (content?.pricing) {
             content.pricing.length > 0 ? setPricingPlans(content.pricing) : null
+            setLoading(false);
         }
     }, [pricingPlans, content?.pricing]);
 
@@ -934,7 +935,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             <div className="flex flex-col max-w-[95rem] w-full mx-auto gap-16">
                 {!content.isSubscriptionActive && <div className="max-w-[95rem] w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-8 mx-auto my-16">
                     <div className="md:col-start-2 md:col-span-2 flex flex-col md:flex-row gap-8 justify-center items-center mx-auto w-full">
-                        {pricingPlans.map((plan, index) => (
+                         {pricingPlans.length > 0 && user && pricingPlans.map((plan, index) => (
                             <div
                                 key={plan.id}
                                 className={`relative bg-neutral-100 w-full rounded-lg p-8 transform hover:scale-105 hover:shadow-2xl transition-transform duration-300 ${plan.isPopular ? 'border-2 border-green-900' : 'border border-neutral-200 shadow-md'} col-start-${2}`}
@@ -966,6 +967,21 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                                 </button>
                             </div>
                         ))}
+                        <div className="col-span-2 flex justify-center items-center">
+                        {!loading && !user && (
+                            <Link href="/signin" className="bg-green-900 text-white px-8 py-3 rounded-md hover:bg-green-950 transition-colors">
+                                Sign in to Subscribe
+                            </Link>
+                        )}
+                        {loading ? (
+                            <div className="flex items-center space-x-2">
+                                <LoaderCircle className="animate-spin h-5 w-5 text-green-900" />
+                                <span className="text-gray-600">Loading plans...</span>
+                            </div>
+                        ) : pricingPlans.length === 0 && (
+                            <p className="text-gray-600">No pricing plans available</p>
+                        )}
+                    </div>
                     </div>
                 </div>}
 
