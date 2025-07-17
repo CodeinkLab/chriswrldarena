@@ -74,8 +74,8 @@ const checkSubscriptionStatus = async (user: any, subs: any) => {
                 console.log("Subscription expiry", expiry, now)
                 if (expiry > now) {
                     const subscriptionIndex = subs.indexOf(sub);
-                    await updateData("settings", { userId }, { values: JSON.stringify({ subscriptionIndex })})
-                   // await updateData("settings", { userId }, { values: JSON.stringify({ subscriptionIndex: subscriptionIndex })})
+                    await updateData("settings", { userId }, { values: JSON.stringify({ subscriptionIndex }) })
+                    // await updateData("settings", { userId }, { values: JSON.stringify({ subscriptionIndex: subscriptionIndex })})
                     hasActive = true;
                     break; // Exit loop once we find an active subscription
                 } else {
@@ -163,4 +163,24 @@ export const addPrices = async (items: any) => {
 
 export const addBettingCode = async (id: string, items: any) => {
     return await updateData('bettingCode', { id }, items);
+}
+
+export const savePayment = async (paymentitems: any, subscriptionitems: any) => {
+    try {
+        const [paymentResult, subscriptionResult] = await Promise.all([
+            createData('payment', paymentitems),
+            createData('subscription', subscriptionitems)
+        ]);
+        
+        return {
+            success: true,
+            payment: paymentResult,
+            subscription: subscriptionResult
+        };
+    } catch (error) {
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error occurred'
+        };
+    }
 }

@@ -9,7 +9,7 @@ import moment from 'moment';
 import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
 import { MoreVertical, Check, X, Clock, Edit, Trash, LoaderCircle, PlusCircle } from 'lucide-react';
 import { useDialog } from '../components/shared/dialog';
-import { updateTitle } from '../actions/utils';
+import { savePayment, updateTitle } from '../actions/utils';
 import { Action, Column, TableComponent } from '../components/shared/TableSeater';
 import Link from 'next/link';
 
@@ -113,15 +113,16 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
         }
         window.FlutterwaveCheckout({
             public_key: paymentKeys.FLW_PUBLIC_KEY,
-            tx_ref: `bbt-${Date.now()}`,
+            tx_ref: `cwa-${Date.now()}`,
             amount: plan.price * currency,
             currency: content.currencyrate ? user.location?.currencycode : "USD",
-            payment_options: 'card,banktransfer,ussd,mobilemoneyghana,mpesa,gpay,apay,paypal,opay',
-           
+            payment_options: 'card,banktransfer,ussd,mobilemoneyghana,gpay,apay,paypal,opay',
+
             customer: {
                 email: user.email,
                 name: user.username,
             },
+
             customizations: {
                 title: 'ChrisWrldArena Subscription',
                 description: `Subscribe to ${plan.name}`,
@@ -141,52 +142,49 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             }],
             callback: async (response: any) => {
                 if (response.status === 'successful') {
-                    await fetch('/api/payment', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            userId: user.id,
-                            amount: parseFloat((plan.price * currency).toString()),
-                            currency: plan.currency,
-                            provider: 'Flutterwave',
-                            status: "SUCCESS",
-                            reference: response.id + "|" + response.tx_ref,
-                        })
-                    });
-                    await fetch('/api/subscription', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            userId: user.id,
-                            plan: plan.plan,
-                            status: 'ACTIVE',
-                            startedAt: new Date().toISOString(),
-                            expiresAt: (() => {
-                                const start = new Date();
-                                if (plan.plan === 'DAILY') {
-                                    start.setDate(start.getDate() + 1);
-                                    start.setHours(1, 0, 0, 0);
-                                } else if (plan.plan === 'WEEKLY') {
-                                    start.setDate(start.getDate() + 7);
-                                    start.setHours(1, 0, 0, 0)
-                                }
-                                return start.toISOString();
-                            })(),
-                            flutterwavePaymentId: response.id,
-                        })
-                    });
+                    console.log(response)
+
+                    const paymentdata = {
+                        userId: user.id,
+                        amount: parseFloat((plan.price * currency).toString()),
+                        currency: plan.currency,
+                        provider: 'Flutterwave',
+                        status: "SUCCESS",
+                        reference: response.transaction_id.toString() + " " + response.tx_ref,
+                    }
+
+                    const subscriptiondata = {
+                        userId: user.id,
+                        plan: plan.plan,
+                        status: 'ACTIVE',
+                        startedAt: new Date().toISOString(),
+                        expiresAt: (() => {
+                            const start = new Date();
+                            if (plan.plan === 'DAILY') {
+                                start.setDate(start.getDate() + 1);
+                                start.setHours(1, 0, 0, 0);
+                            } else if (plan.plan === 'WEEKLY') {
+                                start.setDate(start.getDate() + 7);
+                                start.setHours(1, 0, 0, 0)
+                            }
+                            return start.toISOString();
+                        })(),
+                        flutterwavePaymentId: response.transaction_id.toString(),
+                    }
+                    await savePayment(paymentdata, subscriptiondata)
 
                     toast('Payment successful! Subscription activated.');
                     window.location.href = '/pricing';
                 } else {
+                    console.log('Payment not successful:', response);
                     toast.error('Payment not completed.');
                 }
             },
             onclose: async () => {
                 toast.error('Payment window closed.');
-
             },
         });
+
     };
 
     const deletePrediction = async (index: number, id: string) => {
@@ -933,9 +931,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 {!content.isSubscriptionActive && <p className="text-2xl text-gray-600 text-center mt-32">Get access to premium predictions and expert analysis</p>}
             </div>
             <div className="flex flex-col max-w-[95rem] w-full mx-auto gap-16">
-                {!content.isSubscriptionActive && <div className="max-w-[95rem] w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-8 mx-auto my-16">
+                {!content.isSubscriptionActive && <div className="w-full grid justify-center gap-8 max-w-7xl mx-auto my-16">
                     <div className="md:col-start-2 md:col-span-2 flex flex-col md:flex-row gap-8 justify-center items-center mx-auto w-full">
-                         {pricingPlans.length > 0 && user && pricingPlans.map((plan, index) => (
+                        {pricingPlans.length > 0 && user && pricingPlans.map((plan, index) => (
                             <div
                                 key={plan.id}
                                 className={`relative bg-neutral-100 w-full rounded-lg p-8 transform hover:scale-105 hover:shadow-2xl transition-transform duration-300 ${plan.isPopular ? 'border-2 border-green-900' : 'border border-neutral-200 shadow-md'} col-start-${2}`}
@@ -968,20 +966,20 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                             </div>
                         ))}
                         <div className="col-span-2 flex justify-center items-center">
-                        {!loading && !user && (
-                            <Link href="/signin" className="bg-green-900 text-white px-8 py-3 rounded-md hover:bg-green-950 transition-colors">
-                                Sign in to Subscribe
-                            </Link>
-                        )}
-                        {loading ? (
-                            <div className="flex items-center space-x-2">
-                                <LoaderCircle className="animate-spin h-5 w-5 text-green-900" />
-                                <span className="text-gray-600">Loading plans...</span>
-                            </div>
-                        ) : pricingPlans.length === 0 && (
-                            <p className="text-gray-600">No pricing plans available</p>
-                        )}
-                    </div>
+                            {!loading && !user && (
+                                <Link href="/signin" className="bg-green-900 text-white px-8 py-3 rounded-md hover:bg-green-950 transition-colors">
+                                    Sign in to Subscribe
+                                </Link>
+                            )}
+                            {loading ? (
+                                <div className="flex items-center space-x-2">
+                                    <LoaderCircle className="animate-spin h-5 w-5 text-green-900" />
+                                    <span className="text-gray-600">Loading plans...</span>
+                                </div>
+                            ) : pricingPlans.length === 0 && (
+                                <p className="text-gray-600">No pricing plans available</p>
+                            )}
+                        </div>
                     </div>
                 </div>}
 
