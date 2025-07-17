@@ -59,6 +59,7 @@ export const homeData = async () => {
         }
     }
 }
+
 const checkSubscriptionStatus = async (user: any, subs: any) => {
     if (!user) return false;
     const userId = user.id
@@ -66,16 +67,19 @@ const checkSubscriptionStatus = async (user: any, subs: any) => {
     const now = new Date();
 
     if (Array.isArray(subs)) {
+        console.log("Checking subscriptions for user", userId, subs)
         for (const sub of subs) {
             if (sub.status === 'ACTIVE') {
                 const expiry = new Date(sub.expiresAt);
+                console.log("Subscription expiry", expiry, now)
                 if (expiry > now) {
-                    updateData("settings", { userId }, { values: "{subscriptionIndex: 0}" })
+                    const subscriptionIndex = subs.indexOf(sub);
+                    await updateData("settings", { userId }, { values: JSON.stringify({ subscriptionIndex })})
+                   // await updateData("settings", { userId }, { values: JSON.stringify({ subscriptionIndex: subscriptionIndex })})
                     hasActive = true;
+                    break; // Exit loop once we find an active subscription
                 } else {
-                    // Expired but still marked ACTIVE, update to EXPIRED
                     await updateData("subscription", { id: sub.id }, { status: 'EXPIRED' })
-                    continue
                 }
             }
         }

@@ -1010,7 +1010,6 @@ const HomePageComponent = ({ content }: { content: any }) => {
         }
     }
 
-
     const WelcomPopoup = () => {
         const [isOpen, setIsOpen] = useState(false);
         useEffect(() => {

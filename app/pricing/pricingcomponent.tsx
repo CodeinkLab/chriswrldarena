@@ -116,6 +116,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             amount: plan.price * currency,
             currency: content.currencyrate ? user.location?.currencycode : "USD",
             payment_options: 'card,banktransfer,ussd,mobilemoneyghana,mpesa,gpay,apay,paypal,opay',
+           
             customer: {
                 email: user.email,
                 name: user.username,
@@ -175,13 +176,13 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                     });
 
                     toast('Payment successful! Subscription activated.');
-                    router.push('/profile'); // Redirect to subscription page
+                    window.location.href = '/pricing';
                 } else {
                     toast.error('Payment not completed.');
                 }
             },
             onclose: async () => {
-                toast.error('On payment closed.');
+                toast.error('Payment window closed.');
 
             },
         });
