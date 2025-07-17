@@ -51,20 +51,21 @@ enum EngagementType {
 }
 
 model User {
-  id            String         @id @default(uuid())
-  email         String         @unique
-  passwordHash  String
-  username      String         @default("")
-  phone         String?        @unique
-  role          UserRole       @default(USER)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  predictions   Prediction[]
-  subscriptions Subscription[]
-  payments      Payment[]
-  emailVerified Boolean        @default(false)
-  location      String         @default("")
-
+  id                String              @id @default(uuid())
+  email             String              @unique
+  passwordHash      String
+  username          String              @default("")
+  phone             String?             @unique
+  role              UserRole            @default(USER)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  predictions       Prediction[]
+  subscriptions     Subscription[]
+  payments          Payment[]
+  emailVerified     Boolean             @default(false)
+  location          String              @default("")
+  resetToken        String?
+  resetTokenExpiry  DateTime?
   Notification      Notification[]
   BlogPost          BlogPost[]
   Share             Share[]
@@ -316,12 +317,10 @@ model Title {
   customtitle  String
 }
 
-
 model BettingCode {
   id              String   @id @default(uuid())
   bettingPlatform String
   bettingCode     String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-
 }

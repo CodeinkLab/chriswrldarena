@@ -23,7 +23,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
     const dialog = useDialog()
     const [predictions, setPredictions] = useState<Prediction[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-   
+
     const [updating, setUpdating] = useState<boolean>(false);
     const [currentposition, setCurrentPosition] = useState<number>(-1);
     const [loading, setLoading] = useState(false)
@@ -462,7 +462,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             header,
             footer,
             slice,
-           
+
             updating,
             uniqueId
         }
@@ -592,7 +592,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             header,
             footer,
             slice,
-           
+
             updating,
             uniqueId
         }
@@ -722,7 +722,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             header,
             footer,
             slice,
-           
+
             updating,
             uniqueId
         }
@@ -845,21 +845,23 @@ const HomePageComponent = ({ content }: { content: any }) => {
             ),
         }
         const className = "bg-green-50 border-2 border-green-200 rounded-lg"
-        const component = <div key={Date.now()} className="relative flex items-center justify-between gap-4 px-4 py-4 bg-green-100 text-green-800 rounded-lg shadow-sm min-w-sm max-w-sm lg:max-w-lg mx-auto my-4 ">
-            <div className="flex items-center w-2/3 mr-4">
-                {user?.role === "ADMIN" && <Edit2 className="size-5 text-green-600 hover:text-green-800 cursor-pointer mr-4"
-                    onClick={showBettingCode} />}
-                <p className='text-center font-medium leading-5'>BET DIRECTLY ON <span className='italic underline underline-offset-4'>{bettingPlatform}</span></p>
-            </div>
-            <div >&bull;</div>
-            <div className="flex items-center w-1/3 gap-2 justify-between">
-                <p className='text-center leading-5 font-medium'>CODE: <span className='font-extrabold'>{bettingCode}</span></p>
-                <Copy className="size-8 md:size-4 font-medium text-green-600 hover:text-green-800 transition-colors duration-300"
-                    onClick={() => {
-                        navigator.clipboard.writeText(bettingCode);
-                        toast.success(`Code ${bettingCode} copied to clipboard!`);
-                    }}
-                />
+        const component = <div className="flex justify-center px-4">
+            <div key={Date.now()} className="relative flex flex-col md:flex-row w-full items-center justify-between gap-4 px-4 py-4 bg-green-100 text-green-800 rounded-lg shadow-sm min-w-xs max-w-md lg:max-w-lg mx-8 my-4 place-self-center">
+                <div className="flex items-center mr-4">
+                    {user?.role === "ADMIN" && <Edit2 className="size-5 text-green-600 hover:text-green-800 cursor-pointer mr-2 md:mr-4"
+                        onClick={showBettingCode} />}
+                    <p className='text-base text-center font-medium leading-5'>BET DIRECTLY ON <span className='italic underline underline-offset-4'>{bettingPlatform}</span></p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <p className='text-base text-center leading-5 font-medium'>CODE: <span className='font-extrabold'>{bettingCode}</span></p>
+                    <Copy className="size-5 font-medium text-green-600 hover:text-green-800 transition-colors duration-300"
+                        onClick={() => {
+                            navigator.clipboard.writeText(bettingCode);
+                            toast.success(`Code ${bettingCode} copied to clipboard!`);
+                        }}
+                    />
+                </div>
             </div>
         </div>
 
@@ -870,7 +872,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             header,
             footer,
             slice,
-           
+
             updating,
             uniqueId,
             className,
@@ -1003,7 +1005,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             header,
             footer,
             slice,
-           
+
             updating,
             uniqueId,
             className

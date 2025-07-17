@@ -14,13 +14,19 @@ export async function POST(request: NextRequest) {
         });
 
         if (!user) {
-            throw new Error("No account is associated with this email address");
+            return NextResponse.json(
+                { error: "No account is associated with this email address" },
+                { status: 403 }
+            );
         }
 
         // Verify password
         const isValidPassword = await bcrypt.compare(password, user.passwordHash);
         if (!isValidPassword) {
-            throw new Error("Invalid password, try another one.")
+            return NextResponse.json(
+                { error: "Invalid password, try another one." },
+                { status: 403 }
+            );
         }
 
         /**@todo Check if email is verified */
