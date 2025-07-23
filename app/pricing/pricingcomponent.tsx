@@ -276,9 +276,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <div>
                         <div className="text-sm font-medium text-gray-900">
-                            {prediction.sportType} • {prediction.league || 'Unknown League'}
+                            {prediction.league || 'Unknown League'}
                         </div>
-                        <div className="text-sm text-gray-600 w-44 truncate">
+                        <div className="text-sm text-gray-600 ">
                             {prediction.homeTeam} vs {prediction.awayTeam}
                         </div>
                     </div>
@@ -301,19 +301,19 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             {
                 header: 'Result',
                 accessorKey: 'result',
-                cell: (prediction, colIndex, index) => {
+                cell: (prediction, rowIndex, colIndex) => {
                     if (prediction.result === "WON") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800" title='Won'>
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Check className="w-4 h-4" />}
                         </span>;
                     }
                     if (prediction.result === "LOST") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800" title="Lost">
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <X className="w-4 h-4" />}
                         </span>;
                     }
-                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800" title="Pending">
+                        {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Clock className="w-4 h-4"/>}
                     </span>;
                 },
             },
@@ -402,9 +402,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <div>
                         <div className="text-sm font-medium text-gray-900">
-                            {prediction.sportType} • {prediction.league || 'Unknown League'}
+                            {prediction.league || 'Unknown League'}
                         </div>
-                        <div className="text-sm text-gray-600 w-44 truncate">
+                        <div className="text-sm text-gray-600 ">
                             {prediction.homeTeam} vs {prediction.awayTeam}
                         </div>
                     </div>
@@ -427,19 +427,19 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             {
                 header: 'Result',
                 accessorKey: 'result',
-                cell: (prediction, colIndex, index) => {
+                cell: (prediction, rowIndex, colIndex) => {
                     if (prediction.result === "WON") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800" title='Won'>
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Check className="w-4 h-4" />}
                         </span>;
                     }
                     if (prediction.result === "LOST") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800" title="Lost">
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <X className="w-4 h-4" />}
                         </span>;
                     }
-                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800" title="Pending">
+                        {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Clock className="w-4 h-4"/>}
                     </span>;
                 },
             },
@@ -529,9 +529,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <div>
                         <div className="text-sm font-medium text-gray-900">
-                            {prediction.sportType} • {prediction.league || 'Unknown League'}
+                            {prediction.league || 'Unknown League'}
                         </div>
-                        <div className="text-sm text-gray-600 w-44 truncate">
+                        <div className="text-sm text-gray-600 ">
                             {prediction.homeTeam} vs {prediction.awayTeam}
                         </div>
                     </div>
@@ -571,19 +571,19 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             {
                 header: 'Result',
                 accessorKey: 'result',
-                cell: (prediction, colIndex, index) => {
+                cell: (prediction, rowIndex, colIndex) => {
                     if (prediction.result === "WON") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800" title='Won'>
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Check className="w-4 h-4" />}
                         </span>;
                     }
                     if (prediction.result === "LOST") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800" title="Lost">
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <X className="w-4 h-4" />}
                         </span>;
                     }
-                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800" title="Pending">
+                        {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Clock className="w-4 h-4"/>}
                     </span>;
                 },
             },
@@ -673,9 +673,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <div>
                         <div className="text-sm font-medium text-gray-900">
-                            {prediction.sportType} • {prediction.league || 'Unknown League'}
+                            {prediction.league || 'Unknown League'}
                         </div>
-                        <div className="text-sm text-gray-600 w-44 truncate">
+                        <div className="text-sm text-gray-600 ">
                             {prediction.homeTeam} vs {prediction.awayTeam}
                         </div>
                     </div>
@@ -698,19 +698,19 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             {
                 header: 'Result',
                 accessorKey: 'result',
-                cell: (prediction, colIndex, index) => {
+                cell: (prediction, rowIndex, colIndex) => {
                     if (prediction.result === "WON") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800" title='Won'>
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Check className="w-4 h-4" />}
                         </span>;
                     }
                     if (prediction.result === "LOST") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800" title="Lost">
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <X className="w-4 h-4" />}
                         </span>;
                     }
-                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800" title="Pending">
+                        {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Clock className="w-4 h-4"/>}
                     </span>;
                 },
             },
@@ -802,9 +802,9 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <div>
                         <div className="text-sm font-medium text-gray-900">
-                            {prediction.sportType} • {prediction.league || 'Unknown League'}
+                            {prediction.league || 'Unknown League'}
                         </div>
-                        <div className="text-sm text-gray-600 w-44 truncate">
+                        <div className="text-sm text-gray-600 ">
                             {prediction.homeTeam} vs {prediction.awayTeam}
                         </div>
                     </div>
@@ -827,19 +827,19 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             {
                 header: 'Result',
                 accessorKey: 'result',
-                cell: (prediction, colIndex, index) => {
+                cell: (prediction, rowIndex, colIndex) => {
                     if (prediction.result === "WON") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Won ✓"}
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800" title='Won'>
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Check className="w-4 h-4" />}
                         </span>;
                     }
                     if (prediction.result === "LOST") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                            {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Lost ✗"}
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800" title="Lost">
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <X className="w-4 h-4" />}
                         </span>;
                     }
-                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        {updating && colIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : "Pending ⏳"}
+                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800" title="Pending">
+                        {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Clock className="w-4 h-4"/>}
                     </span>;
                 },
             },

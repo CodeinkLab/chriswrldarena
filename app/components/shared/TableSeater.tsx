@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import React, { ReactNode, useState } from 'react';
@@ -35,7 +36,7 @@ export interface TableFooter {
 }
 
 interface TableProps<T> {
-  data: T[];
+  data: any[];
   columns: Column<T>[];
   actions?: Action<T>[];
   pageSize?: number;
@@ -91,7 +92,7 @@ export function TableComponent<T>({
   }
 
   return (
-    <div className={`bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-max ${clsx(className)}`}>
+    <div className={`bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-max ${clsx(className)} `}>
       {/* Header Section */}
       {header && (
         <div className="p-6 bg-gradient-to-r from-green-950 to-green-900 border-b border-gray-200">
@@ -123,8 +124,8 @@ export function TableComponent<T>({
               <tr>
                 {columns.map((column, index) => (
                   <th
-                    key={index+column.header}
-                    className="px-4 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider"
+                    key={index + column.header}
+                    className={`px-2 py-4 text-left text-xs font-medium text-gray-900 uppercase tracking-wider  ${column.accessorKey === 'publishedAt' ? 'hidden md:table-cell' : ''}`}
                   >
                     {column.header}
                   </th>
@@ -142,9 +143,14 @@ export function TableComponent<T>({
                     className="hover:bg-gray-50 transition-colors odd:bg-neutral-100"
                   >
                     {columns.map((column, colIndex) => (
-                      <td key={colIndex} className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
-                        {column.cell ? column.cell(item, index, colIndex) : String(item[column.accessorKey] || '')}
-                      </td>
+                      <td
+                          key={colIndex + Math.random().toString(36).substring(2, 8)}
+                          className={`px-2 py-2 text-sm text-gray-600 ${column.accessorKey === 'publishedAt' ? 'hidden md:table-cell' : ''} `}
+                        >
+                          <div className="truncate whitespace-normal">
+                            {column.cell ? column.cell(item, index, currentData[index].id) : String(item[column.accessorKey] || '')}
+                          </div>
+                        </td>
                     ))}
                     {actions && actions.length > 0 && (
                       <td className="relative px-4 py-2 gap-2 items-center">
