@@ -48,7 +48,7 @@ export default function FormField({
             required={required}
             onChange={onChange}>
             <option value="">Select {label}</option>
-            {options?.map((option) => (
+            {options?.sort((a, b) => a.label.localeCompare(b.label)).map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
