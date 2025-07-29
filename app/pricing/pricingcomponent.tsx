@@ -876,7 +876,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
         ] : [];
         const slice = 10
         const header = {
-            title: "Previous Games Predictions"
+            title: "Previous Won VIP Games Predictions"
         }
         const uniqueId = Date.now().toString()
         const footer = {
@@ -904,7 +904,6 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             header,
             footer,
             slice,
-
             updating,
             uniqueId,
             className

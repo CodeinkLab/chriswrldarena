@@ -41,13 +41,13 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
     });
 
     const [selectedSportType, setSelectedSportType] = useState<string>(initialData['sportType'] || '');
-    
+
     const [leagueOptions, setLeagueOptions] = useState(() => {
         if (initialData['sportType']) {
             const found = sportTypeOptions.find(opt => opt.label === initialData['sportType']);
             return found ? found.league : [];
         }
-       
+
         return [];
     });
 
@@ -133,9 +133,10 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
                             error={error}
                             required={isCustom ?? true}
                             options={
-                                [{ label: 'Bet of the Day', value: 'Bet of the Day' },
-                                { label: 'Correct Score', value: 'Correct Score' },
-                                { label: 'Draw Games', value: 'Draw Games' },
+                                [
+                                    // { label: 'Bet of the Day', value: 'Bet of the Day' },
+                                    { label: 'Correct Score', value: 'Correct Score' },
+                                    { label: 'Draw Games', value: 'Draw Games' },
                                 ]}
                             hidden={!isCustom}
                             disabled={field.disabled || isSubmitting}

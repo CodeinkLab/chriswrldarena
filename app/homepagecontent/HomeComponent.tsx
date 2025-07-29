@@ -912,6 +912,11 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => prediction.tip || 'No prediction available',
             },
             {
+                header: 'Game',
+                accessorKey: 'isFree',
+                cell: (prediction) => prediction.isFree ? 'VIP' : 'Free',
+            },
+            {
                 header: 'Odds',
                 accessorKey: 'odds',
                 cell: (prediction) => (
