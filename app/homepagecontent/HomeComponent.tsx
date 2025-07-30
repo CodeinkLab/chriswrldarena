@@ -38,9 +38,9 @@ const HomePageComponent = ({ content }: { content: any }) => {
 
     const defaulttitles = [
         "Vip Predictions",
-        "Bet of the day",
-        "Previously Won Matches",
+        // "Bet of the day",
         "Free Hot Odds",
+        "Previously Won Matches",
         "Midnight Owl",
     ]
 
@@ -630,6 +630,11 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => prediction.tip || 'No prediction available',
             },
             {
+                header: 'Game',
+                accessorKey: 'isFree',
+                cell: (prediction) => prediction.isFree ? 'VIP' : 'Free',
+            },
+            {
                 header: 'Odds',
                 accessorKey: 'odds',
                 cell: (prediction) => (
@@ -912,11 +917,6 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => prediction.tip || 'No prediction available',
             },
             {
-                header: 'Game',
-                accessorKey: 'isFree',
-                cell: (prediction) => prediction.isFree ? 'VIP' : 'Free',
-            },
-            {
                 header: 'Odds',
                 accessorKey: 'odds',
                 cell: (prediction) => (
@@ -1016,7 +1016,6 @@ const HomePageComponent = ({ content }: { content: any }) => {
             className
         }
     }
-
     const WelcomPopoup = () => {
         const [isOpen, setIsOpen] = useState(false);
         useEffect(() => {
