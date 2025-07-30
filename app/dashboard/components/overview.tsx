@@ -53,17 +53,17 @@ const Overview = ({ content }: any) => {
   const [loading, setLoading] = useState(true)
   const [summary, setSummary] = useState<any>(null)
 
-  /* useEffect(() => {
+ useEffect(() => {
     async function fetchAll() {
       setLoading(true)
       const cacheKey = 'dashboard_summary_cache'
       const cache = typeof window !== 'undefined' ? localStorage.getItem(cacheKey) : null
-      if (cache) {
+      /* if (cache) {
         try {
           setSummary(JSON.parse(cache))
           setLoading(false)
         } catch { }
-      }
+      } */
 
       console.log('Fetched data:', content.summary)
 
@@ -92,7 +92,7 @@ const Overview = ({ content }: any) => {
     }
     fetchAll()
   },  [content.summary])
-*/
+
   // Helper to safely get a value
   const safe = (fn: () => any, fallback: any = '...') => {
     try { const v = fn(); return v === undefined ? fallback : v } catch { return fallback }
