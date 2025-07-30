@@ -130,7 +130,7 @@ export async function overviewData() {
         ])
 
         const summary = Analytics.Summary.getDashboardSummary({
-            users: users.data,
+            users: users.data.filter((user: any) => user.role !== 'ADMIN'),
             predictions: predictions.data,
             payments: payments.data,
             subscriptions: subscriptions.data,
@@ -168,10 +168,10 @@ export const addBettingCode = async (id: string, items: any) => {
 export const savePayment = async (paymentitems: any, subscriptionitems: any) => {
     try {
         const [paymentResult, subscriptionResult] = await Promise.all([
-            createData('payment', paymentitems),
-            createData('subscription', subscriptionitems)
+            await createData('payment', paymentitems),
+            await createData('subscription', subscriptionitems)
         ]);
-        
+
         return {
             success: true,
             payment: paymentResult,

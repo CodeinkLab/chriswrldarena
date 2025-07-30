@@ -21,7 +21,8 @@ export default function CreatePredictionClient() {
 
     async function handleCreate(data: CreatePredictionDTO) {
 
-        const isFree = (data.customTitle === "Correct Score" || data.customTitle === "Draw Games") ? false : data.isFree
+        const isFree = (data.customTitle === "Correct Score" || data.customTitle === "Draw Games") ? false : data.customTitle === "Bet of the Day" ? true : data.isFree
+        const isCustom = data.customTitle === "Correct Score" || data.customTitle === "Draw Games" || data.customTitle === "Bet of the Day";
 
         setIsSubmitting(true);
         try {
@@ -34,6 +35,7 @@ export default function CreatePredictionClient() {
                     publishedAt: new Date(data.publishedAt || Date.now()).toISOString(),
                     result: "PENDING",
                     isFree,
+                    isCustom,
                     userId: user?.id
                 }),
             });

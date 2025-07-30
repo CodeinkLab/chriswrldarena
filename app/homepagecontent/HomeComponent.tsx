@@ -331,7 +331,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
 
 
     const VIPGames = predictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && !prediction.isCustom)
-    const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && prediction.customTitle === "Bet of the Day")
+    const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.isFree && prediction.customTitle === "Bet of the Day")
     const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING")
     const FreeGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.isFree)
     const MidnightOwlGames = predictions.filter(prediction => prediction.result === "PENDING").slice(0, 0)
