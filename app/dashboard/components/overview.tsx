@@ -53,7 +53,7 @@ const Overview = ({ content }: any) => {
   const [loading, setLoading] = useState(true)
   const [summary, setSummary] = useState<any>(null)
 
-  useEffect(() => {
+  /* useEffect(() => {
     async function fetchAll() {
       setLoading(true)
       const cacheKey = 'dashboard_summary_cache'
@@ -91,8 +91,8 @@ const Overview = ({ content }: any) => {
       })
     }
     fetchAll()
-  }, [content.summary])
-
+  },  [content.summary])
+*/
   // Helper to safely get a value
   const safe = (fn: () => any, fallback: any = '...') => {
     try { const v = fn(); return v === undefined ? fallback : v } catch { return fallback }

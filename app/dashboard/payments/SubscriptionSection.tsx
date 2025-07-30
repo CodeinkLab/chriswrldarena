@@ -203,7 +203,7 @@ export default function SubscriptionSection() {
 
         const paydata = {
             userId: selectedUser?.id,
-            amount: selectedPlan.amount,
+            amount: selectedUser?.role === 'ADMIN' ? 0 : selectedPlan.amount,
             reference: Date.now().toString(),
             status: "SUCCESS",
             currency: user?.location?.currencycode || "USD",
