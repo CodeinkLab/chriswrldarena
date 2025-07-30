@@ -1316,7 +1316,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     currentPosition={currentposition}
                                 />
 
-                                {new Date().getHours() >= 0 && new Date().getHours() < 5 ? (<TableComponent
+                                {/*  {new Date().getHours() >= 0 && new Date().getHours() < 5 ? (<TableComponent
                                     uniqueId={MidnightOwlData().uniqueId}
                                     data={MidnightOwlData().data}
                                     columns={MidnightOwlData().columns}
@@ -1328,18 +1328,18 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     updating={updating}
                                     currentPosition={currentposition}
 
-                                />) : (
-                                    <div className="text-center py-12 border border-gray-200 rounded-lg bg-green-50">
-                                        <div className="w-20 h-20 mx-auto mb-6 text-gray-400">
-                                            <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                        </div>
-                                        <h3 className="text-xs sm:text-xl font-medium text-gray-900 mb-2">Predictions Unavailable</h3>
-                                        <p className="text-xs sm:text-base text-gray-600">Our Midnight Oracle predictions are only available from 12 AM to 5 AM.</p>
-                                        <p suppressHydrationWarning className="text-xs sm:text-sm text-green-600 mt-2">Returns in {23 - new Date().getHours()} hours - {60 - new Date().getMinutes()} mins</p>
+                                />) : ( )} */}
+                                <div className="text-center py-12 border border-gray-200 rounded-lg bg-green-50">
+                                    <div className="w-20 h-20 mx-auto mb-6 text-gray-400">
+                                        <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
                                     </div>
-                                )}
+                                    <h3 className="text-xs sm:text-xl font-medium text-gray-900 mb-2">Predictions Unavailable</h3>
+                                    <p className="text-xs sm:text-base text-gray-600">Our Midnight Oracle predictions are only available from 12 AM to 5 AM.</p>
+                                    <p suppressHydrationWarning className="text-xs sm:text-sm text-green-600 mt-2">Returns in {23 - new Date().getHours()} hours - {60 - new Date().getMinutes()} mins</p>
+                                </div>
+
                             </div>
 
                             {/* TODO: duplicate to make adds */}
