@@ -91,7 +91,7 @@ const Overview = ({ content }: any) => {
       })
     }
     fetchAll()
-  },  [content.summary])
+  },  [summary, content.summary])
 
   // Helper to safely get a value
   const safe = (fn: () => any, fallback: any = '...') => {
