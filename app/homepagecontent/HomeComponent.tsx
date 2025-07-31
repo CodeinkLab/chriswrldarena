@@ -632,7 +632,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Game',
                 accessorKey: 'isFree',
-                cell: (prediction) => prediction.isFree ? 'VIP' : 'Free',
+                cell: (prediction) => !prediction.isFree ? 'VIP' : 'Free',
             },
             {
                 header: 'Odds',
