@@ -173,7 +173,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                     const updatedTitles = [...title];
                     updatedTitles[index] = { ...updatedTitles[index], defaulttitle: titlename };
                     setTitle(updatedTitles);
-                    await updateTitle(title[index].id, titlename)
+                    await updateTitle(String(index), titlename)
                     titlename = ""
                 }
             },
@@ -333,13 +333,13 @@ const HomePageComponent = ({ content }: { content: any }) => {
     const VIPGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "VIP_GAME")
     const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "BET_OF_THE_DAY")
     const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING")
-    .filter(prediction => {
-        const predictionDate = new Date(prediction.publishedAt);
-        const now = new Date();
-        const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
-        return predictionDate >= twentyFourHoursAgo;
-    })
-    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+        .filter(prediction => {
+            const predictionDate = new Date(prediction.publishedAt);
+            const now = new Date();
+            const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+            return predictionDate >= twentyFourHoursAgo;
+        })
+        .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     const FreeGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "FREE_GAME")
     const MidnightOwlGames = predictions.filter(prediction => prediction.result === "PENDING").slice(0, 0)
 
@@ -352,7 +352,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        
+
                     </>
                 ),
             },
@@ -439,7 +439,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             title: title[0]?.defaulttitle || defaulttitles[0],
             badge: 'Premium',
             isAdmin: user?.role === "ADMIN",
-            onTitleEdit: (title: string) => updateTableTitle(0, title),
+            onTitleEdit: (title: string) => updateTableTitle(1, title),
 
         }
 
@@ -481,7 +481,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        
+
                     </>
                 ),
             },
@@ -568,7 +568,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             title: title[1]?.defaulttitle || defaulttitles[1],
             //badge: 'Premium',
             isAdmin: user?.role === "ADMIN",
-            onTitleEdit: (title: string) => updateTableTitle(1, title),
+            onTitleEdit: (title: string) => updateTableTitle(2, title),
 
         }
 
@@ -610,7 +610,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        
+
                     </>
                 ),
             },
@@ -697,7 +697,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             title: title[2]?.defaulttitle || defaulttitles[2],
             //badge: 'Premium',
             isAdmin: user?.role === "ADMIN",
-            onTitleEdit: (title: string) => updateTableTitle(2, title),
+            onTitleEdit: (title: string) => updateTableTitle(3, title),
 
         }
 
@@ -761,7 +761,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        
+
                     </>
                 ),
             },
@@ -853,7 +853,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             title: title[3]?.defaulttitle || defaulttitles[3],
             //badge: 'Premium',
             isAdmin: user?.role === "ADMIN",
-            onTitleEdit: (title: string) => updateTableTitle(3, title),
+            onTitleEdit: (title: string) => updateTableTitle(4, title),
 
         }
 
@@ -887,7 +887,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             uniqueId
         }
     }
-    
+
     const MidnightOwlData = () => {
         const columns: Column<Prediction>[] = [
             {
@@ -896,7 +896,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        
+
                     </>
                 ),
             },
@@ -980,7 +980,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
         ] : [];
         const slice = 3
         const header = {
-            title: title[4]?.defaulttitle || defaulttitles[4],
+            title: title[5]?.defaulttitle || defaulttitles[5],
             //badge: 'Premium',
             isAdmin: user?.role === "ADMIN",
             onTitleEdit: (title: string) => updateTableTitle(4, title),
@@ -1344,7 +1344,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                                 {user?.role === "ADMIN" && (
                                                     <span
                                                         className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-400 text-gray-900"
-                                                        onClick={() => updateTableTitle(4, title[4]?.defaulttitle || defaulttitles[4])}>
+                                                        onClick={() => updateTableTitle(5, title[4]?.defaulttitle || defaulttitles[4])}>
                                                         <Edit2 className="size-4" />&nbsp;Edit
                                                     </span>
                                                 )}
