@@ -102,7 +102,6 @@ model Prediction {
   gameType    GameType         @default(FREE_GAME)
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
-  league_rel  League           @relation(fields: [league], references: [name])
   Share       Share[]
   Save        Save[]
   Like        Like[]
@@ -159,14 +158,6 @@ model Pricing {
   @@unique([plan, currency])
 }
 
-model League {
-  id          String       @id @default(uuid())
-  name        String       @unique
-  sporttype   String       @default("Soccer")
-  predictions Prediction[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-}
 
 model Settings {
   id        String   @id @default(uuid())

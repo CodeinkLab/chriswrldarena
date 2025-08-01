@@ -50,14 +50,17 @@ export default function UpdatePredictionClient() {
         setIsSubmitting(true);
         try {
             // Remove 'id' from data before sending
-            const { id, customRange, ...dataWithoutId } = data;
+            const { id, ...dataWithoutId } = data;
+            console.log('Update data:', dataWithoutId);
+            console.log('League value:', dataWithoutId.league);
+            console.log('League type:', typeof dataWithoutId.league);
+            
             const response = await fetch(`/api/prediction/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     ...dataWithoutId,
                     publishedAt: new Date(data.publishedAt).toISOString(),
-                    //odds: Number(data.odds),
                 }),
             });
             if (!response.ok) throw new Error("Failed to Update prediction");
