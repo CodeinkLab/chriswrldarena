@@ -247,7 +247,7 @@ export default function FormField({
             disabled={disabled}
             required={required}
             onChange={onChange}>
-            <option disabled value="">Select {label}</option>
+            <option value="">Select {label}</option>
             {options?.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}

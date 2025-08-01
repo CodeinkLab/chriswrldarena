@@ -12,7 +12,6 @@ export const homeData = async () => {
         const [predictions, pricings, subscriptions, payments, titles, betslip, currencyrate] = await Promise.all([
             await getDataWithOption('prediction', {
                 createdBy: true,
-                league_rel: true,
                 Share: true,
                 Save: true,
                 Like: true,
@@ -71,7 +70,6 @@ const checkSubscriptionStatus = async (user: any, subs: any) => {
         for (const sub of subs) {
             if (sub.status === 'ACTIVE') {
                 const expiry = new Date(sub.expiresAt);
-                console.log("Subscription expiry", expiry, now)
                 if (expiry > now) {
                     const subscriptionIndex = subs.indexOf(sub);
                     await updateData("settings", { userId }, { values: JSON.stringify({ subscriptionIndex }) })
@@ -93,7 +91,7 @@ export async function overviewData() {
     try {
 
         const [users, predictions, payments, subscriptions, blogPosts] = await Promise.all([
-            await getDataWithOption('user', {
+            getDataWithOption('user', {
                 predictions: true,
                 subscriptions: true,
                 payments: true,
@@ -106,9 +104,8 @@ export async function overviewData() {
                 Comment: true,
                 Settings: true
             }),
-            await getDataWithOption('prediction', {
+            getDataWithOption('prediction', {
                 createdBy: true,
-                league_rel: true,
                 Share: true,
                 Save: true,
                 Like: true,
@@ -116,10 +113,10 @@ export async function overviewData() {
                 View: true,
             }),
 
-            await getData('payment'),
-            await getData('pricing'),
-            await getData('subscription'),
-            await getDataWithOption('blogPost', {
+            getData('payment'),
+            getData('pricing'),
+            getData('subscription'),
+            getDataWithOption('blogPost', {
                 author: true,
                 Share: true,
                 Save: true,
