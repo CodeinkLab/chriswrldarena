@@ -74,7 +74,6 @@ export const revalidate = 0
 
 export default async function HomePage() {
   const homedata = await homeData()
-  console.log('Home Page Data:', homedata);
   
   return (
     <HomePageComponent content={homedata} />
