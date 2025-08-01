@@ -66,7 +66,7 @@ const checkSubscriptionStatus = async (user: any, subs: any) => {
     const now = new Date();
 
     if (Array.isArray(subs)) {
-        
+
         for (const sub of subs) {
             if (sub.status === 'ACTIVE') {
                 const expiry = new Date(sub.expiresAt);
@@ -170,3 +170,5 @@ export const savePayment = async (paymentitems: any, subscriptionitems: any) => 
         };
     }
 }
+
+

@@ -263,3 +263,8 @@ export const getDateRange = (): string => {
 
     return `start_date=${start_date}&end_date=${end_date}`;
 };
+
+export const getTitleName = (id: number, titles: any[]) => {
+    const title = titles.find(title => title.id === id.toString());
+    return title.defaulttitle;
+}
