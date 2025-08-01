@@ -350,7 +350,7 @@ export const sportTypeOptions = [
         ]
     
     },
-    {
+/*     {
         label: 'Basketball', league: [
             { label: 'NBA', value: 'NBA' },
             { label: 'EuroLeague', value: 'EuroLeague' },
@@ -398,7 +398,7 @@ export const sportTypeOptions = [
             { label: 'WTA International', value: 'WTA International' },
             { label: 'Challenger Tour Finals', value: 'Challenger Tour Finals' },
         ]
-    },
+    }, */
     {
         label: 'American Football', league: [
             { label: 'NFL', value: 'NFL' },
@@ -427,7 +427,7 @@ export const sportTypeOptions = [
             { label: 'Liga Noruega de Fútbol Americano', value: 'Liga Noruega de Fútbol Americano' },
         ]
     },
-    {
+   /*  {
         label: 'Baseball', league: [
             { label: 'MLB', value: 'MLB' },
             { label: 'Nippon Professional Baseball', value: 'Nippon Professional Baseball' },
@@ -923,8 +923,8 @@ export const sportTypeOptions = [
             { label: 'Kiteboarding', value: 'Kiteboarding' },
             { label: 'Paragliding', value: 'Paragliding' },
             { label: 'Hang Gliding', value: 'Hang Gliding' },
-        ]
-    }
+       ]
+    }*/  
 ]
 
 export const predictionFormSchema: SchemaDefinition<PredictionFormData> = {
@@ -1012,6 +1012,7 @@ export const predictionFormSchema: SchemaDefinition<PredictionFormData> = {
         validation: {
             maxLength: 2000,
         },
+        hidden: true,
     },
     publishedAt: {
         type: 'datetime-local',

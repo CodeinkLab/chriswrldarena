@@ -255,7 +255,14 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
     const CorrectScoreGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "CORRECT_SCORE")
     const DrawGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "DRAW_GAME")
     const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "BET_OF_THE_DAY")
-    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING" && prediction.gameType === "FREE_GAME").sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING" && prediction.gameType === "FREE_GAME")
+        .filter(prediction => {
+            const predictionDate = new Date(prediction.publishedAt);
+            const now = new Date();
+            const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+            return predictionDate >= twentyFourHoursAgo;
+        })
+        .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
 
     const VIPGamesData = () => {
         const columns: Column<Prediction>[] = [
@@ -265,8 +272,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+
                     </>
                 ),
             },
@@ -391,8 +397,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+
                     </>
                 ),
             },
@@ -518,8 +523,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+
                     </>
                 ),
             },
@@ -548,23 +552,6 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <span className="px-2 py-1 text-xs font-medium text-neutral-800 bg-neutral-100 rounded-full">
                         {prediction.odds || 'N/A'}
-                    </span>
-                ),
-            }, {
-                header: 'Analysis',
-                accessorKey: 'analysis',
-                cell: (prediction) => (
-                    <span className="px-2 py-1 text-xs text-neutral-800 rounded-full" title={prediction.analysis || ""}>
-                        <Popover>
-                            <PopoverTrigger className='max-w-lg w-full' asChild>
-                                <p className="max-w-xs truncate text-sm cursor-default">{prediction.analysis}</p>
-
-                            </PopoverTrigger>
-                            <PopoverContent align="center" className=" h-auto w-md bg-white z-50 rounded-lg shadow-lg border-2 border-neutral-300 p-4 outline-0">
-                                <p className="whitespace-pre-wrap text-sm">{prediction.analysis}</p>
-                            </PopoverContent>
-                        </Popover>
-
                     </span>
                 ),
             },
@@ -662,8 +649,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+
                     </>
                 ),
             },
@@ -791,8 +777,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+
                     </>
                 ),
             },

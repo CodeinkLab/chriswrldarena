@@ -99,8 +99,7 @@ const PredictionComponent = ({ content, title }: { content: Prediction[], title:
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+                        
                     </>
                 ),
             },

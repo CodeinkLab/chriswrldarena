@@ -332,7 +332,14 @@ const HomePageComponent = ({ content }: { content: any }) => {
 
     const VIPGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "VIP_GAME")
     const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "BET_OF_THE_DAY")
-    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING").sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING")
+    .filter(prediction => {
+        const predictionDate = new Date(prediction.publishedAt);
+        const now = new Date();
+        const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+        return predictionDate >= twentyFourHoursAgo;
+    })
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     const FreeGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "FREE_GAME")
     const MidnightOwlGames = predictions.filter(prediction => prediction.result === "PENDING").slice(0, 0)
 
@@ -345,8 +352,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+                        
                     </>
                 ),
             },
@@ -475,8 +481,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+                        
                     </>
                 ),
             },
@@ -605,8 +610,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+                        
                     </>
                 ),
             },
@@ -740,8 +744,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+                        
                     </>
                 ),
             },
@@ -892,8 +895,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                 cell: (prediction) => (
                     <>
                         {moment(prediction.publishedAt).format('LL')}
-                        <br />
-                        {moment(prediction.publishedAt).format('LT')}
+                        
                     </>
                 ),
             },
