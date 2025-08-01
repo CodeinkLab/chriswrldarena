@@ -8,6 +8,7 @@ import { Controller, FieldValues, UseFormRegister } from 'react-hook-form';
 export interface FormFieldPropsWithChange extends FormFieldProps {
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   editorContent?: (data: OutputData | null) => void;
+  initialValue?: string | number;
 }
 
 
@@ -22,6 +23,7 @@ interface AccordionSelectProps {
   required?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   label: string;
+  initialValue?: string | number;
 }
 
 function AccordionSelect({
@@ -34,6 +36,7 @@ function AccordionSelect({
   required,
   onChange,
   label,
+  initialValue,
 }: AccordionSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(() => {
@@ -48,8 +51,28 @@ function AccordionSelect({
     }
     return initialExpanded;
   });
-  const [selectedValue, setSelectedValue] = useState('');
-  const [selectedLabel, setSelectedLabel] = useState(`Select ${label}`);
+  const [selectedValue, setSelectedValue] = useState(() => {
+    if (initialValue) {
+      console.log(`AccordionSelect ${name} - Initial value:`, initialValue);
+      return String(initialValue);
+    }
+    return '';
+  });
+  
+  const [selectedLabel, setSelectedLabel] = useState(() => {
+    if (initialValue && groupedOptions) {
+      console.log(`AccordionSelect ${name} - Looking for label for initial value:`, initialValue);
+      // Find the label for the initial value
+      for (const [_country, options] of Object.entries(groupedOptions)) {
+        const foundOption = options?.find(option => String(option.value) === String(initialValue));
+        if (foundOption) {
+          console.log(`AccordionSelect ${name} - Found initial label:`, foundOption.label);
+          return foundOption.label;
+        }
+      }
+    }
+    return `Select ${label}`;
+  });
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Sync selectedValue with the registered input
@@ -201,6 +224,7 @@ export default function FormField({
   onChange,
   editorContent: _editorContent,
   control,
+  initialValue,
 }: FormFieldPropsWithChange) {
   const getErrorMessage = useCallback((fieldName: string) => {
     const fieldError = error?.[fieldName];
@@ -262,6 +286,7 @@ export default function FormField({
           required={required}
           onChange={onChange}
           label={label}
+          initialValue={initialValue}
         />;
 
 

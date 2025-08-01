@@ -99,6 +99,7 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
                             disabled={field.disabled || isSubmitting}
                             placeholder={field.placeholder}
                             onChange={handleSportTypeChange}
+                            initialValue={initialData[name as keyof TFieldValues] as string | number}
                             control={control}
                         />
                     );
@@ -120,6 +121,7 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
                                 // Handle grouped-select value change
                                 setValue(name as Path<TFieldValues>, e.target.value as any);
                             }}
+                            initialValue={initialData[name as keyof TFieldValues] as string | number}
                             control={control}
                         />
                     );
@@ -137,6 +139,7 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
                         options={field.options}
                         disabled={field.disabled || isSubmitting}
                         placeholder={field.placeholder}
+                        initialValue={initialData[name as keyof TFieldValues] as string | number}
                         control={control}
                     />
                 );
