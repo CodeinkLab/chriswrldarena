@@ -125,7 +125,7 @@ export function TableComponent<T>({
                 {columns.map((column, index) => (
                   <th
                     key={index + column.header}
-                    className={`px-2 py-4 text-left text-xs font-medium text-gray-900 uppercase tracking-wider  `}
+                    className={`px-2 py-4 text-left text-xs font-medium text-gray-900 uppercase tracking-wider ${column.accessorKey === 'publishedAt' ? 'hidden md:table-cell' : ''}`}
                   >
                     {column.header}
                   </th>
@@ -145,15 +145,15 @@ export function TableComponent<T>({
                     {columns.map((column, colIndex) => (
                       <td
                         key={colIndex + Math.random().toString(36).substring(2, 8)}
-                        className={`px-2 max-w-20 md:max-w-max py-2 text-sm text-gray-600 `}
+                        className={`px-2 py-2 text-sm text-gray-600 min-w-0 ${column.accessorKey === 'publishedAt' ? 'hidden md:table-cell' : ''}`}
                       >
-                        <div className="truncate whitespace-pre-line max-w-20 md:max-w-max">
+                        <div className="break-words text-xs sm:text-sm lg:max-w-xs xl:max-w-sm 2xl:max-w-md">
                           {column.cell ? column.cell(item, index, currentData[index].id) : String(item[column.accessorKey] || '')}
                         </div>
                       </td>
                     ))}
                     {actions && actions.length > 0 && (
-                      <td className="relative px-4 py-2 gap-2 items-center">
+                      <td className="relative px-2 py-2 w-10">
                         <Popover>
                           <PopoverTrigger asChild>
                             <button
@@ -162,7 +162,7 @@ export function TableComponent<T>({
                               aria-label="Show actions"
                               type="button"
                             >
-                              <MoreVertical className="text-neutral-500 cursor-pointer hover:text-neutral-600 size-5" />
+                              <MoreVertical className="text-neutral-500 cursor-pointer hover:text-neutral-600 size-4 sm:size-5" />
                             </button>
                           </PopoverTrigger>
                           <PopoverContent

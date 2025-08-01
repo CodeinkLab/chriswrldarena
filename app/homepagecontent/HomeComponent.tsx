@@ -379,7 +379,10 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                cell: (prediction) => prediction.tip || 'No prediction available',
+                 cell: (prediction) => <>
+                    <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
+                    <p className="md:hidden text-xs">----------</p>
+                    {prediction.tip || 'No prediction available'}</>
             },
             {
                 header: 'Odds',
@@ -508,7 +511,10 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                cell: (prediction) => prediction.tip || 'No prediction available',
+                 cell: (prediction) => <>
+                    <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
+                    <p className="md:hidden text-xs">----------</p>
+                    {prediction.tip || 'No prediction available'}</>
             },
             {
                 header: 'Odds',
@@ -637,7 +643,10 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                cell: (prediction) => prediction.tip || 'No prediction available',
+                cell: (prediction) => <>
+                    <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
+                    <p className="md:hidden text-xs">----------</p>
+                    {prediction.tip || 'No prediction available'}</>,
             },
             {
                 header: 'Odds',
@@ -788,7 +797,10 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                cell: (prediction) => prediction.tip || 'No prediction available',
+                 cell: (prediction) => <>
+                    <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
+                    <p className="md:hidden text-xs">----------</p>
+                    {prediction.tip || 'No prediction available'}</>
             },
             {
                 header: 'Game',
@@ -923,7 +935,10 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                cell: (prediction) => prediction.tip || 'No prediction available',
+                 cell: (prediction) => <>
+                    <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
+                    <p className="md:hidden text-xs">----------</p>
+                    {prediction.tip || 'No prediction available'}</>
             },
             {
                 header: 'Odds',
