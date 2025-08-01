@@ -15,7 +15,7 @@ import { toast } from 'react-hot-toast';
 import { useDialog } from '../components/shared/dialog';
 import { addBettingCode, updateTitle } from '../actions/utils';
 import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
-import { FaTelegram, FaTwitter } from 'react-icons/fa';
+import { FaSpinner, FaTelegram, FaTwitter } from 'react-icons/fa';
 import { Action, Column, TableComponent } from '../components/shared/TableSeater';
 
 const HomePageComponent = ({ content }: { content: any }) => {
@@ -330,10 +330,10 @@ const HomePageComponent = ({ content }: { content: any }) => {
     }
 
 
-    const VIPGames = predictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && !prediction.isCustom)
-    const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.isFree && prediction.customTitle === "Bet of the Day")
-    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING")
-    const FreeGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.isFree)
+    const VIPGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "VIP_GAME")
+    const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "BET_OF_THE_DAY")
+    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING").sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    const FreeGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "FREE_GAME")
     const MidnightOwlGames = predictions.filter(prediction => prediction.result === "PENDING").slice(0, 0)
 
 
@@ -632,7 +632,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Game',
                 accessorKey: 'isFree',
-                cell: (prediction) => !prediction.isFree ? 'VIP' : 'Free',
+                cell: (prediction) => prediction.gameType.replace('_', ' ').toUpperCase() || 'N/A',
             },
             {
                 header: 'Odds',
@@ -1274,7 +1274,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                         uniqueId={VIPData().uniqueId}
                                         data={VIPData().data}
                                         columns={VIPData().columns}
-                                        slice={VIPData().slice}
+                                        //slice={VIPData().slice}
                                         actions={VIPData().actions}
                                         footer={VIPData().footer}
                                         header={VIPData().header}
@@ -1295,7 +1295,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     uniqueId={FreeGamesData().uniqueId}
                                     data={FreeGamesData().data}
                                     columns={FreeGamesData().columns}
-                                    slice={FreeGamesData().slice}
+                                    //slice={FreeGamesData().slice}
                                     actions={FreeGamesData().actions}
                                     footer={FreeGamesData().footer}
                                     header={FreeGamesData().header}
@@ -1308,7 +1308,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     uniqueId={PreviousWonData().uniqueId}
                                     data={PreviousWonData().data}
                                     columns={PreviousWonData().columns}
-                                    slice={PreviousWonData().slice}
+                                    //slice={PreviousWonData().slice}
                                     actions={PreviousWonData().actions}
                                     footer={PreviousWonData().footer}
                                     header={PreviousWonData().header}
@@ -1320,7 +1320,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     uniqueId={MidnightOwlData().uniqueId}
                                     data={MidnightOwlData().data}
                                     columns={MidnightOwlData().columns}
-                                    slice={MidnightOwlData().slice}
+                                    //slice={MidnightOwlData().slice}
                                     actions={MidnightOwlData().actions}
                                     footer={MidnightOwlData().footer}
                                     header={MidnightOwlData().header}
@@ -1329,15 +1329,47 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     currentPosition={currentposition}
 
                                 />) : ( )} */}
-                                <div className="text-center py-12 border border-gray-200 rounded-lg bg-green-50">
-                                    <div className="w-20 h-20 mx-auto mb-6 text-gray-400">
-                                        <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
+                                <div className={`bg-white rounded-xl shadow-sm overflow-hidden border border-green-200 h-max `}>
+                                    {/* Header Section */}
+
+                                    <div className="p-6 bg-gradient-to-r from-green-950 to-green-900 border-b border-green-200">
+                                        <div className="relative flex flex-col lg:flex-row gap-4 items-center justify-between">
+
+                                            <h3 className={`text-sm sm:text-xl font-bold text-white flex items-center gap-2 uppercase`}>
+                                                {title[4]?.defaulttitle || defaulttitles[4]}
+                                                {user?.role === "ADMIN" && (
+                                                    <span
+                                                        className="inline-flex cursor-pointer items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-400 text-gray-900"
+                                                        onClick={() => updateTableTitle(4, title[4]?.defaulttitle || defaulttitles[4])}>
+                                                        <Edit2 className="size-4" />&nbsp;Edit
+                                                    </span>
+                                                )}
+                                            </h3>
+                                        </div>
                                     </div>
-                                    <h3 className="text-xs sm:text-xl font-medium text-gray-900 mb-2">Predictions Unavailable</h3>
-                                    <p className="text-xs sm:text-base text-gray-600">Our Midnight Oracle predictions are only available from 12 AM to 5 AM.</p>
-                                    <p suppressHydrationWarning className="text-xs sm:text-sm text-green-600 mt-2">Returns in {23 - new Date().getHours()} hours - {60 - new Date().getMinutes()} mins</p>
+                                    <div className="text-center py-12 border border-gray-200 rounded-lg bg-green-50">
+                                        {new Date().getHours() >= 0 && new Date().getHours() > 5 ? (
+                                            <>
+                                                <div className="w-20 h-20 mx-auto mb-6 text-gray-400">
+                                                    <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                </div>
+                                                <h3 className="text-xs sm:text-xl font-medium text-gray-900 mb-2">Predictions Unavailable</h3>
+                                                <p className="text-xs sm:text-base text-gray-600">Our Midnight Oracle predictions are only available from 12 AM to 5 AM.</p>
+                                                <p suppressHydrationWarning className="text-xs sm:text-sm text-green-600 mt-2">Returns in {23 - new Date().getHours()} hours - {60 - new Date().getMinutes()} mins</p>
+                                            </>
+                                        ) : (
+                                            <div className="flex flex-col items-center">
+                                                <FaSpinner className="animate-spin size-6 text-green-500 mt-4" />
+                                                <p className="text-xs sm:text-base text-gray-600">Our Midnight Oracle predictions are only available from 12 AM to 5 AM.</p>
+                                                <p className="text-xs sm:text-lg text-green-600 mt-2">Predictions will be available soon.</p>
+                                            </div>
+
+                                        )}
+
+                                    </div>
+
                                 </div>
 
                             </div>

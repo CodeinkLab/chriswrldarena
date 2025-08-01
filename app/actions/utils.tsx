@@ -67,7 +67,7 @@ const checkSubscriptionStatus = async (user: any, subs: any) => {
     const now = new Date();
 
     if (Array.isArray(subs)) {
-        console.log("Checking subscriptions for user", userId, subs)
+        
         for (const sub of subs) {
             if (sub.status === 'ACTIVE') {
                 const expiry = new Date(sub.expiresAt);

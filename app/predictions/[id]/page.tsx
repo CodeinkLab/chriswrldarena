@@ -36,13 +36,13 @@ export default async function PredictionDetailsPage({ params }: { params: Promis
     switch (id) {
       case 'freegames':
         title = sortedTitles[3].defaulttitle
-        return data.predictions.filter((bet: Prediction) => bet.result === "PENDING" && bet.isFree);
+        return data.predictions.filter((bet: Prediction) => bet.result === "PENDING" && bet.gameType === "FREE_GAMES");
       case 'custom':
         title = sortedTitles[1].defaulttitle
-        return data.predictions.filter((bet: Prediction) => bet.result === "PENDING" && bet.isCustom && bet.isFree);
+        return data.predictions.filter((bet: Prediction) => bet.result === "PENDING" && bet.gameType === "BET_OF_THE_DAY");
       case 'previousgames':
         title = sortedTitles[2].defaulttitle
-        return data.predictions.filter((bet: Prediction) => bet.result !== "PENDING");
+        return data.predictions.filter((bet: Prediction) => bet.result !== "PENDING").sort((a: { publishedAt: string | number | Date }, b: { publishedAt: string | number | Date }) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
       default:
         title = "No Predictions Found for the Category"
         return []

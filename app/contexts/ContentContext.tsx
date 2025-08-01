@@ -81,11 +81,9 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
                 });
 
                 const checkSubscriptionStatus = async (subs: any) => {
-
                     let hasActive = false;
                     const now = new Date();
 
-                    console.log('Checking subscriptions for user', subs);
                     if (Array.isArray(subs)) {
                         for (const sub of subs) {
                             if (sub.status === 'ACTIVE') {

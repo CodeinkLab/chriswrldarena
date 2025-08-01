@@ -7,7 +7,7 @@ import { Check, Clock, Diamond, Edit, MoreVertical, SubscriptIcon, Trash, X } fr
 import { useDialog } from '@/app/components/shared/dialog';
 import { FaSpinner } from 'react-icons/fa';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 50;
 
 const GetPredictions = () => {
     const dialog = useDialog()
@@ -190,7 +190,10 @@ const GetPredictions = () => {
                                     </td>
                                 </tr>
                             ) : (
-                                paginatedPredictions.map((prediction, i) => (
+                                paginatedPredictions.sort((a, b) => {
+                                    const statusOrder = { 'PENDING': 0, 'WON': 1, 'LOST': 2 };
+                                    return statusOrder[a.result as keyof typeof statusOrder] - statusOrder[b.result as keyof typeof statusOrder];
+                                }).map((prediction, i) => (
                                     <tr key={i + (currentPage - 1) * pageSize} className="hover:bg-gray-50">
                                         <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-600">{moment(prediction.publishedAt).format("L")}
                                             <br />

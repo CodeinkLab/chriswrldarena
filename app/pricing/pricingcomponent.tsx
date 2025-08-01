@@ -251,11 +251,11 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
     }
 
 
-    const VIPGames = predictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && !prediction.isCustom)
-    const CorrectScoreGames = predictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && prediction.customTitle === "Correct Score")
-    const DrawGames = predictions.filter(prediction => prediction.result === "PENDING" && !prediction.isFree && prediction.customTitle === "Draw Games")
-    const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.isCustom && prediction.isFree)
-    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING" && (!prediction.isFree && (prediction.customTitle === "Correct Score" || prediction.customTitle === "Draw Games")))
+    const VIPGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "VIP_GAME")
+    const CorrectScoreGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "CORRECT_SCORE")
+    const DrawGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "DRAW_GAME")
+    const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "BET_OF_THE_DAY")
+    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING" && prediction.gameType === "FREE_GAME").sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
 
     const VIPGamesData = () => {
         const columns: Column<Prediction>[] = [
@@ -814,7 +814,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                 header: 'Prediction',
                 accessorKey: 'tip',
                 cell: (prediction) => prediction.tip || 'No prediction available',
-            },            
+            },
             {
                 header: 'Odds',
                 accessorKey: 'odds',
