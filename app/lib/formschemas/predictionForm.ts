@@ -1,5 +1,5 @@
 import { SchemaDefinition, ValidationRules } from '@/app/lib/interface';
-import { League, PredictionResult, User } from '@prisma/client';
+import { PredictionResult, User } from '@prisma/client';
 
 type PredictionFormData = {
     sportType: string;
@@ -14,7 +14,6 @@ type PredictionFormData = {
     createdBy?: User;
     gameType?: string;
     userId: string;
-    league_rel?: League;
     validation?: ValidationRules
 };
 
