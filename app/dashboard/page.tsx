@@ -3,7 +3,6 @@
 import { Metadata } from 'next'
 import Overview from './components/overview'
 import { overviewData } from '../actions/utils'
-import { generateToken } from '../lib/auth'
 
 
 export const metadata: Metadata = {
@@ -79,12 +78,13 @@ export const revalidate = 0
 export default async function DashboardPage() {
   const dashboard = await overviewData()
 
-  if (!dashboard) return [{
-    users: [], predictions: [], payments: [], subscriptions: [], blogPosts: [], summary: []
-  }]
-
+  if (!dashboard || !dashboard.summary) {
+    return (
+      <Overview content={{ summary: undefined }} />
+    )
+  }
 
   return (
-    <Overview content={dashboard} />
+    <Overview content={{ summary: dashboard.summary }} />
   )
 }

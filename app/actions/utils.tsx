@@ -90,13 +90,12 @@ export async function overviewData() {
     // Fetch fresh data
     try {
 
-        const [users, predictions, payments, subscriptions, blogPosts] = await Promise.all([
+        const [users, predictions, payments, subscriptions] = await Promise.all([
             getDataWithOption('user', {
                 predictions: true,
                 subscriptions: true,
                 payments: true,
                 Notification: true,
-                BlogPost: true,
                 View: true,
                 Like: true,
                 Save: true,
@@ -116,14 +115,6 @@ export async function overviewData() {
             getData('payment'),
             getData('pricing'),
             getData('subscription'),
-            getDataWithOption('blogPost', {
-                author: true,
-                Share: true,
-                Save: true,
-                Like: true,
-                Comment: true,
-                View: true,
-            }),
         ])
 
         const summary = Analytics.Summary.getDashboardSummary({
@@ -131,7 +122,6 @@ export async function overviewData() {
             predictions: predictions.data,
             payments: payments.data,
             subscriptions: subscriptions.data,
-            blogPosts: blogPosts.data,
         })
 
         return {
@@ -139,7 +129,6 @@ export async function overviewData() {
             predictions,
             payments,
             subscriptions,
-            blogPosts,
             summary
         }
 
