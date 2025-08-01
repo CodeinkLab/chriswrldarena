@@ -314,7 +314,7 @@ const Overview = ({ content }: { content?: { summary?: DashboardSummary } }) => 
             title="Total Users"
             value={safe(() => formatNumberShort(summary.overview?.totalUsers || 0), '0')}
             subtitle="Active members"
-            trend={safe(() => summary.overview?.userGrowthRate || 0, 0)}
+            trend={safe(() => Number(summary.overview?.userGrowthRate?.toFixed(0)) || 0, 0)}
             color="green"
           />
           <StatCard
@@ -322,7 +322,7 @@ const Overview = ({ content }: { content?: { summary?: DashboardSummary } }) => 
             title="Predictions"
             value={safe(() => formatNumberShort(summary.overview?.totalPredictions || 0), '0')}
             subtitle="Total predictions"
-            trend={safe(() => summary.overview?.predictionGrowthRate || 0, 0)}
+            trend={safe(() => Number(summary.overview?.predictionGrowthRate?.toFixed(0)) || 0, 0)}
             color="teal"
           />
           <StatCard
@@ -330,7 +330,7 @@ const Overview = ({ content }: { content?: { summary?: DashboardSummary } }) => 
             title="Revenue"
             value={safe(() => (user?.location?.currencysymbol || "$") + formatNumberShort(summary.overview?.totalRevenue || 0), '$0')}
             subtitle="Total earnings"
-            trend={safe(() => summary.overview?.revenueGrowth || 0, 0)}
+            trend={safe(() => Number(summary.overview?.revenueGrowth?.toFixed(0)) || 0, 0)}
             color="purple"
           />
           <StatCard
@@ -338,7 +338,7 @@ const Overview = ({ content }: { content?: { summary?: DashboardSummary } }) => 
             title="Subscriptions"
             value={safe(() => formatNumberShort(summary.overview?.activeSubscriptions || 0), '0')}
             subtitle="Active plans"
-            trend={safe(() => summary.overview?.subscriptionGrowthRate || 0, 0)}
+            trend={safe(() => Number(summary.overview?.subscriptionGrowthRate?.toFixed(0)) || 0, 0)}
             color="green"
           />
           <StatCard
@@ -346,7 +346,7 @@ const Overview = ({ content }: { content?: { summary?: DashboardSummary } }) => 
             title="Today's Revenue"
             value={safe(() => (user?.location?.currencysymbol || "$") + formatNumberShort(summary.todayMetrics?.todayRevenue || 0), '$0')}
             subtitle="Last 24 hours"
-            trend={safe(() => summary.todayMetrics?.todayRevenueGrowth || 0, 0)}
+            trend={safe(() => Number(summary.todayMetrics?.todayRevenueGrowth?.toFixed(0)) || 0, 0)}
             color="indigo"
           />
         </div>
