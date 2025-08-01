@@ -967,7 +967,6 @@ export const predictionFormSchema: SchemaDefinition<PredictionFormData> = {
         placeholder: 'Select a league',
         options: []
     },
-
     homeTeam: {
         type: 'text',
         label: 'Home Team',
@@ -1034,7 +1033,6 @@ export const predictionFormSchema: SchemaDefinition<PredictionFormData> = {
             { label: 'Draw Game', value: "DRAW_GAME" },
         ],
     },
-
     result: {
         type: 'select',
         label: 'Result',
@@ -1044,7 +1042,6 @@ export const predictionFormSchema: SchemaDefinition<PredictionFormData> = {
             { label: 'Lost', value: PredictionResult.LOST },
         ],
     },
-
     userId: {
         type: 'text',
         label: 'User ID',

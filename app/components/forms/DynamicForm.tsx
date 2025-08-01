@@ -116,34 +116,11 @@ export default function DynamicForm<TFieldValues extends FieldValues>({
                             options={leagueOptions.length > 0 ? leagueOptions : field.options}
                             disabled={field.disabled || isSubmitting}
                             placeholder={field.placeholder}
+                            onChange={(e) => {
+                                // Handle grouped-select value change
+                                setValue(name as Path<TFieldValues>, e.target.value as any);
+                            }}
                             control={control}
-                        />
-                    );
-                }
-                if (name === 'customTitle') {
-                    const isCustom = watch('isCustom' as Path<TFieldValues>);
-
-                    return (
-                        <FormField
-                            key={name}
-                            name={name}
-                            label={field.label}
-                            type={field.type}
-                            register={register as UseFormRegister<FieldValues>}
-                            error={error}
-                            required={isCustom ?? true}
-                            options={
-                                [
-                                    // { label: 'Bet of the Day', value: 'Bet of the Day' },
-                                    { label: 'Correct Score', value: 'Correct Score' },
-                                    { label: 'Draw Games', value: 'Draw Games' },
-                                ]}
-                            hidden={!isCustom}
-                            disabled={field.disabled || isSubmitting}
-                            placeholder={field.placeholder}
-                            control={control}
-                            className={!isCustom ? 'hidden' : ''}
-
                         />
                     );
                 }

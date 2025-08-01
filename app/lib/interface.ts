@@ -71,10 +71,7 @@ export interface Prediction {
   publishedAt: Date;
   createdBy?: User;
   userId: string;
-  isFree: boolean;
-  isCustom?: boolean;
-  customTitle?: string;
-  customRange?: string,
+  gameType: string
   league_rel?: League;
   validation?: ValidationRules
 }
@@ -167,7 +164,7 @@ export interface CreatePredictionDTO {
   odds?: string;
   publishedAt: Date;
   userId: string;
-  isFree?: boolean;
+  gameType?: string;
 }
 
 export interface CreateSubscriptionDTO {
@@ -210,7 +207,7 @@ export type UpdateNotificationDTO = Partial<CreateNotificationDTO>;
 export interface PredictionFilters extends PaginationQuery {
   league?: string;
   result?: PredictionResult;
-  isFree?: boolean;
+  gameType?: string;
   userId?: string;
   dateFrom?: Date;
   dateTo?: Date;

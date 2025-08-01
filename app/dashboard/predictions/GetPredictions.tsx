@@ -200,7 +200,7 @@ const GetPredictions = () => {
                                             {moment(prediction.publishedAt).format("LT")}
                                         </td>
                                         <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900"><span className="font-bold">{prediction.sportType.toUpperCase()}</span> &bull; {prediction.league}
-                                        {!prediction.isFree && (
+                                        {prediction.gameType !== "FREE_GAMES" && (
                                             <span className="inline-block ml-2 align-middle">
                                                 <svg
                                                     className="size-4"

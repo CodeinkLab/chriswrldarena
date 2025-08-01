@@ -55,7 +55,7 @@ export function TableComponent<T>({
   data,
   columns,
   actions,
-  pageSize = 10,
+  pageSize = 25,
   slice,
   header,
   footer,

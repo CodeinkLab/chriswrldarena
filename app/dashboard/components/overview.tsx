@@ -53,17 +53,17 @@ const Overview = ({ content }: any) => {
   const [loading, setLoading] = useState(true)
   const [summary, setSummary] = useState<any>(null)
 
- useEffect(() => {
+  useEffect(() => {
     async function fetchAll() {
       setLoading(true)
       const cacheKey = 'dashboard_summary_cache'
       const cache = typeof window !== 'undefined' ? localStorage.getItem(cacheKey) : null
-      /* if (cache) {
+      if (cache) {
         try {
           setSummary(JSON.parse(cache))
           setLoading(false)
         } catch { }
-      } */
+      }
 
       console.log('Fetched data:', content.summary)
 
@@ -91,7 +91,7 @@ const Overview = ({ content }: any) => {
       })
     }
     fetchAll()
-  },  [summary, content.summary])
+  }, [summary, content.summary])
 
   // Helper to safely get a value
   const safe = (fn: () => any, fallback: any = '...') => {
@@ -103,8 +103,7 @@ const Overview = ({ content }: any) => {
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-4">
-            <div className={`p-3 rounded-xl bg-gradient-to-br ${
-              color === 'green' ? 'from-green-500 to-green-600' :
+            <div className={`p-3 rounded-xl bg-gradient-to-br ${color === 'green' ? 'from-green-500 to-green-600' :
               color === 'green' ? 'from-green-500 to-green-600' :
                 color === 'purple' ? 'from-purple-500 to-purple-600' :
                   color === 'teal' ? 'from-teal-500 to-teal-600' :

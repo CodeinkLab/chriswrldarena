@@ -52,6 +52,19 @@ function AccordionSelect({
   const [selectedLabel, setSelectedLabel] = useState(`Select ${label}`);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Sync selectedValue with the registered input
+  useEffect(() => {
+    if (selectedValue) {
+      const hiddenInput = document.querySelector(`input[name="${name}"][type="hidden"]`) as HTMLInputElement;
+      if (hiddenInput) {
+        hiddenInput.value = selectedValue;
+        // Trigger change event to notify react-hook-form
+        const event = new Event('input', { bubbles: true });
+        hiddenInput.dispatchEvent(event);
+      }
+    }
+  }, [selectedValue, name]);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -79,7 +92,7 @@ function AccordionSelect({
     // Trigger the onChange event for form registration
     if (onChange) {
       const event = {
-        target: { value: stringValue }
+        target: { value: stringValue, name }
       } as React.ChangeEvent<HTMLSelectElement>;
       onChange(event);
     }
@@ -101,10 +114,9 @@ function AccordionSelect({
     <div className="relative" ref={dropdownRef}>
       {/* Hidden input for form registration */}
       <input
-        {...register(name)}
+        {...register(name, { required })}
         type="hidden"
         value={selectedValue}
-        required={required}
       />
 
       {/* Custom dropdown trigger */}
@@ -157,7 +169,7 @@ function AccordionSelect({
                       key={option.value}
                       type="button"
                       onClick={() => selectOption(option.value, option.label)}
-                      className={`w-full px-6 py-2 text-left text-sm hover:bg-orange-50 hover:text-orange-600 ${selectedValue === option.value ? 'bg-orange-100 text-orange-600' : 'text-gray-700'
+                      className={`w-full px-6 py-2 text-left text-sm hover:bg-green-50 hover:text-green-600 ${selectedValue === option.value ? 'bg-green-100 text-green-600' : 'text-gray-700'
                         }`}
                     >
                       {option.label}
@@ -187,7 +199,7 @@ export default function FormField({
   disabled = false,
   className = '',
   onChange,
-  editorContent,
+  editorContent: _editorContent,
   control,
 }: FormFieldPropsWithChange) {
   const getErrorMessage = useCallback((fieldName: string) => {
@@ -211,7 +223,7 @@ export default function FormField({
             disabled={disabled}
             required={required}
             onChange={onChange}>
-            <option value="">Select {label}</option>
+            <option disabled value="">Select {label}</option>
             {options?.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -292,7 +304,7 @@ export default function FormField({
       case 'datetime-local':
         return (
           <input
-            type="date"
+            type="datetime-local"
             {...register(name)}
             className={`${baseInputClasses} ${errorClasses}  px-4 py-2`}
             disabled={disabled}

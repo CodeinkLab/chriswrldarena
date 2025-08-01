@@ -631,7 +631,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             },
             {
                 header: 'Game',
-                accessorKey: 'isFree',
+                accessorKey: 'gameType',
                 cell: (prediction) => prediction.gameType.replace('_', ' ').toUpperCase() || 'N/A',
             },
             {
