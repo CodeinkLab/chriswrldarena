@@ -38,7 +38,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
 
     const defaulttitles = [
         "Vip Predictions",
-        // "Bet of the day",
+        "Bet of the day",
         "Free Hot Odds",
         "Previously Won Matches",
         "Midnight Owl",
@@ -602,6 +602,157 @@ const HomePageComponent = ({ content }: { content: any }) => {
             uniqueId
         }
     }
+    const FreeGamesData = () => {
+        const columns: Column<Prediction>[] = [
+            {
+                header: 'Date',
+                accessorKey: 'publishedAt',
+                cell: (prediction) => (
+                    <>
+                        {moment(prediction.publishedAt).format('LL')}
+                        
+                    </>
+                ),
+            },
+            {
+                header: 'Match',
+                accessorKey: 'homeTeam',
+                cell: (prediction) => (
+                    <div>
+                        <div className="text-sm font-medium text-gray-900">
+                            {prediction.league || 'Unknown League'}
+                        </div>
+                        <div className="text-sm text-gray-600 ">
+                            {prediction.homeTeam} vs {prediction.awayTeam}
+                        </div>
+                    </div>
+                ),
+            },
+            {
+                header: 'Prediction',
+                accessorKey: 'tip',
+                cell: (prediction) => prediction.tip || 'No prediction available',
+            },
+            {
+                header: 'Odds',
+                accessorKey: 'odds',
+                cell: (prediction) => (
+                    <span className="px-2 py-1 text-xs font-medium text-neutral-800 bg-neutral-100 rounded-full">
+                        {prediction.odds || 'N/A'}
+                    </span>
+                ),
+            },
+            {
+                header: 'Result',
+                accessorKey: 'result',
+                cell: (prediction, rowIndex, colIndex) => {
+                    if (prediction.result === "WON") {
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800" title='Won'>
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Check className="w-4 h-4" />}
+                        </span>;
+                    }
+                    if (prediction.result === "LOST") {
+                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800" title="Lost">
+                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <X className="w-4 h-4" />}
+                        </span>;
+                    }
+                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800" title="Pending">
+                        {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Clock className="w-4 h-4" />}
+                    </span>;
+                },
+            },
+        ];
+        const actions: Action<Prediction>[] = user?.role === "ADMIN" ? [
+            {
+                label: 'Won',
+                icon: <Check className="w-4 h-4 text-neutral-500" />,
+                onClick: (prediction, index) => updateWLPrediction(index, prediction, 'WON'),
+            },
+            {
+                label: 'Lost',
+                icon: <X className="w-4 h-4 text-neutral-500" />,
+                onClick: (prediction, index) => updateWLPrediction(index, prediction, 'LOST'),
+            },
+            {
+                label: 'Pending',
+                icon: <Clock className="w-4 h-4 text-gray-500" />,
+                onClick: (prediction, index) => updateWLPrediction(index, prediction, 'PENDING'),
+            },
+            {
+                label: 'Edit',
+                icon: <Edit className="w-4 h-4 text-gray-500" />,
+                onClick: (prediction) => {
+                    window.location.href = `/dashboard/predictions/update/?id=${prediction.id}`;
+                },
+            },
+            {
+                label: 'Delete',
+                icon: <Trash className="w-4 h-4 text-red-500" />,
+                onClick: (prediction, index) => deletePrediction(index, prediction.id),
+                className: 'text-red-600',
+            },
+        ] : [];
+        const slice = 10
+        const header = {
+            title: title[2]?.defaulttitle || defaulttitles[2],
+            //badge: 'Premium',
+            isAdmin: user?.role === "ADMIN",
+            onTitleEdit: (title: string) => updateTableTitle(2, title),
+
+        }
+
+        const uniqueId = Date.now().toString()
+        const footer = {
+            emptyMessage: 'Empty List',
+            viewMoreLink: "/predictions/freegames",
+            viewMoreText: "View More",
+            customActions: user?.role === "ADMIN" && (
+                <Link
+                    href={user ? "/dashboard/predictions/create" : "/signin"}
+                    className="text-sm font-medium text-gray-900 hover:text-green-600 transition-all duration-300"
+                >
+                    <div className="group flex gap-1 items-center underline underline-offset-4 text-green-500 hover:text-gray-900">
+                        <PlusCircle className='text-green-500 size-5 group-hover:text-gray-900' /> Add Data
+                    </div>
+                    {!user && "Sign in to View"}
+                </Link>
+            ),
+        }
+        const className = "bg-green-50 border-2 border-green-200 rounded-lg"
+        const component = <div className="flex justify-center px-4">
+            <div key={Date.now()} className="relative flex flex-col md:flex-row w-full items-center justify-between gap-4 px-4 py-4 bg-green-100 text-green-800 rounded-lg shadow-sm min-w-xs max-w-md lg:max-w-lg mx-8 my-4 place-self-center">
+                <div className="flex items-center mr-4">
+                    {user?.role === "ADMIN" && <Edit2 className="size-5 text-green-600 hover:text-green-800 cursor-pointer mr-2 md:mr-4"
+                        onClick={showBettingCode} />}
+                    <p className='text-base text-center font-medium leading-5'>BET DIRECTLY ON <span className='italic underline underline-offset-4'>{bettingPlatform}</span></p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <p className='text-base text-center leading-5 font-medium'>CODE: <span className='font-extrabold'>{bettingCode}</span></p>
+                    <Copy className="size-5 font-medium text-green-600 hover:text-green-800 transition-colors duration-300"
+                        onClick={() => {
+                            navigator.clipboard.writeText(bettingCode);
+                            toast.success(`Code ${bettingCode} copied to clipboard!`);
+                        }}
+                    />
+                </div>
+            </div>
+        </div>
+
+        return {
+            data: FreeGames,
+            columns,
+            actions,
+            header,
+            footer,
+            slice,
+
+            updating,
+            uniqueId,
+            className,
+            component
+        }
+    }
     const PreviousWonData = () => {
         const columns: Column<Prediction>[] = [
             {
@@ -699,10 +850,10 @@ const HomePageComponent = ({ content }: { content: any }) => {
         ] : [];
         const slice = 10
         const header = {
-            title: title[2]?.defaulttitle || defaulttitles[2],
+            title: title[3]?.defaulttitle || defaulttitles[3],
             //badge: 'Premium',
             isAdmin: user?.role === "ADMIN",
-            onTitleEdit: (title: string) => updateTableTitle(2, title),
+            onTitleEdit: (title: string) => updateTableTitle(3, title),
 
         }
 
@@ -736,157 +887,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             uniqueId
         }
     }
-    const FreeGamesData = () => {
-        const columns: Column<Prediction>[] = [
-            {
-                header: 'Date',
-                accessorKey: 'publishedAt',
-                cell: (prediction) => (
-                    <>
-                        {moment(prediction.publishedAt).format('LL')}
-                        
-                    </>
-                ),
-            },
-            {
-                header: 'Match',
-                accessorKey: 'homeTeam',
-                cell: (prediction) => (
-                    <div>
-                        <div className="text-sm font-medium text-gray-900">
-                            {prediction.league || 'Unknown League'}
-                        </div>
-                        <div className="text-sm text-gray-600 ">
-                            {prediction.homeTeam} vs {prediction.awayTeam}
-                        </div>
-                    </div>
-                ),
-            },
-            {
-                header: 'Prediction',
-                accessorKey: 'tip',
-                cell: (prediction) => prediction.tip || 'No prediction available',
-            },
-            {
-                header: 'Odds',
-                accessorKey: 'odds',
-                cell: (prediction) => (
-                    <span className="px-2 py-1 text-xs font-medium text-neutral-800 bg-neutral-100 rounded-full">
-                        {prediction.odds || 'N/A'}
-                    </span>
-                ),
-            },
-            {
-                header: 'Result',
-                accessorKey: 'result',
-                cell: (prediction, rowIndex, colIndex) => {
-                    if (prediction.result === "WON") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800" title='Won'>
-                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Check className="w-4 h-4" />}
-                        </span>;
-                    }
-                    if (prediction.result === "LOST") {
-                        return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800" title="Lost">
-                            {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <X className="w-4 h-4" />}
-                        </span>;
-                    }
-                    return <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800" title="Pending">
-                        {updating && rowIndex === currentposition ? <LoaderCircle className="animate-spin size-4" /> : <Clock className="w-4 h-4" />}
-                    </span>;
-                },
-            },
-        ];
-        const actions: Action<Prediction>[] = user?.role === "ADMIN" ? [
-            {
-                label: 'Won',
-                icon: <Check className="w-4 h-4 text-neutral-500" />,
-                onClick: (prediction, index) => updateWLPrediction(index, prediction, 'WON'),
-            },
-            {
-                label: 'Lost',
-                icon: <X className="w-4 h-4 text-neutral-500" />,
-                onClick: (prediction, index) => updateWLPrediction(index, prediction, 'LOST'),
-            },
-            {
-                label: 'Pending',
-                icon: <Clock className="w-4 h-4 text-gray-500" />,
-                onClick: (prediction, index) => updateWLPrediction(index, prediction, 'PENDING'),
-            },
-            {
-                label: 'Edit',
-                icon: <Edit className="w-4 h-4 text-gray-500" />,
-                onClick: (prediction) => {
-                    window.location.href = `/dashboard/predictions/update/?id=${prediction.id}`;
-                },
-            },
-            {
-                label: 'Delete',
-                icon: <Trash className="w-4 h-4 text-red-500" />,
-                onClick: (prediction, index) => deletePrediction(index, prediction.id),
-                className: 'text-red-600',
-            },
-        ] : [];
-        const slice = 10
-        const header = {
-            title: title[3]?.defaulttitle || defaulttitles[3],
-            //badge: 'Premium',
-            isAdmin: user?.role === "ADMIN",
-            onTitleEdit: (title: string) => updateTableTitle(3, title),
-
-        }
-
-        const uniqueId = Date.now().toString()
-        const footer = {
-            emptyMessage: 'Empty List',
-            viewMoreLink: "/predictions/freegames",
-            viewMoreText: "View More",
-            customActions: user?.role === "ADMIN" && (
-                <Link
-                    href={user ? "/dashboard/predictions/create" : "/signin"}
-                    className="text-sm font-medium text-gray-900 hover:text-green-600 transition-all duration-300"
-                >
-                    <div className="group flex gap-1 items-center underline underline-offset-4 text-green-500 hover:text-gray-900">
-                        <PlusCircle className='text-green-500 size-5 group-hover:text-gray-900' /> Add Data
-                    </div>
-                    {!user && "Sign in to View"}
-                </Link>
-            ),
-        }
-        const className = "bg-green-50 border-2 border-green-200 rounded-lg"
-        const component = <div className="flex justify-center px-4">
-            <div key={Date.now()} className="relative flex flex-col md:flex-row w-full items-center justify-between gap-4 px-4 py-4 bg-green-100 text-green-800 rounded-lg shadow-sm min-w-xs max-w-md lg:max-w-lg mx-8 my-4 place-self-center">
-                <div className="flex items-center mr-4">
-                    {user?.role === "ADMIN" && <Edit2 className="size-5 text-green-600 hover:text-green-800 cursor-pointer mr-2 md:mr-4"
-                        onClick={showBettingCode} />}
-                    <p className='text-base text-center font-medium leading-5'>BET DIRECTLY ON <span className='italic underline underline-offset-4'>{bettingPlatform}</span></p>
-                </div>
-
-                <div className="flex items-center gap-2">
-                    <p className='text-base text-center leading-5 font-medium'>CODE: <span className='font-extrabold'>{bettingCode}</span></p>
-                    <Copy className="size-5 font-medium text-green-600 hover:text-green-800 transition-colors duration-300"
-                        onClick={() => {
-                            navigator.clipboard.writeText(bettingCode);
-                            toast.success(`Code ${bettingCode} copied to clipboard!`);
-                        }}
-                    />
-                </div>
-            </div>
-        </div>
-
-        return {
-            data: FreeGames,
-            columns,
-            actions,
-            header,
-            footer,
-            slice,
-
-            updating,
-            uniqueId,
-            className,
-            component
-        }
-    }
+    
     const MidnightOwlData = () => {
         const columns: Column<Prediction>[] = [
             {
@@ -1018,6 +1019,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             className
         }
     }
+
     const WelcomPopoup = () => {
         const [isOpen, setIsOpen] = useState(false);
         useEffect(() => {
