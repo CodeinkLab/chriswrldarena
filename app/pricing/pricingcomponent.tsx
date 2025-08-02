@@ -162,10 +162,8 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
                             const start = new Date();
                             if (plan.plan === 'DAILY') {
                                 start.setDate(start.getDate() + 1);
-                                start.setHours(1, 0, 0, 0);
                             } else if (plan.plan === 'WEEKLY') {
                                 start.setDate(start.getDate() + 7);
-                                start.setHours(1, 0, 0, 0)
                             }
                             return start.toISOString();
                         })(),
@@ -255,11 +253,11 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
     const CorrectScoreGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "CORRECT_SCORE")
     const DrawGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "DRAW_GAME")
     const BetOfTheDayGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "BET_OF_THE_DAY")
-    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING" && prediction.gameType === "FREE_GAME")
+    const PrevWonGames = predictions.filter(prediction => prediction.result !== "PENDING" && (prediction.gameType === "VIP_GAME" || prediction.gameType === "DRAW_GAME" || prediction.gameType === "CORRECT_SCORE" || prediction.gameType === "BET_OF_THE_DAY"))
         .filter(prediction => {
             const predictionDate = new Date(prediction.publishedAt);
             const now = new Date();
-            const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+            const twentyFourHoursAgo = new Date(now.getTime() - (48 * 60 * 60 * 1000));
             return predictionDate >= twentyFourHoursAgo;
         })
         .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
@@ -293,7 +291,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                 cell: (prediction) => <>
+                cell: (prediction) => <>
                     <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
                     <p className="md:hidden text-xs">----------</p>
                     {prediction.tip || 'No prediction available'}</>
@@ -421,7 +419,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                 cell: (prediction) => <>
+                cell: (prediction) => <>
                     <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
                     <p className="md:hidden text-xs">----------</p>
                     {prediction.tip || 'No prediction available'}</>
@@ -550,7 +548,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                 cell: (prediction) => <>
+                cell: (prediction) => <>
                     <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
                     <p className="md:hidden text-xs">----------</p>
                     {prediction.tip || 'No prediction available'}</>
@@ -679,7 +677,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                 cell: (prediction) => <>
+                cell: (prediction) => <>
                     <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
                     <p className="md:hidden text-xs">----------</p>
                     {prediction.tip || 'No prediction available'}</>
@@ -810,7 +808,7 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                 cell: (prediction) => <>
+                cell: (prediction) => <>
                     <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
                     <p className="md:hidden text-xs">----------</p>
                     {prediction.tip || 'No prediction available'}</>

@@ -83,6 +83,9 @@ export const sportTypeOptions = [
             { label: 'KNVB Beker', value: 'KNVB Beker', country: 'Netherlands' },
             { label: 'Johan Cruyff Shield', value: 'Johan Cruyff Shield', country: 'Netherlands' },
 
+            // Jordan
+            { label: 'Jordanian Pro League', value: 'Jordanian Pro League', country: 'Jordan' },
+
             // North Macedonia
             { label: 'Macedonian First League', value: 'Macedonian First League', country: 'North Macedonia' },
 

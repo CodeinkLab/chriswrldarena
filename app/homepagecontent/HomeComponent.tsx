@@ -342,7 +342,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
         .filter(prediction => {
             const predictionDate = new Date(prediction.publishedAt);
             const now = new Date();
-            const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+            const twentyFourHoursAgo = new Date(now.getTime() - (48 * 60 * 60 * 1000));
             return predictionDate >= twentyFourHoursAgo;
         })
         .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
@@ -805,7 +805,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Game',
                 accessorKey: 'gameType',
-                cell: (prediction) => prediction.gameType.replace('_', ' ').toUpperCase() || 'N/A',
+                cell: (prediction) => prediction.gameType.replace(/_/g, ' ').toUpperCase() || 'N/A',
             },
             {
                 header: 'Odds',
