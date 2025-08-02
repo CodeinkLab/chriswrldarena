@@ -1,4 +1,3 @@
-import { predictionFormSchema, sportTypeOptions } from '@/app/lib/formschemas/predictionForm';
 import { FormFieldProps } from '@/app/lib/interface';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import BlogEditor from './BlogEditor';
@@ -51,29 +50,31 @@ function AccordionSelect({
     }
     return initialExpanded;
   });
-  const [selectedValue, setSelectedValue] = useState(() => {
+  const [inputValue, setInputValue] = useState(() => {
     if (initialValue) {
       console.log(`AccordionSelect ${name} - Initial value:`, initialValue);
+      // Check if initial value matches an option label
+      if (groupedOptions) {
+        for (const [_country, options] of Object.entries(groupedOptions)) {
+          const foundOption = options?.find(option => String(option.value) === String(initialValue));
+          if (foundOption) {
+            return foundOption.label;
+          }
+        }
+      }
       return String(initialValue);
     }
     return '';
   });
-  
-  const [selectedLabel, setSelectedLabel] = useState(() => {
-    if (initialValue && groupedOptions) {
-      console.log(`AccordionSelect ${name} - Looking for label for initial value:`, initialValue);
-      // Find the label for the initial value
-      for (const [_country, options] of Object.entries(groupedOptions)) {
-        const foundOption = options?.find(option => String(option.value) === String(initialValue));
-        if (foundOption) {
-          console.log(`AccordionSelect ${name} - Found initial label:`, foundOption.label);
-          return foundOption.label;
-        }
-      }
+  const [selectedValue, setSelectedValue] = useState(() => {
+    if (initialValue) {
+      return String(initialValue);
     }
-    return `Select ${label}`;
+    return '';
   });
+  const [filteredOptions, setFilteredOptions] = useState(groupedOptions);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Sync selectedValue with the registered input
   useEffect(() => {
@@ -87,6 +88,34 @@ function AccordionSelect({
       }
     }
   }, [selectedValue, name]);
+
+  // Filter options based on input value
+  useEffect(() => {
+    if (!groupedOptions) {
+      setFilteredOptions({});
+      return;
+    }
+
+    if (!inputValue.trim()) {
+      setFilteredOptions(groupedOptions);
+      return;
+    }
+
+    const filtered: typeof groupedOptions = {};
+    const searchTerm = inputValue.toLowerCase().trim();
+
+    Object.entries(groupedOptions).forEach(([country, options]) => {
+      const matchingOptions = options?.filter(option =>
+        option.label.toLowerCase().includes(searchTerm)
+      );
+      
+      if (matchingOptions && matchingOptions.length > 0) {
+        filtered[country] = matchingOptions;
+      }
+    });
+
+    setFilteredOptions(filtered);
+  }, [inputValue, groupedOptions]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -106,11 +135,45 @@ function AccordionSelect({
     }));
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    setSelectedValue(value);
+    setIsOpen(true);
+
+    // Trigger the onChange event for form registration
+    if (onChange) {
+      const event = {
+        target: { value, name }
+      } as React.ChangeEvent<HTMLSelectElement>;
+      onChange(event);
+    }
+  };
+
+  const handleInputFocus = () => {
+    setIsOpen(true);
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      setIsOpen(false);
+      inputRef.current?.blur();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setIsOpen(true);
+    }
+  };
+
   const selectOption = (value: string | number, label: string) => {
     const stringValue = String(value);
     setSelectedValue(stringValue);
-    setSelectedLabel(label);
+    setInputValue(label);
     setIsOpen(false);
+
+    // Focus back to input after selection
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
 
     // Trigger the onChange event for form registration
     if (onChange) {
@@ -121,17 +184,7 @@ function AccordionSelect({
     }
   };
 
-  const sortedGroups = groupedOptions ? Object.entries(groupedOptions)
-    /* .sort(([a], [b]) => {
-      // Sort countries with 'International' and 'UEFA' first, then alphabetically
-      if (a === 'International') return -1;
-      if (b === 'International') return 1;
-      if (a === 'UEFA') return -1;
-      if (b === 'UEFA') return 1;
-      if (a === 'Others') return 1;
-      if (b === 'Others') return -1;
-      return a.localeCompare(b);
-} }*/ : [];
+  const sortedGroups = filteredOptions ? Object.entries(filteredOptions) : [];
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -142,66 +195,84 @@ function AccordionSelect({
         value={selectedValue}
       />
 
-      {/* Custom dropdown trigger */}
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        disabled={disabled}
-        className={`${baseInputClasses} ${errorClasses} px-4 py-2 text-left flex items-center justify-between w-full`}
-      >
-        <span className={selectedValue ? 'text-gray-900' : 'text-gray-500'}>
-          {selectedLabel}
-        </span>
-        <svg
-          className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+      {/* Input field that acts as both input and dropdown trigger */}
+      <div className="relative">
+        <input
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onFocus={handleInputFocus}
+          onKeyDown={handleInputKeyDown}
+          disabled={disabled}
+          placeholder={`Type or select ${label.toLowerCase()}...`}
+          className={`${baseInputClasses} ${errorClasses} px-4 py-2 pr-10`}
+        />
+        
+        {/* Dropdown toggle button */}
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          disabled={disabled}
+          className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-gray-600"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
+          <svg
+            className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
 
       {/* Dropdown content */}
       {isOpen && (
         <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-80 overflow-y-auto">
-          {sortedGroups.map(([country, countryOptions]) => (
-            <div key={country} className="border-b border-gray-100 last:border-b-0">
-              {/* Country header */}
-              <button
-                type="button"
-                onClick={() => toggleGroup(country)}
-                className="w-full px-4 py-3 text-left text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 flex items-center justify-between"
-              >
-                <span>{country} ({countryOptions.length})</span>
-                <svg
-                  className={`w-4 h-4 transition-transform ${expandedGroups[country] ? 'rotate-180' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-
-              {/* Country options */}
-              {expandedGroups[country] && (
-                <div className="bg-white">
-                  {countryOptions?.sort((a, b) => a.label.localeCompare(b.label)).map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => selectOption(option.value, option.label)}
-                      className={`w-full px-6 py-2 text-left text-sm hover:bg-green-50 hover:text-green-600 ${selectedValue === option.value ? 'bg-green-100 text-green-600' : 'text-gray-700'
-                        }`}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              )}
+          {sortedGroups.length === 0 ? (
+            <div className="px-4 py-3 text-sm text-gray-500 text-center">
+              {inputValue ? `No matches found for "${inputValue}"` : 'No options available'}
             </div>
-          ))}
+          ) : (
+            sortedGroups.map(([country, countryOptions]) => (
+              <div key={country} className="border-b border-gray-100 last:border-b-0">
+                {/* Country header */}
+                <button
+                  type="button"
+                  onClick={() => toggleGroup(country)}
+                  className="w-full px-4 py-3 text-left text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 flex items-center justify-between"
+                >
+                  <span>{country} ({countryOptions.length})</span>
+                  <svg
+                    className={`w-4 h-4 transition-transform ${expandedGroups[country] ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Country options */}
+                {expandedGroups[country] && (
+                  <div className="bg-white">
+                    {countryOptions?.sort((a, b) => a.label.localeCompare(b.label)).map((option) => (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => selectOption(option.value, option.label)}
+                        className={`w-full px-6 py-2 text-left text-sm hover:bg-green-50 hover:text-green-600 ${selectedValue === option.value ? 'bg-green-100 text-green-600' : 'text-gray-700'
+                          }`}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))
+          )}
         </div>
       )}
     </div>

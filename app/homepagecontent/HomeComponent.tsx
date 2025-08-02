@@ -112,14 +112,13 @@ const HomePageComponent = ({ content }: { content: any }) => {
     useEffect(() => {
         if (content && Array.isArray(content.titles)) {
             // Sort content.titles by their customtitle's index in defaulttitles
-            console.log(content.titles)
+      
             const sortedTitles = content.titles.sort((a: any, b: any) => {
                 const idA = parseInt(a.id, 10);
                 const idB = parseInt(b.id, 10);
                 return idA - idB;
             });
-            console.log(sortedTitles);
-
+            
 
             setTitle(sortedTitles);
         }
