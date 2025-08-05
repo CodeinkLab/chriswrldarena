@@ -43,7 +43,7 @@ const GetPredictions = () => {
             }
         })
     }
-    
+
     const updateWLPrediction = async (index: number, prediction: Prediction, data: string) => {
         setCurrentPosition(index);
         const { id, ...dataWithoutId } = prediction;
@@ -110,7 +110,11 @@ const GetPredictions = () => {
 
     // Calculate paginated predictions
     const totalPages = Math.ceil(predictions.length / pageSize);
-    const paginatedPredictions = predictions.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    const paginatedPredictions = predictions
+        .sort((a, b) => {
+            const statusOrder = { 'PENDING': 0, 'WON': 1, 'LOST': 2 };
+            return statusOrder[a.result as keyof typeof statusOrder] - statusOrder[b.result as keyof typeof statusOrder];
+        }).slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
     return (
         <div className="p-4 bg-white">
@@ -190,37 +194,34 @@ const GetPredictions = () => {
                                     </td>
                                 </tr>
                             ) : (
-                                paginatedPredictions.sort((a, b) => {
-                                    const statusOrder = { 'PENDING': 0, 'WON': 1, 'LOST': 2 };
-                                    return statusOrder[a.result as keyof typeof statusOrder] - statusOrder[b.result as keyof typeof statusOrder];
-                                }).map((prediction, i) => (
+                                paginatedPredictions.map((prediction, i) => (
                                     <tr key={i + (currentPage - 1) * pageSize} className="hover:bg-gray-50">
                                         <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-600">{moment(prediction.publishedAt).format("L")}
                                             <br />
                                             {moment(prediction.publishedAt).format("LT")}
                                         </td>
                                         <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900"><span className="font-bold">{prediction.sportType.toUpperCase()}</span> &bull; {prediction.league}
-                                        {prediction.gameType !== "FREE_GAMES" && (
-                                            <span className="inline-block ml-2 align-middle">
-                                                <svg
-                                                    className="size-4"
-                                                    viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <defs>
-                                                        <linearGradient id={`diamond-gradient-${i}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                                                            <stop offset="0%" stopColor="#facc15">
-                                                                <animate attributeName="stop-color" values="#fa4315;#f542ec;#15ccfa" dur="2s" repeatCount="indefinite" />
-                                                            </stop>
-                                                            <stop offset="100%" stopColor="#fa7c15">
-                                                                <animate attributeName="stop-color" values="#f542ec;#facc15;#15ccfa" dur="2s" repeatCount="indefinite" />
-                                                            </stop>
-                                                        </linearGradient>
-                                                    </defs>
-                                                    <path d="M12 2L2 9l10 13 10-13-10-7z" fill={`url(#diamond-gradient-${i})`} />
-                                                </svg>
-                                            </span>
-                                        )}
+                                            {prediction.gameType !== "FREE_GAMES" && (
+                                                <span className="inline-block ml-2 align-middle">
+                                                    <svg
+                                                        className="size-4"
+                                                        viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <defs>
+                                                            <linearGradient id={`diamond-gradient-${i}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                                                                <stop offset="0%" stopColor="#facc15">
+                                                                    <animate attributeName="stop-color" values="#fa4315;#f542ec;#15ccfa" dur="2s" repeatCount="indefinite" />
+                                                                </stop>
+                                                                <stop offset="100%" stopColor="#fa7c15">
+                                                                    <animate attributeName="stop-color" values="#f542ec;#facc15;#15ccfa" dur="2s" repeatCount="indefinite" />
+                                                                </stop>
+                                                            </linearGradient>
+                                                        </defs>
+                                                        <path d="M12 2L2 9l10 13 10-13-10-7z" fill={`url(#diamond-gradient-${i})`} />
+                                                    </svg>
+                                                </span>
+                                            )}
                                             <br />
                                             <span className="text-gray-500">{prediction.homeTeam} vs {prediction.awayTeam}</span>
                                         </td>
@@ -259,7 +260,7 @@ const GetPredictions = () => {
                                                 )}
                                         </td>
 
-                                        
+
 
                                         {predictions.length > 0 && !loading && <td className=" px-6 py-2 flex gap-2 items-center justify-end">
                                             <div className="group my-4">
