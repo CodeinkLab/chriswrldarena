@@ -112,13 +112,13 @@ const HomePageComponent = ({ content }: { content: any }) => {
     useEffect(() => {
         if (content && Array.isArray(content.titles)) {
             // Sort content.titles by their customtitle's index in defaulttitles
-      
+
             const sortedTitles = content.titles.sort((a: any, b: any) => {
                 const idA = parseInt(a.id, 10);
                 const idB = parseInt(b.id, 10);
                 return idA - idB;
             });
-            
+
 
             setTitle(sortedTitles);
         }
@@ -344,7 +344,6 @@ const HomePageComponent = ({ content }: { content: any }) => {
             const twentyFourHoursAgo = new Date(now.getTime() - (48 * 60 * 60 * 1000));
             return predictionDate >= twentyFourHoursAgo;
         })
-        .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     const FreeGames = predictions.filter(prediction => prediction.result === "PENDING" && prediction.gameType === "FREE_GAME")
     const MidnightOwlGames = predictions.filter(prediction => prediction.result === "PENDING").slice(0, 0)
 
@@ -378,7 +377,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                 cell: (prediction) => <>
+                cell: (prediction) => <>
                     <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
                     <p className="md:hidden text-xs">----------</p>
                     {prediction.tip || 'No prediction available'}</>
@@ -510,7 +509,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                 cell: (prediction) => <>
+                cell: (prediction) => <>
                     <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
                     <p className="md:hidden text-xs">----------</p>
                     {prediction.tip || 'No prediction available'}</>
@@ -796,7 +795,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                 cell: (prediction) => <>
+                cell: (prediction) => <>
                     <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
                     <p className="md:hidden text-xs">----------</p>
                     {prediction.tip || 'No prediction available'}</>
@@ -934,7 +933,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
             {
                 header: 'Prediction',
                 accessorKey: 'tip',
-                 cell: (prediction) => <>
+                cell: (prediction) => <>
                     <p className="md:hidden text-xs font-bold">{moment(prediction.publishedAt).format('LL')}</p>
                     <p className="md:hidden text-xs">----------</p>
                     {prediction.tip || 'No prediction available'}</>
@@ -1293,6 +1292,18 @@ const HomePageComponent = ({ content }: { content: any }) => {
                             <div className="flex flex-col w-full xl:col-span-2 gap-16">
 
                                 {/* VIP Games */}
+                                <TableComponent
+                                    uniqueId={PreviousWonData().uniqueId}
+                                    data={PreviousWonData().data}
+                                    columns={PreviousWonData().columns}
+                                    //slice={PreviousWonData().slice}
+                                    actions={PreviousWonData().actions}
+                                    footer={PreviousWonData().footer}
+                                    header={PreviousWonData().header}
+                                    updating={updating}
+                                    currentPosition={currentposition}
+                                />
+
                                 {content.isSubscriptionActive &&
                                     <TableComponent
                                         uniqueId={VIPData().uniqueId}
@@ -1328,17 +1339,7 @@ const HomePageComponent = ({ content }: { content: any }) => {
                                     currentPosition={currentposition}
                                     component={FreeGamesData().component}
                                 />
-                                <TableComponent
-                                    uniqueId={PreviousWonData().uniqueId}
-                                    data={PreviousWonData().data}
-                                    columns={PreviousWonData().columns}
-                                    //slice={PreviousWonData().slice}
-                                    actions={PreviousWonData().actions}
-                                    footer={PreviousWonData().footer}
-                                    header={PreviousWonData().header}
-                                    updating={updating}
-                                    currentPosition={currentposition}
-                                />
+
 
                                 {/*  {new Date().getHours() >= 0 && new Date().getHours() < 5 ? (<TableComponent
                                     uniqueId={MidnightOwlData().uniqueId}

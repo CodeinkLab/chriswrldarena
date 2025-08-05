@@ -260,8 +260,6 @@ const PricingComponent = ({ paymentKeys, content }: PricingComponentProps) => {
             const twentyFourHoursAgo = new Date(now.getTime() - (48 * 60 * 60 * 1000));
             return predictionDate >= twentyFourHoursAgo;
         })
-        .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-
     const VIPGamesData = () => {
         const columns: Column<Prediction>[] = [
             {
