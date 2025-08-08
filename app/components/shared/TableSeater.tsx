@@ -69,8 +69,8 @@ export function TableComponent<T>({
   const [currentPage, setCurrentPage] = useState(1);
 
   // If slice is provided, use it instead of pagination
-  const displayData = slice ? data.slice(0, slice).sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-    : data.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  const displayData = slice ? data.slice(0, slice).sort((a, b) => new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime())
+    : data.sort((a, b) => new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime());
 
   // Calculate pagination values
   const totalPages = Math.ceil(data.length / pageSize);
